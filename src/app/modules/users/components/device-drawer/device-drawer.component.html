@@ -1,0 +1,36 @@
+<app-drawer [title]="title" [open]="open" (closed)="closed.emit()">
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>memory</mat-icon>Información del dispositivo</span>
+      <div class="form-field">
+        <label for="device-serial">Serial <span class="required">*</span></label>
+        <input id="device-serial" formControlName="serial" placeholder="Ej. WD-000123" maxlength="50" class="uppercase" [class.is-invalid]="hasError('serial')" />
+        @if (hasError('serial')) {
+          <span class="form-field__error">{{ errorFor('serial') }}</span>
+        }
+      </div>
+      @if (mode !== 'create') {
+        <div class="form-field">
+          <label for="device-status">Estado <span class="required">*</span></label>
+          <select id="device-status" formControlName="status">
+            @for (option of statusOptions; track option[0]) {
+              <option [value]="option[0]">{{ option[1] }}</option>
+            }
+          </select>
+        </div>
+      }
+    </div>
+    @if (errorMessage()) {
+      <span class="form-alert" role="alert">{{ errorMessage() }}</span>
+    }
+  </form>
+  @if (mode !== 'view') {
+    <app-form-actions
+      drawer-footer
+      [saveLabel]="mode === 'edit' ? 'Guardar cambios' : 'Guardar dispositivo'"
+      [loading]="saving()"
+      (save)="save()"
+      (dismiss)="closed.emit()"
+    />
+  }
+</app-drawer>

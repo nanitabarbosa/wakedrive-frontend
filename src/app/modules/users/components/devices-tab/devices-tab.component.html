@@ -1,0 +1,62 @@
+<app-table
+  [columns]="columns"
+  [data]="devices()"
+  [customColumns]="['index', 'serial', 'status', 'actions']"
+  [showToolbar]="true"
+  [selectable]="true"
+  [paginated]="true"
+  [page]="page()"
+  [pageSize]="pageSize"
+  [total]="total()"
+  (pageChange)="onPageChange($event)"
+  [emptyMessage]="loadError() ? 'No se pudieron cargar los dispositivos. Intenta de nuevo más tarde.' : 'No hay dispositivos que coincidan con la búsqueda.'"
+>
+  <div class="toolbar" table-actions>
+    <div class="toolbar__row">
+      <label class="search">
+        <mat-icon>search</mat-icon>
+        <input type="search" placeholder="Buscar por serial..." (input)="onSearch($any($event.target).value)" />
+      </label>
+      <button type="button" class="btn btn--primary btn--sm" (click)="openDrawer('create')">
+        <mat-icon>add</mat-icon>Nuevo dispositivo
+      </button>
+    </div>
+    <div class="toolbar__row">
+      <select class="select" [value]="status()" (change)="onStatusChange($any($event.target).value)" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        @for (option of statusOptions; track option[0]) {
+          <option [value]="option[0]">{{ option[1] }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <ng-template #cellTemplate let-device let-column="column" let-index="index">
+    @switch (column.key) {
+      @case ('index') {
+        <span class="text-strong">{{ rowNumber(index) }}</span>
+      }
+      @case ('serial') {
+        <span class="plate">{{ device.serial }}</span>
+      }
+      @case ('status') {
+        <span class="badge" [class.badge--success]="device.status === 'ACTIVE'" [class.badge--danger]="device.status === 'INACTIVE'">
+          {{ statusLabels[device.status] }}
+        </span>
+      }
+      @case ('actions') {
+        <span class="row-actions">
+          <button type="button" class="row-actions__btn" (click)="openDrawer('view', device)" aria-label="Ver dispositivo" title="Ver">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button type="button" class="row-actions__btn" (click)="openDrawer('edit', device)" aria-label="Editar dispositivo" title="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button type="button" class="row-actions__btn row-actions__btn--danger" (click)="confirmDelete(device)" aria-label="Eliminar dispositivo" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      }
+    }
+  </ng-template>
+</app-table>
+<app-device-drawer [open]="drawerOpen()" [mode]="drawerMode()" [device]="selectedDevice()" (closed)="closeDrawer()" (saved)="onSaved($event)" />
