@@ -1,0 +1,74 @@
+<app-table
+  [columns]="columns"
+  [data]="users()"
+  [customColumns]="['index', 'fullName', 'role', 'status', 'actions']"
+  [showToolbar]="true"
+  [selectable]="true"
+  [paginated]="true"
+  [page]="page()"
+  [pageSize]="pageSize"
+  [total]="total()"
+  (pageChange)="onPageChange($event)"
+  [emptyMessage]="loadError() ? 'No se pudieron cargar los usuarios. Intenta de nuevo más tarde.' : 'No hay usuarios que coincidan con la búsqueda.'"
+>
+  <div class="toolbar" table-actions>
+    <div class="toolbar__row">
+      <label class="search">
+        <mat-icon>search</mat-icon>
+        <input type="search" placeholder="Buscar por nombre, documento o correo..." (input)="onSearch($any($event.target).value)" />
+      </label>
+      <button type="button" class="btn btn--primary btn--sm" (click)="openDrawer('create')">
+        <mat-icon>add</mat-icon>Nuevo usuario
+      </button>
+    </div>
+    <div class="toolbar__row">
+      <select class="select" [value]="role()" (change)="onRoleChange($any($event.target).value)" aria-label="Filtrar por rol">
+        <option value="">Todos los roles</option>
+        @for (option of roleOptions; track option[0]) {
+          <option [value]="option[0]">{{ option[1] }}</option>
+        }
+      </select>
+      <select class="select" [value]="status()" (change)="onStatusChange($any($event.target).value)" aria-label="Filtrar por estado">
+        <option value="">Todos los estados</option>
+        @for (option of statusOptions; track option[0]) {
+          <option [value]="option[0]">{{ option[1] }}</option>
+        }
+      </select>
+    </div>
+  </div>
+  <ng-template #cellTemplate let-user let-column="column" let-index="index">
+    @switch (column.key) {
+      @case ('index') {
+        <span class="text-strong">{{ rowNumber(index) }}</span>
+      }
+      @case ('fullName') {
+        <span class="user-cell">
+          <span class="avatar avatar--lg" [style.background]="avatarColors[user.id % avatarColors.length]">{{ user.fullName | initials }}</span>
+          {{ user.fullName }}
+        </span>
+      }
+      @case ('role') {
+        <span class="chip" [class.chip--purple]="user.role === 'SUPERVISOR'" [class.chip--blue]="user.role === 'ADMIN'">{{ roleLabels[user.role] }}</span>
+      }
+      @case ('status') {
+        <span class="badge" [class.badge--success]="user.status === 'ACTIVE'" [class.badge--danger]="user.status === 'INACTIVE'">
+          {{ statusLabels[user.status] }}
+        </span>
+      }
+      @case ('actions') {
+        <span class="row-actions">
+          <button type="button" class="row-actions__btn" (click)="openDrawer('view', user)" aria-label="Ver usuario" title="Ver">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button type="button" class="row-actions__btn" (click)="openDrawer('edit', user)" aria-label="Editar usuario" title="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button type="button" class="row-actions__btn row-actions__btn--danger" (click)="confirmDelete(user)" aria-label="Eliminar usuario" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      }
+    }
+  </ng-template>
+</app-table>
+<app-user-drawer [open]="drawerOpen()" [mode]="drawerMode()" [user]="selectedUser()" (closed)="closeDrawer()" (saved)="onSaved($event)" />

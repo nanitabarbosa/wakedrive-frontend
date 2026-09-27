@@ -1,0 +1,71 @@
+<app-drawer title="Solicitud de acceso" [open]="open" (closed)="closed.emit()">
+  @if (request; as r) {
+    <div class="form-section">
+      <div class="detail-badges">
+        <span
+          class="badge"
+          [class.badge--warning]="r.status === 'PENDING'"
+          [class.badge--success]="r.status === 'APPROVED'"
+          [class.badge--danger]="r.status === 'REJECTED'"
+          [class.badge--neutral]="r.status === 'INACTIVE'"
+        >
+          {{ statusLabels[r.status] }}
+        </span>
+      </div>
+      <span class="form-section__hint">Solicitud recibida el {{ r.createdAt | date: 'dd/MM/yyyy' }} – {{ r.createdAt | date: 'h:mm a' }}</span>
+    </div>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>apartment</mat-icon>Información de la empresa</span>
+      <div class="detail-list detail-list--wide">
+        <span class="detail-list__label">Nombre de la empresa</span>
+        <span class="detail-list__value">{{ r.companyName }}</span>
+        <span class="detail-list__label">NIT</span>
+        <span class="detail-list__value">{{ r.nit }}</span>
+        <span class="detail-list__label">País</span>
+        <span class="detail-list__value">{{ r.country }}</span>
+        <span class="detail-list__label">Ciudad</span>
+        <span class="detail-list__value">{{ r.city }}</span>
+        <span class="detail-list__label">Dirección</span>
+        <span class="detail-list__value">{{ r.address }}</span>
+        <span class="detail-list__label">Teléfono</span>
+        <span class="detail-list__value">{{ r.companyPhone }}</span>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>person_outline</mat-icon>Información del administrador</span>
+      <div class="detail-list detail-list--wide">
+        <span class="detail-list__label">Nombre completo</span>
+        <span class="detail-list__value">{{ r.adminName }}</span>
+        <span class="detail-list__label">Correo corporativo</span>
+        <span class="detail-list__value">{{ r.adminEmail }}</span>
+        <span class="detail-list__label">Teléfono</span>
+        <span class="detail-list__value">{{ r.adminPhone }}</span>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>fact_check</mat-icon>Estado de la solicitud</span>
+      <div
+        class="status-box"
+        [class.status-box--warning]="r.status === 'PENDING'"
+        [class.status-box--success]="r.status === 'APPROVED'"
+        [class.status-box--danger]="r.status === 'REJECTED'"
+      >
+        <mat-icon class="status-box__icon">{{ statusIcons[r.status] }}</mat-icon>
+        <div class="status-box__body">
+          <span class="status-box__title">{{ statusLabels[r.status] }}</span>
+          <span class="status-box__text">{{ statusMessages[r.status] }}</span>
+        </div>
+      </div>
+    </div>
+  }
+  @if (request?.status === 'PENDING') {
+    <div class="review-actions" drawer-footer>
+      <button type="button" class="btn btn--danger-outline" [disabled]="saving()" (click)="reject(request!)">
+        <mat-icon>close</mat-icon>Rechazar
+      </button>
+      <button type="button" class="btn btn--primary" [disabled]="saving()" (click)="approve(request!)">
+        <mat-icon>check</mat-icon>{{ saving() ? 'Guardando...' : 'Aprobar' }}
+      </button>
+    </div>
+  }
+</app-drawer>

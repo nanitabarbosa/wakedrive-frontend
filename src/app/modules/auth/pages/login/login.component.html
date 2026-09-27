@@ -1,0 +1,74 @@
+<section class="auth-page">
+  <div class="auth-page__content">
+    <div class="auth-hero">
+      <img class="auth-hero__logo" src="images/logo-horizontal.png" alt="WakeDrive" />
+      <span class="auth-hero__divider"></span>
+      <span class="auth-hero__title">
+        <span class="auth-hero__title-line">Conducción segura,</span>
+        <span class="auth-hero__title-line auth-hero__title-line--accent">más vidas en el camino</span>
+      </span>
+      <span class="auth-hero__subtitle">Tecnología para monitorear, detectar y prevenir la somnolencia en tiempo real.</span>
+    </div>
+    <div class="auth-card">
+      <span class="auth-card__title">Inicia sesión</span>
+      <span class="auth-card__description">Ingresa a tu cuenta para monitorear y gestionar tu flota de conductores.</span>
+      <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="form-field">
+          <label for="login-email">Correo electrónico</label>
+          <div class="input-icon" [class.is-invalid]="hasError('email')">
+            <mat-icon class="input-icon__icon">mail_outline</mat-icon>
+            <input id="login-email" type="email" formControlName="email" placeholder="tu@empresa.com" autocomplete="email" maxlength="120" />
+          </div>
+          @if (hasError('email')) {
+            <span class="form-field__error">{{ errorFor('email') }}</span>
+          }
+        </div>
+        <div class="form-field">
+          <label for="login-password">Contraseña</label>
+          <div class="input-icon" [class.is-invalid]="hasError('password')">
+            <mat-icon class="input-icon__icon">lock_outline</mat-icon>
+            <input
+              id="login-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="Ingresa tu contraseña"
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="input-icon__toggle"
+              (click)="togglePassword()"
+              [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            >
+              <mat-icon>{{ showPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+            </button>
+          </div>
+          @if (hasError('password')) {
+            <span class="form-field__error">{{ errorFor('password') }}</span>
+          }
+        </div>
+        <button type="button" class="auth-form__forgot" routerLink="/auth/forgot-password">¿Olvidaste tu contraseña?</button>
+        @if (errorMessage()) {
+          <span class="auth-form__alert" role="alert">{{ errorMessage() }}</span>
+        }
+        <button type="submit" class="btn btn--primary auth-form__submit" [disabled]="loading()">
+          {{ loading() ? 'Ingresando...' : 'Iniciar sesión' }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </form>
+      <div class="auth-card__separator">
+        <mat-icon>visibility</mat-icon>
+      </div>
+      <div class="auth-request">
+        <span class="auth-request__icon"><mat-icon>apartment</mat-icon></span>
+        <div class="auth-request__body">
+          <span class="auth-request__text">¿Tu empresa desea implementar WakeDrive?</span>
+          <button type="button" class="auth-request__link" routerLink="/auth/request-access">
+            Solicita acceso aquí
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

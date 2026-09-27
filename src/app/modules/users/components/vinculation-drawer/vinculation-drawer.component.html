@@ -1,0 +1,48 @@
+<app-drawer title="Nueva vinculación" [open]="open" (closed)="closed.emit()">
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>link</mat-icon>Vinculación</span>
+      <span class="form-section__hint">Asigna un conductor a un vehículo y al dispositivo instalado en él. Solo se listan los que aún no están vinculados.</span>
+      <div class="form-field">
+        <label for="vinculation-user">Conductor <span class="required">*</span></label>
+        <select id="vinculation-user" formControlName="userId" [class.is-invalid]="hasError('userId')">
+          <option [ngValue]="null" disabled>{{ loadingOptions() ? 'Cargando...' : 'Selecciona un conductor' }}</option>
+          @for (option of drivers(); track option.id) {
+            <option [ngValue]="option.id">{{ option.label }}</option>
+          }
+        </select>
+        @if (hasError('userId')) {
+          <span class="form-field__error">Selecciona un conductor.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="vinculation-vehicle">Vehículo <span class="required">*</span></label>
+        <select id="vinculation-vehicle" formControlName="vehicleId" [class.is-invalid]="hasError('vehicleId')">
+          <option [ngValue]="null" disabled>{{ loadingOptions() ? 'Cargando...' : 'Selecciona un vehículo' }}</option>
+          @for (option of vehicles(); track option.id) {
+            <option [ngValue]="option.id">{{ option.label }}</option>
+          }
+        </select>
+        @if (hasError('vehicleId')) {
+          <span class="form-field__error">Selecciona un vehículo.</span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="vinculation-device">Dispositivo <span class="required">*</span></label>
+        <select id="vinculation-device" formControlName="deviceSerial" [class.is-invalid]="hasError('deviceSerial')">
+          <option [ngValue]="null" disabled>{{ loadingOptions() ? 'Cargando...' : 'Selecciona un dispositivo' }}</option>
+          @for (option of devices(); track option.id) {
+            <option [ngValue]="option.label">{{ option.label }}</option>
+          }
+        </select>
+        @if (hasError('deviceSerial')) {
+          <span class="form-field__error">Selecciona un dispositivo.</span>
+        }
+      </div>
+    </div>
+    @if (errorMessage()) {
+      <span class="form-alert" role="alert">{{ errorMessage() }}</span>
+    }
+  </form>
+  <app-form-actions drawer-footer saveLabel="Vincular" [loading]="saving()" (save)="save()" (dismiss)="closed.emit()" />
+</app-drawer>

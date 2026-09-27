@@ -1,0 +1,111 @@
+<section class="wrapper-section">
+  <app-page-header title="Alertas" subtitle="Consulta y gestiona el historial completo de alertas generadas por los dispositivos." />
+  <article class="card filters">
+    <div class="filters__field">
+      <label for="alerts-from">Fecha inicio</label>
+      <input id="alerts-from" type="date" class="input" [value]="filters().from" [max]="filters().to" (change)="onDateChange('from', $any($event.target).value)" />
+    </div>
+    <div class="filters__field">
+      <label for="alerts-to">Fecha fin</label>
+      <input id="alerts-to" type="date" class="input" [value]="filters().to" [min]="filters().from" [max]="today" (change)="onDateChange('to', $any($event.target).value)" />
+    </div>
+    <div class="filters__field">
+      <label for="alerts-user">Usuario</label>
+      <select id="alerts-user" class="select" (change)="onSelectChange('userId', $any($event.target).value)">
+        <option value="">Todos los usuarios</option>
+        @for (option of userOptions(); track option.id) {
+          <option [value]="option.id">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="filters__field">
+      <label for="alerts-vehicle">Vehículo</label>
+      <select id="alerts-vehicle" class="select" (change)="onSelectChange('vehicleId', $any($event.target).value)">
+        <option value="">Todos los vehículos</option>
+        @for (option of vehicleOptions(); track option.id) {
+          <option [value]="option.id">{{ option.label }}</option>
+        }
+      </select>
+    </div>
+    <div class="filters__field">
+      <label for="alerts-type">Tipo de alerta</label>
+      <select id="alerts-type" class="select" (change)="onSelectChange('type', $any($event.target).value)">
+        <option value="">Todos los tipos</option>
+        @for (option of typeOptions; track option[0]) {
+          <option [value]="option[0]">{{ option[1] }}</option>
+        }
+      </select>
+    </div>
+    <div class="filters__field">
+      <label for="alerts-level">Nivel</label>
+      <select id="alerts-level" class="select" (change)="onSelectChange('level', $any($event.target).value)">
+        <option value="">Todos los niveles</option>
+        @for (option of levelOptions; track option[0]) {
+          <option [value]="option[0]">{{ option[1] }}</option>
+        }
+      </select>
+    </div>
+    <div class="filters__field filters__field--wide">
+      <label for="alerts-location">Ubicación</label>
+      <div class="filters__inline">
+        <label class="search">
+          <mat-icon>search</mat-icon>
+          <input id="alerts-location" type="search" placeholder="Buscar por ubicación..." (input)="onLocationSearch($any($event.target).value)" />
+        </label>
+        <button type="button" class="filters__refresh" (click)="loadAlerts()" aria-label="Actualizar" title="Actualizar">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+    </div>
+    @if (dateError()) {
+      <span class="filters__error" role="alert">{{ dateError() }}</span>
+    }
+  </article>
+  <app-table
+    [columns]="columns"
+    [data]="alerts()"
+    [customColumns]="['date', 'time', 'vehiclePlate', 'type', 'durationSeconds', 'level', 'actions']"
+    [selectable]="true"
+    [paginated]="true"
+    [page]="filters().page"
+    [pageSize]="filters().size"
+    [total]="total()"
+    (pageChange)="onPageChange($event)"
+    [emptyMessage]="loadError() ? 'No se pudieron cargar las alertas. Intenta de nuevo más tarde.' : 'No hay alertas para los filtros seleccionados.'"
+  >
+    <ng-template #cellTemplate let-alert let-column="column">
+      @switch (column.key) {
+        @case ('date') {
+          {{ alert.date | date: 'dd/MM/yyyy' }}
+        }
+        @case ('time') {
+          {{ alert.date | date: 'HH:mm:ss' }}
+        }
+        @case ('vehiclePlate') {
+          <span class="text-strong">{{ alert.vehiclePlate }}</span>
+        }
+        @case ('type') {
+          <span class="badge badge--icon" [class.badge--warning]="alert.type === 'FACE_NOT_DETECTED'" [class.badge--danger]="alert.type !== 'FACE_NOT_DETECTED'">
+            <mat-icon>{{ typeIcons[alert.type] }}</mat-icon>{{ typeLabels[alert.type] }}
+          </span>
+        }
+        @case ('durationSeconds') {
+          {{ alert.durationSeconds }} seg
+        }
+        @case ('level') {
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'">
+            {{ levelLabels[alert.level] }}
+          </span>
+        }
+        @case ('actions') {
+          <span class="row-actions">
+            <button type="button" class="row-actions__btn row-actions__btn--neutral" (click)="openDetail(alert)" aria-label="Ver alerta" title="Ver detalle">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </span>
+        }
+      }
+    </ng-template>
+  </app-table>
+  <app-alert-detail-drawer [open]="drawerOpen()" [alert]="selectedAlert()" (closed)="closeDetail()" />
+</section>

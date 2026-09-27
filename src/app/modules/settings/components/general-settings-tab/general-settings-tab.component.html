@@ -1,0 +1,130 @@
+<form class="settings" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  @if (loadError()) {
+    <span class="settings__alert" role="alert">No se pudo cargar la configuración actual. Intenta de nuevo más tarde.</span>
+  }
+  <div class="card settings-card">
+    <div class="settings-card__header">
+      <span class="settings-card__title">Detección de somnolencia</span>
+      <span class="settings-card__description">Configura el comportamiento de la detección y la alarma.</span>
+    </div>
+    <div class="setting-row">
+      <mat-icon class="setting-row__icon">face</mat-icon>
+      <div class="setting-row__body">
+        <span class="setting-row__label">Reconocimiento de rostro siempre</span>
+        <span class="setting-row__description">Mantiene el reconocimiento de rostro activo mientras el dispositivo esté encendido.</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" role="switch" formControlName="faceRecognitionAlways" aria-label="Reconocimiento de rostro siempre" />
+        <span class="switch__track"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <mat-icon class="setting-row__icon">notifications_none</mat-icon>
+      <div class="setting-row__body">
+        <span class="setting-row__label">Notificar apagado del dispositivo</span>
+        <span class="setting-row__description">Envía una notificación cuando el dispositivo se apague o pierda conexión.</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" role="switch" formControlName="notifyDeviceShutdown" aria-label="Notificar apagado del dispositivo" />
+        <span class="switch__track"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <mat-icon class="setting-row__icon">schedule</mat-icon>
+      <div class="setting-row__body">
+        <label class="setting-row__label" for="settings-alarmDuration">Duración de la alarma (segundos)</label>
+        <span class="setting-row__description">Tiempo que sonará la alarma cuando se detecte somnolencia.</span>
+        @if (hasError('alarmDurationSeconds')) {
+          <span class="form-field__error">{{ errorFor('alarmDurationSeconds') }}</span>
+        }
+      </div>
+      <input
+        id="settings-alarmDuration"
+        type="number"
+        class="input setting-row__number"
+        formControlName="alarmDurationSeconds"
+        min="1"
+        max="60"
+        [class.is-invalid]="hasError('alarmDurationSeconds')"
+      />
+    </div>
+    <div class="setting-row">
+      <mat-icon class="setting-row__icon">volume_up</mat-icon>
+      <div class="setting-row__body">
+        <span class="setting-row__label">Sonido de la alarma</span>
+        <span class="setting-row__description">Archivo de audio en formato MP3. Tamaño máximo 5 MB.</span>
+        <app-file-drop
+          inputId="settings-alarmSound"
+          [rules]="alarmRules"
+          [file]="alarmSound()"
+          (fileSelected)="onAlarmSelected($event)"
+          (removed)="onAlarmRemoved()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="card settings-card">
+    <div class="settings-card__header">
+      <span class="settings-card__title">Información de la empresa</span>
+      <span class="settings-card__description">Datos generales que se mostrarán en la plataforma.</span>
+    </div>
+    <div class="settings-grid">
+      <div class="setting-field">
+        <mat-icon class="setting-row__icon">apartment</mat-icon>
+        <div class="form-field">
+          <label for="settings-companyName">Nombre de la empresa <span class="required">*</span></label>
+          <input id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" [class.is-invalid]="hasError('companyName')" />
+          @if (hasError('companyName')) {
+            <span class="form-field__error">{{ errorFor('companyName') }}</span>
+          }
+        </div>
+      </div>
+      <div class="setting-field">
+        <mat-icon class="setting-row__icon">badge</mat-icon>
+        <div class="form-field">
+          <label for="settings-nit">NIT <span class="required">*</span></label>
+          <input id="settings-nit" formControlName="nit" placeholder="Ej. 901234567-8" maxlength="14" [class.is-invalid]="hasError('nit')" />
+          @if (hasError('nit')) {
+            <span class="form-field__error">{{ errorFor('nit') }}</span>
+          }
+        </div>
+      </div>
+      <div class="setting-field">
+        <mat-icon class="setting-row__icon">location_on</mat-icon>
+        <div class="form-field">
+          <label for="settings-address">Dirección</label>
+          <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" [class.is-invalid]="hasError('address')" />
+          @if (hasError('address')) {
+            <span class="form-field__error">{{ errorFor('address') }}</span>
+          }
+        </div>
+      </div>
+      <div class="setting-field">
+        <mat-icon class="setting-row__icon">call</mat-icon>
+        <div class="form-field">
+          <label for="settings-phone">Teléfono</label>
+          <input id="settings-phone" type="tel" inputmode="numeric" formControlName="phone" placeholder="Ej. 3001234567" maxlength="15" [class.is-invalid]="hasError('phone')" />
+          @if (hasError('phone')) {
+            <span class="form-field__error">{{ errorFor('phone') }}</span>
+          }
+        </div>
+      </div>
+      <div class="setting-field setting-field--full">
+        <mat-icon class="setting-row__icon">image</mat-icon>
+        <div class="setting-row__body">
+          <span class="setting-row__label">Logo de la empresa (opcional)</span>
+          <span class="setting-row__description">Formatos: PNG, JPG. Tamaño máximo 2 MB.</span>
+          <app-file-drop inputId="settings-logo" [rules]="logoRules" [file]="logo()" (fileSelected)="onLogoSelected($event)" (removed)="onLogoRemoved()" />
+        </div>
+      </div>
+    </div>
+  </div>
+  @if (errorMessage()) {
+    <span class="settings__alert" role="alert">{{ errorMessage() }}</span>
+  }
+  <div class="settings__footer">
+    <button type="submit" class="btn btn--primary" [disabled]="saving()">
+      <mat-icon>save</mat-icon>{{ saving() ? 'Guardando...' : 'Guardar configuración' }}
+    </button>
+  </div>
+</form>

@@ -1,0 +1,13 @@
+@if (open) {
+  <div class="drawer-backdrop" (click)="close()"></div>
+  <section class="drawer" role="dialog" aria-modal="true" [attr.aria-label]="title">
+    <div class="drawer__header">
+      <span class="drawer__title">{{ title }}</span>
+      <button type="button" class="btn-icon" (click)="close()" aria-label="Cerrar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="drawer__body"><ng-content /></div>
+    <div class="drawer__footer"><ng-content select="[drawer-footer]" /></div>
+  </section>
+}

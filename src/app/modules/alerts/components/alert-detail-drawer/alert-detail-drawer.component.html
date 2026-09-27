@@ -1,0 +1,36 @@
+<app-drawer title="Detalle de la alerta" [open]="open" (closed)="closed.emit()">
+  @if (alert; as a) {
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>notifications_active</mat-icon>Alerta</span>
+      <div class="detail-badges">
+        <span class="badge badge--icon" [class.badge--warning]="a.type === 'FACE_NOT_DETECTED'" [class.badge--danger]="a.type !== 'FACE_NOT_DETECTED'">
+          <mat-icon>{{ typeIcons[a.type] }}</mat-icon>{{ typeLabels[a.type] }}
+        </span>
+        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'">
+          Nivel {{ levelLabels[a.level] }}
+        </span>
+      </div>
+      <div class="detail-list">
+        <span class="detail-list__label">Fecha</span>
+        <span class="detail-list__value">{{ a.date | date: 'dd/MM/yyyy' }}</span>
+        <span class="detail-list__label">Hora</span>
+        <span class="detail-list__value">{{ a.date | date: 'HH:mm:ss' }}</span>
+        <span class="detail-list__label">Duración</span>
+        <span class="detail-list__value">{{ a.durationSeconds }} seg</span>
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>directions_car</mat-icon>Conductor y vehículo</span>
+      <div class="detail-list">
+        <span class="detail-list__label">Usuario</span>
+        <span class="detail-list__value">{{ a.userName }}</span>
+        <span class="detail-list__label">Vehículo</span>
+        <span class="detail-list__value">{{ a.vehiclePlate }}</span>
+        <span class="detail-list__label">Dispositivo</span>
+        <span class="detail-list__value">{{ a.deviceSerial }}</span>
+        <span class="detail-list__label">Ubicación</span>
+        <span class="detail-list__value">{{ a.location }}</span>
+      </div>
+    </div>
+  }
+</app-drawer>

@@ -1,0 +1,6 @@
+<div class="form-actions">
+  <button type="button" class="btn btn--outline" [disabled]="loading" (click)="dismiss.emit()">{{ cancelLabel }}</button>
+  <button type="button" class="btn btn--primary" [disabled]="disabled || loading" (click)="save.emit()">
+    {{ loading ? 'Guardando...' : saveLabel }}
+  </button>
+</div>

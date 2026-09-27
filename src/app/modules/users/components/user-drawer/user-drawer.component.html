@@ -1,0 +1,68 @@
+<app-drawer [title]="title" [open]="open" (closed)="closed.emit()">
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>person</mat-icon>Información personal</span>
+      <div class="form-field">
+        <label for="user-fullName">Nombre completo <span class="required">*</span></label>
+        <input id="user-fullName" formControlName="fullName" placeholder="Ej. Juan Pérez" maxlength="100" [class.is-invalid]="hasError('fullName')" />
+        @if (hasError('fullName')) {
+          <span class="form-field__error">{{ errorFor('fullName') }}</span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="user-document">Documento <span class="required">*</span></label>
+        <input id="user-document" formControlName="document" inputmode="numeric" placeholder="Ej. 1092345678" maxlength="12" [class.is-invalid]="hasError('document')" />
+        @if (hasError('document')) {
+          <span class="form-field__error">{{ errorFor('document') }}</span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="user-email">Correo electrónico <span class="required">*</span></label>
+        <input id="user-email" type="email" formControlName="email" placeholder="Ej. juan.perez@abc.com" maxlength="120" [class.is-invalid]="hasError('email')" />
+        @if (hasError('email')) {
+          <span class="form-field__error">{{ errorFor('email') }}</span>
+        }
+      </div>
+      <div class="form-field">
+        <label for="user-phone">Teléfono</label>
+        <input id="user-phone" type="tel" formControlName="phone" inputmode="numeric" placeholder="Ej. 3001234567" maxlength="15" [class.is-invalid]="hasError('phone')" />
+        @if (hasError('phone')) {
+          <span class="form-field__error">{{ errorFor('phone') }}</span>
+        }
+      </div>
+    </div>
+    <div class="form-section">
+      <span class="form-section__title"><mat-icon>shield</mat-icon>Rol</span>
+      <div class="form-field">
+        <label for="user-role">Rol <span class="required">*</span></label>
+        <select id="user-role" formControlName="role">
+          @for (option of roleOptions; track option[0]) {
+            <option [value]="option[0]">{{ option[1] }}</option>
+          }
+        </select>
+      </div>
+      @if (mode !== 'create') {
+        <div class="form-field">
+          <label for="user-status">Estado <span class="required">*</span></label>
+          <select id="user-status" formControlName="status">
+            @for (option of statusOptions; track option[0]) {
+              <option [value]="option[0]">{{ option[1] }}</option>
+            }
+          </select>
+        </div>
+      }
+    </div>
+    @if (errorMessage()) {
+      <span class="form-alert" role="alert">{{ errorMessage() }}</span>
+    }
+  </form>
+  @if (mode !== 'view') {
+    <app-form-actions
+      drawer-footer
+      [saveLabel]="mode === 'edit' ? 'Guardar cambios' : 'Guardar usuario'"
+      [loading]="saving()"
+      (save)="save()"
+      (dismiss)="closed.emit()"
+    />
+  }
+</app-drawer>

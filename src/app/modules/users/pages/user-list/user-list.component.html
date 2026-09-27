@@ -1,0 +1,29 @@
+<section class="wrapper-section">
+  <app-page-header title="Usuarios" subtitle="Gestiona los usuarios, vehículos y sus vinculaciones." />
+  <div class="tabs" role="tablist">
+    @for (tab of tabs; track tab.id) {
+      <button
+        type="button"
+        role="tab"
+        class="tabs__item"
+        [class.tabs__item--active]="activeTab() === tab.id"
+        [attr.aria-selected]="activeTab() === tab.id"
+        (click)="selectTab(tab.id)"
+      >
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+  @switch (activeTab()) {
+    @case ('users') {
+      <app-users-tab />
+    }
+    @case ('vehicles') {
+      <app-vehicles-tab />
+    }
+    @case ('vinculations') {
+      <app-vinculations-tab />
+    }
+  }
+</section>

@@ -1,0 +1,80 @@
+<div class="layout" [class.layout--collapsed]="collapsed()">
+  <section class="sidebar">
+    <div class="sidebar__brand">
+      <mat-icon class="sidebar__logo">visibility</mat-icon>
+      <span class="sidebar__brand-text">Wake<span>Drive</span></span>
+    </div>
+    @if (!isSuperAdmin) {
+      <button
+        type="button"
+        class="sidebar__company"
+        [matMenuTriggerFor]="companyMenu"
+        [disabled]="!companies().length"
+        [attr.title]="selectedCompany?.name ?? 'Sin empresas'"
+      >
+        <mat-icon>apartment</mat-icon>
+        <span class="sidebar__label">{{ selectedCompany?.name ?? 'Sin empresas' }}</span>
+        <mat-icon class="sidebar__label">expand_more</mat-icon>
+      </button>
+      <mat-menu #companyMenu="matMenu">
+        @for (company of companies(); track company.id) {
+          <button mat-menu-item (click)="selectCompany(company)">{{ company.name }}</button>
+        }
+      </mat-menu>
+    }
+    <div class="sidebar__nav" role="navigation">
+      @for (item of navItems; track item.route) {
+        <button
+          type="button"
+          class="sidebar__link"
+          [routerLink]="item.route"
+          routerLinkActive="sidebar__link--active"
+          [attr.title]="collapsed() ? item.label : null"
+        >
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span class="sidebar__label">{{ item.label }}</span>
+        </button>
+      }
+    </div>
+    <button type="button" class="sidebar__collapse" (click)="toggleMenu()">
+      <mat-icon>{{ collapsed() ? 'arrow_forward' : 'arrow_back' }}</mat-icon>
+      <span class="sidebar__label">Contraer menú</span>
+    </button>
+  </section>
+  <div class="layout__main">
+    <div class="topbar">
+      @if (!isSuperAdmin) {
+        <button type="button" class="topbar__bell" aria-label="Notificaciones" (click)="openNotifications()">
+          <mat-icon>notifications</mat-icon>
+          @if (unreadNotifications) {
+            <span class="topbar__badge">{{ unreadNotifications > 9 ? '9+' : unreadNotifications }}</span>
+          }
+        </button>
+      }
+      <button type="button" class="topbar__user" [matMenuTriggerFor]="userMenu">
+        @if (user; as u) {
+          <span class="avatar avatar--lg">{{ initials(u.name) }}</span>
+          <span class="topbar__user-info">
+            <span class="topbar__user-name">{{ u.name }}</span>
+            <span class="topbar__user-role">{{ u.role }}</span>
+          </span>
+        } @else {
+          <span class="avatar avatar--lg"><mat-icon>person</mat-icon></span>
+        }
+        <mat-icon>expand_more</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Cerrar sesión</span>
+        </button>
+      </mat-menu>
+      @if (!isSuperAdmin) {
+        <app-notifications-modal [open]="notificationsOpen()" (closed)="closeNotifications()" />
+      }
+    </div>
+    <section class="layout__content">
+      <router-outlet />
+    </section>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<section class="auth-page">
+  <div class="auth-page__content">
+    <div class="auth-hero">
+      <img class="auth-hero__logo" src="images/logo-horizontal.png" alt="WakeDrive" />
+      <span class="auth-hero__divider"></span>
+      <span class="auth-hero__title">
+        <span class="auth-hero__title-line">Conducción segura,</span>
+        <span class="auth-hero__title-line auth-hero__title-line--accent">más vidas en el camino</span>
+      </span>
+      <span class="auth-hero__subtitle">Tecnología para monitorear, detectar y prevenir la somnolencia en tiempo real.</span>
+    </div>
+    <div class="auth-card auth-card--wide">
+      <span class="auth-card__title">Solicitar acceso</span>
+      <span class="auth-card__description">Diligencia la información de tu empresa. Nuestro equipo revisará tu solicitud y te contactará.</span>
+      <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <span class="auth-form__section">Información de la empresa</span>
+        <div class="form-field">
+          <label for="request-companyName">Nombre de la empresa <span class="required">*</span></label>
+          <div class="input-icon" [class.is-invalid]="hasError('companyName')">
+            <mat-icon class="input-icon__icon">apartment</mat-icon>
+            <input id="request-companyName" formControlName="companyName" placeholder="Nombre de la empresa" maxlength="120" autocomplete="organization" />
+          </div>
+          @if (hasError('companyName')) {
+            <span class="form-field__error">{{ errorFor('companyName') }}</span>
+          }
+        </div>
+        <div class="auth-form__row">
+          <div class="form-field">
+            <label for="request-nit">NIT <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('nit')">
+              <mat-icon class="input-icon__icon">description</mat-icon>
+              <input id="request-nit" formControlName="nit" placeholder="Ingresa el NIT" maxlength="15" />
+            </div>
+            @if (hasError('nit')) {
+              <span class="form-field__error">{{ errorFor('nit') }}</span>
+            }
+          </div>
+          <div class="form-field">
+            <label for="request-cityId">Ciudad <span class="required">*</span></label>
+            <div class="input-icon input-icon--select" [class.is-invalid]="hasError('cityId')">
+              <mat-icon class="input-icon__icon">location_on</mat-icon>
+              <select id="request-cityId" formControlName="cityId" required>
+                <option value="" disabled>Selecciona una ciudad</option>
+                @for (city of cities(); track city.id) {
+                  <option [value]="city.id">{{ city.name }}</option>
+                }
+              </select>
+            </div>
+            @if (hasError('cityId')) {
+              <span class="form-field__error">{{ errorFor('cityId') }}</span>
+            }
+          </div>
+        </div>
+        <div class="auth-form__row">
+          <div class="form-field">
+            <label for="request-address">Dirección <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('address')">
+              <mat-icon class="input-icon__icon">home</mat-icon>
+              <input id="request-address" formControlName="address" placeholder="Dirección de la empresa" maxlength="150" autocomplete="street-address" />
+            </div>
+            @if (hasError('address')) {
+              <span class="form-field__error">{{ errorFor('address') }}</span>
+            }
+          </div>
+          <div class="form-field">
+            <label for="request-companyPhone">Teléfono <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('companyPhone')">
+              <mat-icon class="input-icon__icon">phone</mat-icon>
+              <input id="request-companyPhone" type="tel" formControlName="companyPhone" placeholder="+57 300 123 4567" maxlength="20" autocomplete="tel" />
+            </div>
+            @if (hasError('companyPhone')) {
+              <span class="form-field__error">{{ errorFor('companyPhone') }}</span>
+            }
+          </div>
+        </div>
+        <span class="auth-form__section">Información del administrador</span>
+        <div class="form-field">
+          <label for="request-adminName">Nombre completo <span class="required">*</span></label>
+          <div class="input-icon" [class.is-invalid]="hasError('adminName')">
+            <mat-icon class="input-icon__icon">person_outline</mat-icon>
+            <input id="request-adminName" formControlName="adminName" placeholder="Nombre del administrador" maxlength="100" autocomplete="name" />
+          </div>
+          @if (hasError('adminName')) {
+            <span class="form-field__error">{{ errorFor('adminName') }}</span>
+          }
+        </div>
+        <div class="auth-form__row">
+          <div class="form-field">
+            <label for="request-adminEmail">Correo corporativo <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('adminEmail')">
+              <mat-icon class="input-icon__icon">mail_outline</mat-icon>
+              <input id="request-adminEmail" type="email" formControlName="adminEmail" placeholder="admin@empresa.com" maxlength="120" autocomplete="email" />
+            </div>
+            @if (hasError('adminEmail')) {
+              <span class="form-field__error">{{ errorFor('adminEmail') }}</span>
+            }
+          </div>
+          <div class="form-field">
+            <label for="request-adminPhone">Teléfono <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('adminPhone')">
+              <mat-icon class="input-icon__icon">phone</mat-icon>
+              <input id="request-adminPhone" type="tel" formControlName="adminPhone" placeholder="+57 300 123 4567" maxlength="20" autocomplete="tel" />
+            </div>
+            @if (hasError('adminPhone')) {
+              <span class="form-field__error">{{ errorFor('adminPhone') }}</span>
+            }
+          </div>
+        </div>
+        @if (errorMessage()) {
+          <span class="auth-form__alert" role="alert">{{ errorMessage() }}</span>
+        }
+        <button type="submit" class="btn btn--primary auth-form__submit" [disabled]="loading()">
+          {{ loading() ? 'Enviando...' : 'Enviar solicitud' }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

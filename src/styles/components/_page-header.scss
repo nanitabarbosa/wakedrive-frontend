@@ -1,0 +1,34 @@
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  &__title,
+  &__subtitle {
+    display: block;
+  }
+
+  &__title {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--wd-text);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

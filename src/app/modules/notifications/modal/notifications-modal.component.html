@@ -1,0 +1,44 @@
+<app-drawer title="Notificaciones" [open]="open" (closed)="closed.emit()">
+  <div class="notifications">
+    <div class="notifications__toolbar">
+      <div class="notifications__tabs" role="tablist">
+        <button type="button" role="tab" class="notifications__tab" [class.notifications__tab--active]="filter() === 'ALL'" [attr.aria-selected]="filter() === 'ALL'" (click)="selectFilter('ALL')">Todas ({{ counts().total }})</button>
+        <button type="button" role="tab" class="notifications__tab" [class.notifications__tab--active]="filter() === 'UNREAD'" [attr.aria-selected]="filter() === 'UNREAD'" (click)="selectFilter('UNREAD')">No leídas ({{ counts().unread }})</button>
+      </div>
+      <button type="button" class="notifications__link" (click)="markAllAsRead()">
+        <mat-icon>done_all</mat-icon>
+        <span>Marcar todas como leídas</span>
+      </button>
+    </div>
+    @if (actionError()) {
+      <span class="notifications__error" role="alert">{{ actionError() }}</span>
+    }
+    <div class="notifications__list">
+      @for (notification of notifications(); track notification.id) {
+        <button type="button" class="notification-item" [class.notification-item--unread]="!notification.read" (click)="markAsRead(notification)">
+          <span [class]="'notification-item__icon notification-item__icon--' + styleFor(notification.type).variant">
+            <mat-icon>{{ styleFor(notification.type).icon }}</mat-icon>
+          </span>
+          <span class="notification-item__content">
+            <span class="notification-item__title">{{ notification.title }}</span>
+            <span class="notification-item__message">{{ notification.message }}</span>
+            <span class="notification-item__time">{{ notification.createdAt | timeAgo }}</span>
+          </span>
+          @if (!notification.read) {
+            <span class="notification-item__dot" aria-label="No leída"></span>
+          }
+        </button>
+      } @empty {
+        @if (!loading()) {
+          <span class="notifications__empty">{{ loadError() ? 'No se pudieron cargar las notificaciones.' : filter() === 'UNREAD' ? 'No tienes notificaciones sin leer.' : 'No tienes notificaciones.' }}</span>
+        }
+      }
+      @if (loading()) {
+        <span class="notifications__empty">Cargando...</span>
+      }
+    </div>
+  </div>
+  @if (hasMore()) {
+    <button drawer-footer type="button" class="notifications__more" [disabled]="loading()" (click)="loadMore()">Ver todas las notificaciones</button>
+  }
+</app-drawer>

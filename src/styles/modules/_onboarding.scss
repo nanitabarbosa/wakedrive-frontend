@@ -1,0 +1,145 @@
+.status-tabs {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    height: 44px;
+    padding: 0 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--wd-text);
+    white-space: nowrap;
+    background: var(--wd-surface);
+    border: 1px solid var(--wd-border);
+    border-radius: var(--wd-radius);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--wd-bg);
+    }
+
+    &--active {
+      color: #fff;
+      background: var(--wd-primary);
+      border-color: var(--wd-primary);
+
+      &:hover {
+        background: var(--wd-primary);
+      }
+    }
+  }
+
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--wd-text);
+    background: #eef2f7;
+    border-radius: 11px;
+
+    .status-tabs__item--active & {
+      color: var(--wd-primary);
+      background: #fff;
+    }
+  }
+}
+
+.cell-stack {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &__sub {
+    font-size: 12px;
+    color: var(--wd-text-muted);
+  }
+}
+
+.badge--neutral {
+  color: var(--wd-text-muted);
+  background: #f1f5f9;
+}
+
+.detail-list--wide {
+  grid-template-columns: 150px 1fr;
+
+  .detail-list__value {
+    word-break: break-word;
+  }
+}
+
+.status-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  color: var(--wd-text-muted);
+  background: #f1f5f9;
+  border-radius: var(--wd-radius);
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  &__text {
+    font-size: 13px;
+    color: var(--wd-text);
+  }
+
+  &--warning {
+    color: #d97706;
+    background: var(--wd-warning-soft);
+  }
+
+  &--success {
+    color: var(--wd-success);
+    background: var(--wd-success-soft);
+  }
+
+  &--danger {
+    color: var(--wd-danger);
+    background: var(--wd-danger-soft);
+  }
+}
+
+.review-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.btn--danger-outline {
+  color: var(--wd-danger);
+  background: var(--wd-surface);
+  border-color: var(--wd-danger);
+
+  &:hover:not(:disabled) {
+    background: var(--wd-danger-soft);
+  }
+}

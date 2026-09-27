@@ -1,0 +1,20 @@
+@use 'styles/variables';
+@use 'styles/base';
+@use 'styles/components';
+
+@use 'styles/components/wrapper-section';
+@use 'styles/components/page-header';
+@use 'styles/components/table';
+@use 'styles/components/drawer';
+@use 'styles/components/form-actions';
+@use 'styles/components/confirm-dialog';
+
+@use 'styles/layout/main-layout';
+
+@use 'styles/modules/auth';
+@use 'styles/modules/dashboard';
+@use 'styles/modules/users';
+@use 'styles/modules/alerts';
+@use 'styles/modules/notifications';
+@use 'styles/modules/settings';
+@use 'styles/modules/onboarding';

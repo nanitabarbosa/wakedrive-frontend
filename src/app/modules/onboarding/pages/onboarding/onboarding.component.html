@@ -1,0 +1,71 @@
+<section class="wrapper-section">
+  <app-page-header title="Onboarding" subtitle="Peticiones de registro recibidas desde el sitio · aprueba o rechaza cada solicitud." />
+  <div class="status-tabs" role="tablist">
+    @for (tab of tabs; track tab.status) {
+      <button
+        type="button"
+        role="tab"
+        class="status-tabs__item"
+        [class.status-tabs__item--active]="status() === tab.status"
+        [attr.aria-selected]="status() === tab.status"
+        (click)="selectStatus(tab.status)"
+      >
+        {{ tab.label }}
+        <span class="status-tabs__count">{{ counts()[tab.count] }}</span>
+      </button>
+    }
+  </div>
+  <app-table
+    [columns]="columns"
+    [data]="requests()"
+    [customColumns]="['companyName', 'adminName', 'status', 'createdAt', 'actions']"
+    [paginated]="true"
+    [page]="page()"
+    [pageSize]="pageSize"
+    [total]="total()"
+    (pageChange)="onPageChange($event)"
+    [emptyMessage]="loadError() ? 'No se pudieron cargar las solicitudes. Intenta de nuevo más tarde.' : 'No hay solicitudes en este estado.'"
+  >
+    <ng-template #cellTemplate let-request let-column="column">
+      @switch (column.key) {
+        @case ('companyName') {
+          <span class="cell-stack">
+            <span class="text-strong">{{ request.companyName }}</span>
+            <span class="cell-stack__sub">NIT {{ request.nit }}</span>
+          </span>
+        }
+        @case ('adminName') {
+          <span class="cell-stack">
+            <span class="text-strong">{{ request.adminName }}</span>
+            <span class="cell-stack__sub">{{ request.adminEmail }}</span>
+          </span>
+        }
+        @case ('status') {
+          <span
+            class="badge"
+            [class.badge--warning]="request.status === 'PENDING'"
+            [class.badge--success]="request.status === 'APPROVED'"
+            [class.badge--danger]="request.status === 'REJECTED'"
+            [class.badge--neutral]="request.status === 'INACTIVE'"
+          >
+            {{ statusLabels[request.status] }}
+          </span>
+        }
+        @case ('createdAt') {
+          <span class="cell-stack">
+            <span class="text-strong">{{ request.createdAt | date: 'dd/MM/yyyy' }}</span>
+            <span class="cell-stack__sub">{{ request.createdAt | date: 'h:mm a' }}</span>
+          </span>
+        }
+        @case ('actions') {
+          <span class="row-actions">
+            <button type="button" class="row-actions__btn" (click)="openDrawer(request)" aria-label="Ver solicitud" title="Ver">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </span>
+        }
+      }
+    </ng-template>
+  </app-table>
+  <app-access-request-drawer [open]="drawerOpen()" [request]="selectedRequest()" (closed)="closeDrawer()" (reviewed)="onReviewed($event)" />
+</section>

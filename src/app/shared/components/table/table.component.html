@@ -1,0 +1,70 @@
+<article class="card">
+  @if (title || showToolbar) {
+    <div class="card__header">
+      @if (title) {
+        <span class="card__title">
+          @if (icon) {
+            <mat-icon [class]="iconClass">{{ icon }}</mat-icon>
+          }
+          {{ title }}
+        </span>
+      }
+      <div class="card__actions"><ng-content select="[table-actions]" /></div>
+    </div>
+  }
+  <div class="table-wrapper">
+    <div class="table" role="table">
+      <div class="table__header" role="row">
+        @if (selectable) {
+          <div class="table__head-cell table__check" role="columnheader">
+            <input type="checkbox" [checked]="allSelected" (change)="toggleAll()" aria-label="Seleccionar todos" />
+          </div>
+        }
+        @for (column of columns; track column.key) {
+          <span class="table__head-cell" role="columnheader" [class.text-center]="column.align === 'center'" [class.text-right]="column.align === 'right'">{{ column.label }}</span>
+        }
+      </div>
+      @for (row of data; track $index; let i = $index) {
+        <div class="table__row" role="row" [class.table__row--selected]="selected.has(row)">
+          @if (selectable) {
+            <div class="table__cell table__check" role="cell">
+              <input type="checkbox" [checked]="selected.has(row)" (change)="toggleRow(row)" aria-label="Seleccionar fila" />
+            </div>
+          }
+          @for (column of columns; track column.key) {
+            <div class="table__cell" role="cell" [class.text-center]="column.align === 'center'" [class.text-right]="column.align === 'right'">
+              @if (isCustom(column) && cellTemplate) {
+                <ng-container *ngTemplateOutlet="cellTemplate; context: { $implicit: row, column: column, index: i }" />
+              } @else {
+                <span>{{ value(row, column) }}</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+    @if (!data.length) {
+      <span class="table__empty">{{ emptyMessage }}</span>
+    }
+  </div>
+  @if (paginated && total > 0) {
+    <div class="pagination">
+      <span>Mostrando {{ rangeStart }} a {{ rangeEnd }} de {{ total }} resultados</span>
+      <div class="pagination__pages" role="navigation" aria-label="Paginación">
+        <button type="button" class="pagination__btn" [disabled]="page === 1" (click)="goToPage(page - 1)" aria-label="Página anterior">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        @for (p of visiblePages; track $index) {
+          @if (p === null) {
+            <span class="pagination__ellipsis">…</span>
+          } @else {
+            <button type="button" class="pagination__btn" [class.pagination__btn--active]="p === page" (click)="goToPage(p)">{{ p }}</button>
+          }
+        }
+        <button type="button" class="pagination__btn" [disabled]="page === totalPages" (click)="goToPage(page + 1)" aria-label="Página siguiente">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  }
+</article>

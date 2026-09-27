@@ -1,0 +1,53 @@
+<div
+  class="file-drop"
+  [class.file-drop--dragging]="dragging()"
+  [class.file-drop--invalid]="error()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+>
+  @if (file) {
+    @if (rules.kind === 'audio') {
+      <div class="file-drop__audio">
+        <mat-icon class="file-drop__file-icon">volume_up</mat-icon>
+        <div class="file-drop__info">
+          <span class="file-drop__name">{{ file.name }}</span>
+          <span class="file-drop__size">{{ formatSize(file.size) }}</span>
+        </div>
+        <div class="audio-player">
+          <button type="button" class="audio-player__btn" (click)="togglePlay()" [attr.aria-label]="playing() ? 'Pausar' : 'Reproducir'">
+            <mat-icon>{{ playing() ? 'pause' : 'play_arrow' }}</mat-icon>
+          </button>
+          <span class="audio-player__time">{{ formatTime(currentTime()) }} / {{ formatTime(duration()) }}</span>
+          <input
+            type="range"
+            class="audio-player__progress"
+            min="0"
+            step="0.1"
+            [max]="duration() || 0"
+            [value]="currentTime()"
+            (input)="seek($any($event.target).value)"
+            aria-label="Progreso del audio"
+          />
+        </div>
+      </div>
+    } @else {
+      <div class="file-drop__image">
+        <img [src]="file.url" [alt]="file.name" />
+      </div>
+    }
+    <button type="button" class="file-drop__remove" (click)="remove()" aria-label="Eliminar archivo" title="Eliminar">
+      <mat-icon>delete</mat-icon>
+    </button>
+  } @else {
+    <label class="file-drop__empty" [for]="inputId">
+      <mat-icon class="file-drop__upload-icon">cloud_upload</mat-icon>
+      <span class="file-drop__text"><span class="text-strong">Haz clic para seleccionar</span> o arrastra el archivo aquí</span>
+      <span class="file-drop__hint">{{ rules.label }} · Máximo {{ rules.maxSizeMb }} MB</span>
+      <input class="file-drop__input" type="file" [id]="inputId" [accept]="rules.accept" (change)="onInputChange($any($event.target))" />
+    </label>
+  }
+</div>
+@if (error()) {
+  <span class="form-field__error" role="alert">{{ error() }}</span>
+}

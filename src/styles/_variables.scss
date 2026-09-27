@@ -1,0 +1,31 @@
+:root {
+  --wd-font: 'Inter', Roboto, 'Helvetica Neue', sans-serif;
+
+  --wd-bg: #f5f7fb;
+  --wd-surface: #ffffff;
+  --wd-border: #e8ecf3;
+  --wd-text: #0f172a;
+  --wd-text-muted: #64748b;
+
+  --wd-primary: #2f6fed;
+  --wd-primary-soft: #e8f0fe;
+
+  --wd-sidebar-bg: #14233c;
+  --wd-sidebar-text: #c7d0e0;
+  --wd-sidebar-active: #1f3a66;
+  --wd-sidebar-width: 200px;
+  --wd-sidebar-collapsed-width: 72px;
+
+  --wd-success: #16a34a;
+  --wd-success-soft: #e7f7ed;
+  --wd-danger: #ef4444;
+  --wd-danger-soft: #fdecec;
+  --wd-warning: #f59e0b;
+  --wd-warning-soft: #fef5e1;
+  --wd-purple: #7c5cf5;
+  --wd-purple-soft: #efeafe;
+
+  --wd-radius: 10px;
+  --wd-radius-sm: 6px;
+  --wd-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
