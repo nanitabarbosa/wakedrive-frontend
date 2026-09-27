@@ -1,0 +1,35 @@
+<section class="wrapper-section">
+  <app-page-header title="Empresas" subtitle="Empresas registradas en la plataforma.">
+    <label class="search">
+      <mat-icon>search</mat-icon>
+      <input type="search" placeholder="Buscar empresa..." (input)="onSearch($any($event.target).value)" />
+    </label>
+  </app-page-header>
+  <app-table
+    [columns]="columns"
+    [data]="companies()"
+    [customColumns]="['name', 'actions']"
+    [paginated]="true"
+    [page]="page()"
+    [pageSize]="pageSize"
+    [total]="total()"
+    (pageChange)="onPageChange($event)"
+    [emptyMessage]="loadError() ? 'No se pudieron cargar las empresas. Intenta de nuevo más tarde.' : 'No hay empresas que coincidan con la búsqueda.'"
+  >
+    <ng-template #cellTemplate let-company let-column="column">
+      @switch (column.key) {
+        @case ('name') {
+          <span class="text-strong">{{ company.name }}</span>
+        }
+        @case ('actions') {
+          <span class="row-actions">
+            <button type="button" class="row-actions__btn" (click)="openDrawer(company)" aria-label="Ver dispositivos" title="Ver dispositivos">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </span>
+        }
+      }
+    </ng-template>
+  </app-table>
+  <app-company-devices-drawer [open]="drawerOpen()" [company]="selectedCompany()" (closed)="closeDrawer()" />
+</section>

@@ -31,7 +31,10 @@ export class MainLayoutComponent implements OnInit {
     { label: 'Configuración', icon: 'settings', route: '/settings' },
   ];
 
-  readonly superAdminNavItems: NavItem[] = [{ label: 'Onboarding', icon: 'assignment', route: '/onboarding' }];
+  readonly superAdminNavItems: NavItem[] = [
+    { label: 'Onboarding', icon: 'assignment', route: '/onboarding' },
+    { label: 'Empresas', icon: 'domain', route: '/companies' },
+  ];
 
   readonly companies = signal<Company[]>([]);
   readonly notificationsOpen = signal(false);
