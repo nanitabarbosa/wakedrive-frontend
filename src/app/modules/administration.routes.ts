@@ -37,6 +37,12 @@ export const ADMINISTRATION_ROUTES: Routes = [
         data: { roles: ['SUPER_ADMIN'] },
         loadComponent: () => import('./onboarding/pages/onboarding/onboarding.component').then(m => m.OnboardingComponent),
       },
+      {
+        path: 'companies',
+        canActivate: [roleGuard],
+        data: { roles: ['SUPER_ADMIN'] },
+        loadComponent: () => import('./companies/pages/company-list/company-list.component').then(m => m.CompanyListComponent),
+      },
     ],
   },
 ];

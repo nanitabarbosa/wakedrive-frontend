@@ -1,0 +1,24 @@
+<app-drawer title="Dispositivos de la empresa" [open]="open" (closed)="closed.emit()">
+  @if (company; as c) {
+    <div class="form-section company-devices">
+      <div class="company-devices__heading">
+        <span class="company-devices__name">{{ c.name }}</span>
+        <span class="company-devices__count">{{ c.deviceCount }} {{ c.deviceCount === 1 ? 'dispositivo asignado' : 'dispositivos asignados' }}</span>
+      </div>
+      <label class="search company-devices__search">
+        <mat-icon>search</mat-icon>
+        <input type="search" placeholder="Buscar serial..." [value]="search()" (input)="onSearch($any($event.target).value)" />
+      </label>
+      <app-table
+        [columns]="columns"
+        [data]="devices()"
+        [paginated]="true"
+        [page]="page()"
+        [pageSize]="pageSize"
+        [total]="total()"
+        (pageChange)="onPageChange($event)"
+        [emptyMessage]="loadError() ? 'No se pudieron cargar los dispositivos.' : 'No hay dispositivos que coincidan con la búsqueda.'"
+      />
+    </div>
+  }
+</app-drawer>
