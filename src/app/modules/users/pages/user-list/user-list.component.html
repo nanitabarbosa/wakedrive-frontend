@@ -1,5 +1,5 @@
 <section class="wrapper-section">
-  <app-page-header title="Gestión de flota" subtitle="Gestiona los usuarios, vehículos, dispositivos y sus vinculaciones." />
+  <app-page-header title="Gestión de flota" subtitle="Gestiona los conductores, vehículos, dispositivos y sus vinculaciones." />
   <div class="tabs" role="tablist">
     @for (tab of tabs; track tab.id) {
       <button
@@ -21,6 +21,9 @@
     }
     @case ('vehicles') {
       <app-vehicles-tab />
+    }
+    @case ('devices') {
+      <app-devices-tab />
     }
     @case ('vinculations') {
       <app-vinculations-tab />

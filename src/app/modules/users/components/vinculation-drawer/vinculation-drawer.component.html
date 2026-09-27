@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="save()" novalidate>
     <div class="form-section">
       <span class="form-section__title"><mat-icon>link</mat-icon>Vinculación</span>
-      <span class="form-section__hint">Asigna un conductor a un vehículo y al dispositivo instalado en él. Solo se listan los que aún no están vinculados.</span>
+      <span class="form-section__hint">Asigna un conductor a un vehículo y al dispositivo instalado en él. Solo se listan los registrados que aún no están vinculados.</span>
       <div class="form-field">
         <label for="vinculation-user">Conductor <span class="required">*</span></label>
         <select id="vinculation-user" formControlName="userId" [class.is-invalid]="hasError('userId')">
