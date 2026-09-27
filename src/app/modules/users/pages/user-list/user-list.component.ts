@@ -6,7 +6,7 @@ import { UsersTabComponent } from '../../components/users-tab/users-tab.componen
 import { VehiclesTabComponent } from '../../components/vehicles-tab/vehicles-tab.component';
 import { VinculationsTabComponent } from '../../components/vinculations-tab/vinculations-tab.component';
 
-type UsersTab = 'users' | 'vehicles' | 'vinculations';
+type UsersTab = 'drivers' | 'vehicles' | 'vinculations';
 
 interface TabItem {
   id: UsersTab;
@@ -22,11 +22,11 @@ interface TabItem {
 })
 export class UserListComponent {
   readonly tabs: TabItem[] = [
-    { id: 'users', label: 'Usuarios', icon: 'group' },
+    { id: 'drivers', label: 'Conductores', icon: 'group' },
     { id: 'vehicles', label: 'Vehículos', icon: 'directions_car' },
     { id: 'vinculations', label: 'Vincular', icon: 'link' },
   ];
-  readonly activeTab = signal<UsersTab>('users');
+  readonly activeTab = signal<UsersTab>('drivers');
 
   selectTab(tab: UsersTab): void {
     this.activeTab.set(tab);

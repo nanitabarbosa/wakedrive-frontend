@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
-import { RECORD_STATUS_LABELS, USER_ROLE_LABELS, User, UserPayload } from '../../interfaces/user.interface';
+import { RECORD_STATUS_LABELS, User, UserPayload } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
@@ -29,9 +29,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
   @Output() closed = new EventEmitter<void>();
   @Output() saved = new EventEmitter<string>();
 
-  readonly roleLabels = USER_ROLE_LABELS;
   readonly statusLabels = RECORD_STATUS_LABELS;
-  readonly roleOptions = Object.entries(USER_ROLE_LABELS);
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly saving = signal(false);
   readonly errorMessage = signal('');
@@ -44,7 +42,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
   ) {}
 
   get title(): string {
-    return { create: 'Nuevo usuario', edit: 'Editar usuario', view: 'Detalle del usuario' }[this.mode];
+    return { create: 'Nuevo conductor', edit: 'Editar conductor', view: 'Detalle del conductor' }[this.mode];
   }
 
   ngOnInit(): void {
@@ -61,7 +59,6 @@ export class UserDrawerComponent implements OnInit, OnChanges {
       document: ['', [Validators.required, Validators.pattern(/^\d{6,12}$/)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
       phone: ['', Validators.pattern(/^\d{7,15}$/)],
-      role: ['DRIVER', Validators.required],
       status: ['ACTIVE', Validators.required],
     });
   }
@@ -103,11 +100,11 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     request$.subscribe({
       next: () => {
         this.saving.set(false);
-        this.saved.emit(isEdit ? 'Usuario actualizado' : 'Usuario creado');
+        this.saved.emit(isEdit ? 'Conductor actualizado' : 'Conductor creado');
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar el usuario. Intenta de nuevo.');
+        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar el conductor. Intenta de nuevo.');
       },
     });
   }

@@ -31,17 +31,9 @@
         }
       </div>
     </div>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>shield</mat-icon>Rol</span>
-      <div class="form-field">
-        <label for="user-role">Rol <span class="required">*</span></label>
-        <select id="user-role" formControlName="role">
-          @for (option of roleOptions; track option[0]) {
-            <option [value]="option[0]">{{ option[1] }}</option>
-          }
-        </select>
-      </div>
-      @if (mode !== 'create') {
+    @if (mode !== 'create') {
+      <div class="form-section">
+        <span class="form-section__title"><mat-icon>toggle_on</mat-icon>Estado</span>
         <div class="form-field">
           <label for="user-status">Estado <span class="required">*</span></label>
           <select id="user-status" formControlName="status">
@@ -50,8 +42,8 @@
             }
           </select>
         </div>
-      }
-    </div>
+      </div>
+    }
     @if (errorMessage()) {
       <span class="form-alert" role="alert">{{ errorMessage() }}</span>
     }
@@ -59,7 +51,7 @@
   @if (mode !== 'view') {
     <app-form-actions
       drawer-footer
-      [saveLabel]="mode === 'edit' ? 'Guardar cambios' : 'Guardar usuario'"
+      [saveLabel]="mode === 'edit' ? 'Guardar cambios' : 'Guardar conductor'"
       [loading]="saving()"
       (save)="save()"
       (dismiss)="closed.emit()"
