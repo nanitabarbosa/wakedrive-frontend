@@ -10,7 +10,7 @@ import { DrawerMode } from '../../../../shared/components/drawer/interfaces/draw
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
-import { RECORD_STATUS_LABELS, RecordStatus, USER_ROLE_LABELS, User, UserRole } from '../../interfaces/user.interface';
+import { RECORD_STATUS_LABELS, RecordStatus, User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 import { UserDrawerComponent } from '../user-drawer/user-drawer.component';
 
@@ -26,13 +26,10 @@ export class UsersTabComponent implements OnInit {
     { key: 'fullName', label: 'Nombre' },
     { key: 'document', label: 'Documento' },
     { key: 'email', label: 'Correo' },
-    { key: 'role', label: 'Rol' },
     { key: 'status', label: 'Estado' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];
-  readonly roleLabels = USER_ROLE_LABELS;
   readonly statusLabels = RECORD_STATUS_LABELS;
-  readonly roleOptions = Object.entries(USER_ROLE_LABELS);
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly avatarColors = ['#2f6fed', '#16a34a', '#f59e0b', '#7c5cf5', '#ec4899', '#14b8a6'];
   readonly pageSize = 8;
@@ -43,7 +40,6 @@ export class UsersTabComponent implements OnInit {
   readonly loadError = signal(false);
 
   readonly search = signal('');
-  readonly role = signal<UserRole | ''>('');
   readonly status = signal<RecordStatus | ''>('');
 
   readonly drawerOpen = signal(false);
@@ -76,7 +72,7 @@ export class UsersTabComponent implements OnInit {
   loadUsers(): void {
     this.loadError.set(false);
     this._userService
-      .getUsers({ search: this.search(), role: this.role(), status: this.status(), page: this.page(), size: this.pageSize })
+      .getUsers({ search: this.search(), status: this.status(), page: this.page(), size: this.pageSize })
       .subscribe({
         next: response => {
           this.users.set(response.content);
@@ -92,11 +88,6 @@ export class UsersTabComponent implements OnInit {
 
   onSearch(term: string): void {
     this._search$.next(term.trim());
-  }
-
-  onRoleChange(role: string): void {
-    this.role.set(role as UserRole | '');
-    this.resetAndLoad();
   }
 
   onStatusChange(status: string): void {
@@ -132,7 +123,7 @@ export class UsersTabComponent implements OnInit {
   confirmDelete(user: User): void {
     this._dialog
       .open(ConfirmDialogComponent, {
-        data: { title: 'Eliminar usuario', message: `¿Seguro que deseas eliminar a ${user.fullName}? Esta acción no se puede deshacer.` },
+        data: { title: 'Eliminar conductor', message: `¿Seguro que deseas eliminar a ${user.fullName}? Esta acción no se puede deshacer.` },
       })
       .afterClosed()
       .pipe(
@@ -141,10 +132,10 @@ export class UsersTabComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Usuario eliminado', 'Cerrar', { duration: 3000 });
+          this._snackBar.open('Conductor eliminado', 'Cerrar', { duration: 3000 });
           this.loadUsers();
         },
-        error: () => this._snackBar.open('No se pudo eliminar el usuario', 'Cerrar', { duration: 4000 }),
+        error: () => this._snackBar.open('No se pudo eliminar el conductor', 'Cerrar', { duration: 4000 }),
       });
   }
 
