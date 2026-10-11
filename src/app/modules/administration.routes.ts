@@ -1,10 +1,15 @@
 import { Routes } from '@angular/router';
 
-import { authGuard } from '../core/guards/auth.guard';
+import { authGuard, changePasswordGuard } from '../core/guards/auth.guard';
 import { roleGuard } from '../core/guards/role.guard';
 import { MainLayoutComponent } from '../shared/layouts/main-layout/main-layout.component';
 
 export const ADMINISTRATION_ROUTES: Routes = [
+  {
+    path: 'change-password',
+    canActivate: [changePasswordGuard],
+    loadComponent: () => import('./auth/pages/change-password/change-password.component').then(m => m.ChangePasswordComponent),
+  },
   {
     path: '',
     component: MainLayoutComponent,

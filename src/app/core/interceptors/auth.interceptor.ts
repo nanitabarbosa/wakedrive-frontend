@@ -12,7 +12,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
-      if (error.status === 401) auth.logout();
+      if (error.status === 401 && !req.url.endsWith('/auth/change-password')) auth.logout();
       return throwError(() => error);
     }),
   );

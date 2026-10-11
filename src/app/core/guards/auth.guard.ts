@@ -5,7 +5,16 @@ import { AuthService } from '../services/auth.service';
 
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthService);
-  return auth.isAuthenticated() || inject(Router).createUrlTree(['/auth/login']);
+  const router = inject(Router);
+  if (!auth.isAuthenticated()) return router.createUrlTree(['/auth/login']);
+  return !auth.mustChangePassword() || router.createUrlTree(['/change-password']);
+};
+
+export const changePasswordGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  if (!auth.isAuthenticated()) return router.createUrlTree(['/auth/login']);
+  return auth.mustChangePassword() || router.parseUrl(auth.homeRoute());
 };
 
 export const guestGuard: CanActivateFn = () => {

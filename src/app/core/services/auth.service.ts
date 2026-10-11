@@ -21,6 +21,7 @@ export class AuthService {
   readonly roles = this._roles.asReadonly();
   readonly user = this._user.asReadonly();
   readonly isAuthenticated = computed(() => !!this._token());
+  readonly mustChangePassword = computed(() => !!this._user()?.mustChangePassword);
 
   constructor(
     private _http: HttpClient,
@@ -46,11 +47,20 @@ export class AuthService {
   }
 
   homeRoute(): string {
+    if (this.mustChangePassword()) return '/change-password';
     return this.isSuperAdmin() ? '/onboarding' : '/dashboard';
   }
 
   hasAnyRole(roles: string[]): boolean {
     return roles.some(role => this._roles().includes(role));
+  }
+
+  markPasswordChanged(): void {
+    const user = this._user();
+    if (!user) return;
+    const updated = { ...user, mustChangePassword: false };
+    localStorage.setItem(USER_KEY, JSON.stringify(updated));
+    this._user.set(updated);
   }
 
   private setSession(res: AuthResponse): void {
