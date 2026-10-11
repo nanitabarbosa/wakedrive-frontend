@@ -13,6 +13,7 @@ export class FileDropComponent implements OnChanges, OnDestroy {
   @Input({ required: true }) rules!: FileRules;
   @Input() file: StoredFile | null = null;
   @Input() inputId = '';
+  @Input() compact = false;
   @Output() fileSelected = new EventEmitter<File>();
   @Output() removed = new EventEmitter<void>();
 
