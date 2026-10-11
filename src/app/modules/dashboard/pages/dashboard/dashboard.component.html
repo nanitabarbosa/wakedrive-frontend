@@ -206,7 +206,7 @@
           @for (user of topUsers(); track user.userId; let i = $index) {
             <div class="ranking__item">
               <span class="ranking__position">{{ i + 1 }}</span>
-              <span class="avatar" [style.background]="avatarColors[i % avatarColors.length]">{{ initials(user.name) }}</span>
+              <span class="avatar" [style.background]="avatarColors[user.userId % avatarColors.length]">{{ initials(user.name) }}</span>
               <span>{{ user.name }}</span>
               <span class="ranking__track"><span class="ranking__fill" [style.width.%]="(user.total / rankingMax()) * 100"></span></span>
               <span class="ranking__total">{{ user.total }}</span>

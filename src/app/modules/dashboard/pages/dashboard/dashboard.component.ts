@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     { label: 'Últimos 30 días', days: 30 },
   ];
   readonly periodOptions = [7, 14, 30];
-  readonly avatarColors = ['#2f6fed', '#16a34a', '#f59e0b', '#7c5cf5', '#ec4899'];
+  readonly avatarColors = ['#4f6f9f', '#5b8070', '#9a7b4f', '#6f6598', '#986a76', '#4f8591'];
 
   readonly stats = signal<DashboardStats | null>(null);
   readonly devices = signal<DeviceSummary[]>([]);

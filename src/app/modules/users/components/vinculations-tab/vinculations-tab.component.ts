@@ -29,7 +29,7 @@ export class VinculationsTabComponent implements OnInit {
     { key: 'linkedAt', label: 'Vinculado desde' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];
-  readonly avatarColors = ['#2f6fed', '#16a34a', '#f59e0b', '#7c5cf5', '#ec4899', '#14b8a6'];
+  readonly avatarColors = ['#4f6f9f', '#5b8070', '#9a7b4f', '#6f6598', '#986a76', '#4f8591'];
   readonly pageSize = 8;
 
   readonly vinculations = signal<Vinculation[]>([]);
