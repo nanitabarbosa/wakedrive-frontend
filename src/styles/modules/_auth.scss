@@ -274,6 +274,30 @@
   max-width: 620px;
 }
 
+.auth-card__title--with-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-card__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--wd-primary);
+  cursor: pointer;
+
+  .mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
 .auth-form {
   &__section {
     margin-top: 4px;

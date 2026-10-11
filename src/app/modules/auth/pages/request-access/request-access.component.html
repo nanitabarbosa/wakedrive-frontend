@@ -10,7 +10,12 @@
       <span class="auth-hero__subtitle">Tecnología para monitorear, detectar y prevenir la somnolencia en tiempo real.</span>
     </div>
     <div class="auth-card auth-card--wide">
-      <span class="auth-card__title">Solicitar acceso</span>
+      <span class="auth-card__title auth-card__title--with-back">
+        <a class="auth-card__back" routerLink="/auth/login" aria-label="Volver al inicio de sesión">
+          <mat-icon>arrow_back</mat-icon>
+        </a>
+        Solicitar acceso
+      </span>
       <span class="auth-card__description">Diligencia la información de tu empresa. Nuestro equipo revisará tu solicitud y te contactará.</span>
       <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <span class="auth-form__section">Información de la empresa</span>

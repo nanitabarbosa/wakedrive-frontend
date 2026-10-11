@@ -3,6 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 
 import { AccessRequestPayload, City } from '../../interfaces/access-request.interface';
 import { AccessRequestService } from '../../services/access-request.service';
@@ -19,7 +20,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-request-access',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule],
+  imports: [ReactiveFormsModule, MatIconModule, RouterLink],
   templateUrl: './request-access.component.html',
 })
 export class RequestAccessComponent implements OnInit {
