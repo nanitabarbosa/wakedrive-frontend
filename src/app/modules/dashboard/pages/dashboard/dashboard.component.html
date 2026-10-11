@@ -161,11 +161,6 @@
     <article class="card">
       <div class="card__header">
         <span class="card__title"><mat-icon class="icon--primary">bar_chart</mat-icon>Alertas por día</span>
-        <select class="select" [value]="chartDays()" (change)="onChartDaysChange($any($event.target).value)" aria-label="Periodo">
-          @for (days of periodOptions; track days) {
-            <option [value]="days">Últimos {{ days }} días</option>
-          }
-        </select>
       </div>
       @if (alertsByDay().length) {
         <div class="bar-chart">
@@ -195,11 +190,6 @@
     <article class="card">
       <div class="card__header">
         <span class="card__title"><mat-icon>person</mat-icon>Usuarios con más alertas</span>
-        <select class="select" [value]="rankingDays()" (change)="onRankingDaysChange($any($event.target).value)" aria-label="Periodo">
-          @for (days of periodOptions; track days) {
-            <option [value]="days">Últimos {{ days }} días</option>
-          }
-        </select>
       </div>
       @if (topUsers().length) {
         <div class="ranking">

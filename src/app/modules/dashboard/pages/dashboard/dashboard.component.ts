@@ -73,7 +73,6 @@ export class DashboardComponent implements OnInit {
     { label: 'Últimos 7 días', days: 7 },
     { label: 'Últimos 30 días', days: 30 },
   ];
-  readonly periodOptions = [7, 14, 30];
   readonly avatarColors = ['#4f6f9f', '#5b8070', '#9a7b4f', '#6f6598', '#986a76', '#4f8591'];
 
   readonly stats = signal<DashboardStats | null>(null);
@@ -88,8 +87,7 @@ export class DashboardComponent implements OnInit {
   readonly deviceStatus = signal<DeviceStatus | ''>('');
   readonly alertSearch = signal('');
   readonly alertType = signal<AlertType | ''>('');
-  readonly chartDays = signal(7);
-  readonly rankingDays = signal(7);
+  readonly rangeDays = signal(7);
 
   readonly chartMax = computed(() => Math.max(5, Math.ceil(Math.max(0, ...this.alertsByDay().map(d => d.total)) / 5) * 5));
   readonly chartTicks = computed(() => Array.from({ length: this.chartMax() / 5 + 1 }, (_, i) => i * 5));
@@ -127,11 +125,14 @@ export class DashboardComponent implements OnInit {
   setDateRange(preset: DateRangePreset): void {
     this.applyDateRange(preset);
     this.loadStats();
+    this.loadAlertsByDay();
+    this.loadTopUsers();
   }
 
   applyDateRange(preset: DateRangePreset): void {
     const end = new Date();
     this.dateRange.set({ start: new Date(end.getTime() - (preset.days - 1) * DAY), end });
+    this.rangeDays.set(preset.days);
   }
 
   loadDashboard(): void {
@@ -165,14 +166,14 @@ export class DashboardComponent implements OnInit {
   }
 
   loadAlertsByDay(): void {
-    this._dashboardService.getAlertsByDay(this.chartDays()).subscribe({
+    this._dashboardService.getAlertsByDay(this.rangeDays()).subscribe({
       next: data => this.setResult('alertsByDay', () => this.alertsByDay.set(data)),
       error: () => this.setError('alertsByDay', () => this.alertsByDay.set([])),
     });
   }
 
   loadTopUsers(): void {
-    this._dashboardService.getTopUsers(this.rankingDays(), LIMIT).subscribe({
+    this._dashboardService.getTopUsers(this.rangeDays(), LIMIT).subscribe({
       next: users => this.setResult('topUsers', () => this.topUsers.set(users)),
       error: () => this.setError('topUsers', () => this.topUsers.set([])),
     });
@@ -194,16 +195,6 @@ export class DashboardComponent implements OnInit {
   onAlertTypeChange(type: string): void {
     this.alertType.set(type as AlertType | '');
     this.loadAlerts();
-  }
-
-  onChartDaysChange(days: string): void {
-    this.chartDays.set(Number(days));
-    this.loadAlertsByDay();
-  }
-
-  onRankingDaysChange(days: string): void {
-    this.rankingDays.set(Number(days));
-    this.loadTopUsers();
   }
 
   initials(name: string): string {
