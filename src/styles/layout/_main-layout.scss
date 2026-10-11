@@ -48,7 +48,6 @@
     display: none;
   }
 
-  &__company,
   &__link,
   &__collapse {
     display: flex;
@@ -74,17 +73,6 @@
     &:hover {
       color: #fff;
       background: rgba(255, 255, 255, 0.06);
-    }
-  }
-
-  &__company {
-    margin-bottom: 18px;
-    font-weight: 600;
-    color: #fff;
-
-    .sidebar__label:first-of-type {
-      flex: 1;
-      text-align: left;
     }
   }
 
@@ -123,7 +111,6 @@
     display: none;
   }
 
-  .sidebar__company,
   .sidebar__link,
   .sidebar__collapse {
     justify-content: center;

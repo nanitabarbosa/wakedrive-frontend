@@ -4,24 +4,6 @@
       <span class="sidebar__brand-text">Wake<span>Drive</span></span>
       <span class="sidebar__brand-short">W<span>D</span></span>
     </div>
-    @if (!isSuperAdmin) {
-      <button
-        type="button"
-        class="sidebar__company"
-        [matMenuTriggerFor]="companyMenu"
-        [disabled]="!companies().length"
-        [attr.title]="selectedCompany?.name ?? 'Sin empresas'"
-      >
-        <mat-icon>apartment</mat-icon>
-        <span class="sidebar__label">{{ selectedCompany?.name ?? 'Sin empresas' }}</span>
-        <mat-icon class="sidebar__label">expand_more</mat-icon>
-      </button>
-      <mat-menu #companyMenu="matMenu">
-        @for (company of companies(); track company.id) {
-          <button mat-menu-item (click)="selectCompany(company)">{{ company.name }}</button>
-        }
-      </mat-menu>
-    }
     <div class="sidebar__nav" role="navigation">
       @for (item of navItems; track item.route) {
         <button

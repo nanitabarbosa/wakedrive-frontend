@@ -3,9 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { Company } from '../../../core/interfaces/company.interface';
 import { AuthService } from '../../../core/services/auth.service';
-import { CompanyService } from '../../../core/services/company.service';
 import { NotificationsModalComponent } from '../../../modules/notifications/modal/notifications-modal.component';
 import { NotificationService } from '../../../modules/notifications/services/notification.service';
 
@@ -36,12 +34,10 @@ export class MainLayoutComponent implements OnInit {
     { label: 'Empresas', icon: 'domain', route: '/companies' },
   ];
 
-  readonly companies = signal<Company[]>([]);
   readonly notificationsOpen = signal(false);
 
   constructor(
     private _authService: AuthService,
-    private _companyService: CompanyService,
     private _notificationService: NotificationService,
   ) {}
 
@@ -57,29 +53,17 @@ export class MainLayoutComponent implements OnInit {
     return this._authService.user();
   }
 
-  get selectedCompany(): Company | null {
-    return this._companyService.selected();
-  }
-
   get unreadNotifications(): number {
     return this._notificationService.unreadCount();
   }
 
   ngOnInit(): void {
-    this.loadCompanyContext();
+    this.loadNotificationContext();
   }
 
-  loadCompanyContext(): void {
+  loadNotificationContext(): void {
     if (this.isSuperAdmin) return;
-    this.loadCompanies();
     this.loadNotificationCounts();
-  }
-
-  loadCompanies(): void {
-    this._companyService.getCompanies().subscribe({
-      next: companies => this.companies.set(companies),
-      error: () => this.companies.set([]),
-    });
   }
 
   loadNotificationCounts(): void {
@@ -96,10 +80,6 @@ export class MainLayoutComponent implements OnInit {
 
   toggleMenu(): void {
     this.collapsed.update(value => !value);
-  }
-
-  selectCompany(company: Company): void {
-    this._companyService.select(company);
   }
 
   initials(name: string): string {
