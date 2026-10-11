@@ -35,7 +35,11 @@
       }
       <button type="button" class="topbar__user" [matMenuTriggerFor]="userMenu">
         @if (user; as u) {
-          <span class="avatar avatar--lg">{{ initials(u.name) }}</span>
+          @if (logoUrl) {
+            <span class="avatar avatar--lg avatar--logo"><img [src]="logoUrl" alt="Logo de la empresa" /></span>
+          } @else {
+            <span class="avatar avatar--lg">{{ initials(u.name) }}</span>
+          }
           <span class="topbar__user-info">
             <span class="topbar__user-name">{{ u.name }}</span>
             <span class="topbar__user-role">{{ u.role }}</span>

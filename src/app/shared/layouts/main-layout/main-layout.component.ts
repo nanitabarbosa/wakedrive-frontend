@@ -1,9 +1,10 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { SettingsService } from '../../../modules/settings/services/settings.service';
 import { NotificationsModalComponent } from '../../../modules/notifications/modal/notifications-modal.component';
 import { NotificationService } from '../../../modules/notifications/services/notification.service';
 
@@ -19,7 +20,7 @@ interface NavItem {
   imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule, MatMenuModule, NotificationsModalComponent],
   templateUrl: './main-layout.component.html',
 })
-export class MainLayoutComponent implements OnInit {
+export class MainLayoutComponent implements OnInit, OnDestroy {
   readonly collapsed = signal(false);
 
   readonly companyNavItems: NavItem[] = [
@@ -39,6 +40,7 @@ export class MainLayoutComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _notificationService: NotificationService,
+    private _settingsService: SettingsService,
   ) {}
 
   get isSuperAdmin(): boolean {
@@ -53,17 +55,31 @@ export class MainLayoutComponent implements OnInit {
     return this._authService.user();
   }
 
+  get logoUrl(): string | null {
+    return this._settingsService.logo()?.url ?? null;
+  }
+
   get unreadNotifications(): number {
     return this._notificationService.unreadCount();
   }
 
   ngOnInit(): void {
     this.loadNotificationContext();
+    this.loadLogo();
+  }
+
+  ngOnDestroy(): void {
+    this._settingsService.clearLogo();
   }
 
   loadNotificationContext(): void {
     if (this.isSuperAdmin) return;
     this.loadNotificationCounts();
+  }
+
+  loadLogo(): void {
+    if (this.isSuperAdmin) return;
+    this._settingsService.getSettings().subscribe({ error: () => undefined });
   }
 
   loadNotificationCounts(): void {
