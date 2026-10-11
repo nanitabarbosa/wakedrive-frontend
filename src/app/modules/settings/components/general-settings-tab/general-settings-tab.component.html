@@ -68,48 +68,50 @@
       <span class="settings-card__title">Información de la empresa</span>
       <span class="settings-card__description">Datos generales que se mostrarán en la plataforma.</span>
     </div>
-    <div class="settings-grid">
-      <div class="setting-field">
-        <mat-icon class="setting-row__icon">apartment</mat-icon>
+    <div class="company-info">
+      <div class="company-info__logo">
+        <span class="company-info__label">Logo <span class="company-info__optional">(opcional)</span></span>
+        <span class="company-info__hint">PNG o JPG, máx. 2 MB</span>
+        <app-file-drop [compact]="true" inputId="settings-logo" [rules]="logoRules" [file]="logo()" (fileSelected)="onLogoSelected($event)" (removed)="onLogoRemoved()" />
+      </div>
+      <div class="company-info__fields">
         <div class="form-field">
           <label for="settings-companyName">Nombre de la empresa <span class="required">*</span></label>
-          <input id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" [class.is-invalid]="hasError('companyName')" />
+          <div class="input-icon" [class.is-invalid]="hasError('companyName')">
+            <mat-icon class="input-icon__icon">apartment</mat-icon>
+            <input id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" />
+          </div>
           @if (hasError('companyName')) {
             <span class="form-field__error">{{ errorFor('companyName') }}</span>
           }
         </div>
-      </div>
-      <div class="setting-field">
-        <mat-icon class="setting-row__icon">badge</mat-icon>
-        <div class="form-field">
-          <label for="settings-nit">NIT</label>
-          <input id="settings-nit" formControlName="nit" title="El NIT de la empresa no se puede modificar" />
+        <div class="company-info__row">
+          <div class="form-field">
+            <label for="settings-nit">NIT</label>
+            <div class="input-icon input-icon--disabled" title="El NIT de la empresa no se puede modificar">
+              <mat-icon class="input-icon__icon">badge</mat-icon>
+              <input id="settings-nit" formControlName="nit" />
+              <mat-icon class="input-icon__icon">lock_outline</mat-icon>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="settings-phone">Teléfono</label>
+            <div class="input-icon" [class.is-invalid]="hasError('phone')">
+              <mat-icon class="input-icon__icon">call</mat-icon>
+              <input id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" />
+            </div>
+            <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
+          </div>
         </div>
-      </div>
-      <div class="setting-field">
-        <mat-icon class="setting-row__icon">location_on</mat-icon>
         <div class="form-field">
           <label for="settings-address">Dirección</label>
-          <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" [class.is-invalid]="hasError('address')" />
+          <div class="input-icon" [class.is-invalid]="hasError('address')">
+            <mat-icon class="input-icon__icon">location_on</mat-icon>
+            <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" />
+          </div>
           @if (hasError('address')) {
             <span class="form-field__error">{{ errorFor('address') }}</span>
           }
-        </div>
-      </div>
-      <div class="setting-field">
-        <mat-icon class="setting-row__icon">call</mat-icon>
-        <div class="form-field">
-          <label for="settings-phone">Teléfono</label>
-          <input id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
-          <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
-        </div>
-      </div>
-      <div class="setting-field setting-field--full">
-        <mat-icon class="setting-row__icon">image</mat-icon>
-        <div class="setting-row__body">
-          <span class="setting-row__label">Logo de la empresa (opcional)</span>
-          <span class="setting-row__description">Formatos: PNG, JPG. Tamaño máximo 2 MB.</span>
-          <app-file-drop inputId="settings-logo" [rules]="logoRules" [file]="logo()" (fileSelected)="onLogoSelected($event)" (removed)="onLogoRemoved()" />
         </div>
       </div>
     </div>
