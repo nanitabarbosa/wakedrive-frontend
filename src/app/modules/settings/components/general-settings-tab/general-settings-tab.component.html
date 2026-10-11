@@ -103,7 +103,7 @@
         <mat-icon class="setting-row__icon">call</mat-icon>
         <div class="form-field">
           <label for="settings-phone">Teléfono</label>
-          <input id="settings-phone" type="tel" inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
+          <input id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
           <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
         </div>
       </div>

@@ -25,7 +25,7 @@
       </div>
       <div class="form-field">
         <label for="user-phone">Teléfono</label>
-        <input id="user-phone" type="tel" formControlName="phone" inputmode="numeric" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
+        <input id="user-phone" type="tel" appOnlyNumbers formControlName="phone" inputmode="numeric" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
         <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
       </div>
     </div>

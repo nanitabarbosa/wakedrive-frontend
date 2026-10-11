@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 
 import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
 import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
+import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
 import { AlertService } from '../../../../core/services/alert.service';
 import { AccessRequestPayload, City } from '../../interfaces/access-request.interface';
 import { AccessRequestService } from '../../services/access-request.service';
@@ -18,7 +19,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-request-access',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, RouterLink],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, RouterLink],
   templateUrl: './request-access.component.html',
 })
 export class RequestAccessComponent implements OnInit {

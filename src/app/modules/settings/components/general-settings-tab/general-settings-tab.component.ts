@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
 import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
+import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
 import { AlertService } from '../../../../core/services/alert.service';
 import { ALARM_SOUND_RULES, CompanySettings, LOGO_RULES, SettingsPayload, StoredFile } from '../../interfaces/settings.interface';
 import { SettingsService } from '../../services/settings.service';
@@ -18,7 +19,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-general-settings-tab',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, FileDropComponent],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, FileDropComponent],
   templateUrl: './general-settings-tab.component.html',
 })
 export class GeneralSettingsTabComponent implements OnInit, OnDestroy {

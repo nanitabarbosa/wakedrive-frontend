@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
 import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
+import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -20,7 +21,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-user-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, DrawerComponent, FormActionsComponent],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, DrawerComponent, FormActionsComponent],
   templateUrl: './user-drawer.component.html',
 })
 export class UserDrawerComponent implements OnInit, OnChanges {
