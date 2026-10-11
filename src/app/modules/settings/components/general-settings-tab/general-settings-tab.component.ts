@@ -29,7 +29,6 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
 
   readonly loadError = signal(false);
   readonly saving = signal(false);
-  readonly errorMessage = signal('');
   readonly alarmSound = signal<StoredFile | null>(null);
   readonly logo = signal<StoredFile | null>(null);
 
@@ -129,7 +128,6 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
     };
 
     this.saving.set(true);
-    this.errorMessage.set('');
     this._settingsService.updateSettings(payload, this._alarmFile, this._logoFile).subscribe({
       next: settings => {
         this.saving.set(false);
@@ -138,7 +136,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar la configuración. Intenta de nuevo.');
+        this._alert.error(error.error?.message ?? 'No se pudo guardar la configuración. Intenta de nuevo.');
       },
     });
   }

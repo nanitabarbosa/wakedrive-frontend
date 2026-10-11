@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { PasswordService } from '../../services/password.service';
 
 @Component({
@@ -14,13 +15,13 @@ import { PasswordService } from '../../services/password.service';
 export class ForgotPasswordComponent implements OnInit {
   readonly loading = signal(false);
   readonly sentTo = signal('');
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
   constructor(
     private _fb: FormBuilder,
     private _passwordService: PasswordService,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +54,6 @@ export class ForgotPasswordComponent implements OnInit {
 
     const email = this.form.getRawValue().email.trim().toLowerCase();
     this.loading.set(true);
-    this.errorMessage.set('');
     this._passwordService.forgotPassword({ email }).subscribe({
       next: () => {
         this.loading.set(false);
@@ -61,7 +61,7 @@ export class ForgotPasswordComponent implements OnInit {
       },
       error: () => {
         this.loading.set(false);
-        this.errorMessage.set('No se pudo enviar el enlace. Intenta de nuevo.');
+        this._alert.error('No se pudo enviar el enlace. Intenta de nuevo.');
       },
     });
   }

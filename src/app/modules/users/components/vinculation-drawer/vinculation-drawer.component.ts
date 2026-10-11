@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { forkJoin } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { SelectOption, VinculationPayload } from '../../interfaces/vinculation.interface';
@@ -32,6 +33,7 @@ export class VinculationDrawerComponent implements OnInit, OnChanges {
   constructor(
     private _fb: FormBuilder,
     private _vinculationService: VinculationService,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -90,7 +92,6 @@ export class VinculationDrawerComponent implements OnInit, OnChanges {
     }
 
     this.saving.set(true);
-    this.errorMessage.set('');
     this._vinculationService.createVinculation(this.form.getRawValue() as VinculationPayload).subscribe({
       next: () => {
         this.saving.set(false);
@@ -98,7 +99,7 @@ export class VinculationDrawerComponent implements OnInit, OnChanges {
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo crear la vinculación. Intenta de nuevo.');
+        this._alert.error(error.error?.message ?? 'No se pudo crear la vinculación. Intenta de nuevo.');
       },
     });
   }

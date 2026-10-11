@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
 import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
 import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
@@ -36,13 +37,13 @@ export class UserDrawerComponent implements OnInit, OnChanges {
   readonly statusLabels = RECORD_STATUS_LABELS;
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly saving = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
   constructor(
     private _fb: FormBuilder,
     private _userService: UserService,
+    private _alert: AlertService,
   ) {}
 
   get title(): string {
@@ -68,7 +69,6 @@ export class UserDrawerComponent implements OnInit, OnChanges {
   }
 
   resetForm(): void {
-    this.errorMessage.set('');
     this.form.reset();
     if (this.user) this.form.patchValue({ ...this.user, phone: this.user.phone ?? '' });
     if (this.mode === 'view') this.form.disable();
@@ -100,7 +100,6 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     const request$ = isEdit ? this._userService.updateUser(this.user!.id, payload) : this._userService.createUser(payload);
 
     this.saving.set(true);
-    this.errorMessage.set('');
     request$.subscribe({
       next: () => {
         this.saving.set(false);
@@ -108,7 +107,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar el conductor. Intenta de nuevo.');
+        this._alert.error(error.error?.message ?? 'No se pudo guardar el conductor. Intenta de nuevo.');
       },
     });
   }

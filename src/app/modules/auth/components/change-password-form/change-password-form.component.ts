@@ -23,7 +23,6 @@ export class ChangePasswordFormComponent implements OnInit {
   readonly showPassword = signal(false);
   readonly showConfirm = signal(false);
   readonly loading = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
@@ -87,7 +86,6 @@ export class ChangePasswordFormComponent implements OnInit {
 
     const { currentPassword, newPassword } = this.form.getRawValue();
     this.loading.set(true);
-    this.errorMessage.set('');
     this._passwordService.changePassword({ currentPassword, newPassword }).subscribe({
       next: () => {
         this._alert.success('Tu contraseña fue actualizada correctamente.');
@@ -95,7 +93,7 @@ export class ChangePasswordFormComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(error.status === 401 ? 'La contraseña actual es incorrecta.' : 'No se pudo cambiar la contraseña. Intenta de nuevo.');
+        this._alert.error(error.status === 401 ? 'La contraseña actual es incorrecta.' : 'No se pudo cambiar la contraseña. Intenta de nuevo.');
       },
     });
   }

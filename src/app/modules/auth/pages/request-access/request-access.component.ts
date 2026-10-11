@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
 import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
@@ -34,6 +34,7 @@ export class RequestAccessComponent implements OnInit {
     private _fb: FormBuilder,
     private _accessRequestService: AccessRequestService,
     private _alert: AlertService,
+    private _router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -90,18 +91,16 @@ export class RequestAccessComponent implements OnInit {
     };
 
     this.loading.set(true);
-    this.errorMessage.set('');
     this._accessRequestService.createRequest(payload).subscribe({
       next: () => {
         this.loading.set(false);
         this.form.reset();
+        this._router.navigate(['/auth/login']);
         this._alert.success('La solicitud fue enviada correctamente. Nuestro equipo te contactará pronto.');
       },
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        const message = error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.';
-        this.errorMessage.set(message);
-        this._alert.error(message);
+        this._alert.error(error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.');
       },
     });
   }

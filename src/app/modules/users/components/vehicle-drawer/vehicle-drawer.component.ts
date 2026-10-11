@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -31,13 +32,13 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
   readonly minYear = MIN_YEAR;
   readonly maxYear = MAX_YEAR;
   readonly saving = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
   constructor(
     private _fb: FormBuilder,
     private _vehicleService: VehicleService,
+    private _alert: AlertService,
   ) {}
 
   get title(): string {
@@ -64,7 +65,6 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
   }
 
   resetForm(): void {
-    this.errorMessage.set('');
     this.form.reset();
     if (this.vehicle) this.form.patchValue(this.vehicle);
     if (this.mode === 'view') this.form.disable();
@@ -105,7 +105,6 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
       : this._vehicleService.createVehicle(payload);
 
     this.saving.set(true);
-    this.errorMessage.set('');
     request$.subscribe({
       next: () => {
         this.saving.set(false);
@@ -113,7 +112,7 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar el vehículo. Intenta de nuevo.');
+        this._alert.error(error.error?.message ?? 'No se pudo guardar el vehículo. Intenta de nuevo.');
       },
     });
   }

@@ -37,7 +37,7 @@ export class AlertService {
   }
 
   private show(type: AlertType, message: string): void {
-    this._shown.next();
+    if (type !== 'error') this._shown.next();
     this._snackBar.openFromComponent(AlertComponent, {
       data: { type, message },
       duration: DURATIONS[type],

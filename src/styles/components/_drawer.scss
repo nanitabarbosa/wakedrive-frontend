@@ -180,3 +180,8 @@
     font-weight: 500;
   }
 }
+
+// Alertas y modales siempre por encima del panel lateral (z-index 1000/1001)
+.cdk-overlay-container {
+  z-index: 1100;
+}

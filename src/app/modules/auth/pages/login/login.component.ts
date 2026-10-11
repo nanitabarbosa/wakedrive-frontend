@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
@@ -15,13 +16,13 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class LoginComponent implements OnInit {
   readonly showPassword = signal(false);
   readonly loading = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
   constructor(
     private _fb: FormBuilder,
     private _authService: AuthService,
+    private _alert: AlertService,
     private _router: Router,
   ) {}
 
@@ -60,12 +61,11 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.form.getRawValue();
     this.loading.set(true);
-    this.errorMessage.set('');
     this._authService.login({ email: email.trim().toLowerCase(), password }).subscribe({
       next: () => this._router.navigateByUrl(this._authService.homeRoute()),
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(error.status === 401 ? 'Correo o contraseña incorrectos.' : 'No se pudo iniciar sesión. Intenta de nuevo.');
+        this._alert.error(error.status === 401 ? 'Correo o contraseña incorrectos.' : 'No se pudo iniciar sesión. Intenta de nuevo.');
       },
     });
   }

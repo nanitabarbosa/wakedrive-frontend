@@ -116,9 +116,6 @@
       </div>
     </div>
   </div>
-  @if (errorMessage()) {
-    <span class="settings__alert" role="alert">{{ errorMessage() }}</span>
-  }
   <div class="settings__footer">
     <button type="submit" class="btn btn--primary" [disabled]="saving()">
       <mat-icon>save</mat-icon>{{ saving() ? 'Guardando...' : 'Guardar configuración' }}

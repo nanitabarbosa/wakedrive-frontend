@@ -42,9 +42,6 @@
         </div>
       </div>
     }
-    @if (errorMessage()) {
-      <span class="form-alert" role="alert">{{ errorMessage() }}</span>
-    }
   </form>
   @if (mode !== 'view') {
     <app-form-actions

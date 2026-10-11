@@ -48,9 +48,6 @@
           }
         </div>
         <button type="button" class="auth-form__forgot" routerLink="/auth/forgot-password">¿Olvidaste tu contraseña?</button>
-        @if (errorMessage()) {
-          <span class="auth-form__alert" role="alert">{{ errorMessage() }}</span>
-        }
         <button type="submit" class="btn btn--primary auth-form__submit" [disabled]="loading()">
           {{ loading() ? 'Ingresando...' : 'Iniciar sesión' }}
           <mat-icon>arrow_forward</mat-icon>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -25,13 +26,13 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
 
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly saving = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
   constructor(
     private _fb: FormBuilder,
     private _deviceService: DeviceService,
+    private _alert: AlertService,
   ) {}
 
   get title(): string {
@@ -54,7 +55,6 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
   }
 
   resetForm(): void {
-    this.errorMessage.set('');
     this.form.reset();
     if (this.device) this.form.patchValue(this.device);
     if (this.mode === 'view') this.form.disable();
@@ -88,7 +88,6 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
       : this._deviceService.createDevice(payload);
 
     this.saving.set(true);
-    this.errorMessage.set('');
     request$.subscribe({
       next: () => {
         this.saving.set(false);
@@ -96,7 +95,7 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo guardar el dispositivo. Intenta de nuevo.');
+        this._alert.error(error.error?.message ?? 'No se pudo guardar el dispositivo. Intenta de nuevo.');
       },
     });
   }

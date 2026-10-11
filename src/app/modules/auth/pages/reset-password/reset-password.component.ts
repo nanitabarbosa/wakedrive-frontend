@@ -24,7 +24,6 @@ export class ResetPasswordComponent implements OnInit {
   readonly showPassword = signal(false);
   readonly showConfirm = signal(false);
   readonly loading = signal(false);
-  readonly errorMessage = signal('');
 
   form!: FormGroup;
 
@@ -92,7 +91,6 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     this.loading.set(true);
-    this.errorMessage.set('');
     this._passwordService.resetPassword({ token: this.token, password: this.form.getRawValue().password }).subscribe({
       next: () => {
         this._alert.success('Tu contraseña fue actualizada. Ya puedes iniciar sesión.');
@@ -104,7 +102,7 @@ export class ResetPasswordComponent implements OnInit {
           this.state.set('invalid');
           return;
         }
-        this.errorMessage.set('No se pudo actualizar la contraseña. Intenta de nuevo.');
+        this._alert.error('No se pudo actualizar la contraseña. Intenta de nuevo.');
       },
     });
   }
