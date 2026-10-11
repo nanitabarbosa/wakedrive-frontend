@@ -40,7 +40,6 @@ export class OnboardingComponent implements OnInit {
     { status: 'PENDING', label: 'Pendientes', count: 'pending' },
     { status: 'APPROVED', label: 'Aprobadas', count: 'approved' },
     { status: 'REJECTED', label: 'Rechazadas', count: 'rejected' },
-    { status: 'INACTIVE', label: 'Inactivas', count: 'inactive' },
   ];
   readonly statusLabels = ACCESS_REQUEST_STATUS_LABELS;
   readonly pageSize = 10;
