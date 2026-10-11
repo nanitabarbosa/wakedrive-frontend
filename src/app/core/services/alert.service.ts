@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 
 import { AlertComponent } from '../../shared/components/alert/alert.component';
 import { AlertType } from '../../shared/components/alert/interfaces/alert.interface';
@@ -13,6 +14,10 @@ const DURATIONS: Record<AlertType, number> = {
 
 @Injectable({ providedIn: 'root' })
 export class AlertService {
+  private readonly _shown = new Subject<void>();
+
+  readonly shown$ = this._shown.asObservable();
+
   constructor(private _snackBar: MatSnackBar) {}
 
   success(message: string): void {
@@ -32,6 +37,7 @@ export class AlertService {
   }
 
   private show(type: AlertType, message: string): void {
+    this._shown.next();
     this._snackBar.openFromComponent(AlertComponent, {
       data: { type, message },
       duration: DURATIONS[type],
