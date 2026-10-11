@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { AuthService } from '../../../core/services/auth.service';
+import { ChangePasswordDialogComponent } from '../../../modules/auth/components/change-password-dialog/change-password-dialog.component';
 import { SettingsService } from '../../../modules/settings/services/settings.service';
 import { NotificationsModalComponent } from '../../../modules/notifications/modal/notifications-modal.component';
 import { NotificationService } from '../../../modules/notifications/services/notification.service';
@@ -41,6 +43,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _notificationService: NotificationService,
     private _settingsService: SettingsService,
+    private _dialog: MatDialog,
   ) {}
 
   get isSuperAdmin(): boolean {
@@ -106,6 +109,10 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
       .slice(0, 2)
       .join('')
       .toUpperCase();
+  }
+
+  openChangePassword(): void {
+    this._dialog.open(ChangePasswordDialogComponent, { width: '440px', maxWidth: '92vw' });
   }
 
   logout(): void {

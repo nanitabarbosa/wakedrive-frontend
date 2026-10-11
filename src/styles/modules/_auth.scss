@@ -340,6 +340,27 @@
   }
 }
 
+.change-password-dialog {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 24px;
+
+  .auth-form {
+    margin-top: 18px;
+  }
+}
+
+.auth-form__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+
+  .btn {
+    height: 44px;
+  }
+}
+
 .auth-state {
   display: flex;
   flex-direction: column;
