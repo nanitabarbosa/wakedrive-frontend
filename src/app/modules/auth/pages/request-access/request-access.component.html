@@ -71,11 +71,9 @@
             <label for="request-companyPhone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('companyPhone')">
               <mat-icon class="input-icon__icon">phone</mat-icon>
-              <input id="request-companyPhone" type="tel" formControlName="companyPhone" placeholder="+57 300 123 4567" maxlength="20" autocomplete="tel" />
+              <input id="request-companyPhone" type="tel" formControlName="companyPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
             </div>
-            @if (hasError('companyPhone')) {
-              <span class="form-field__error">{{ errorFor('companyPhone') }}</span>
-            }
+            <app-validate-errors [control]="form.get('companyPhone')" [messages]="phoneErrors" />
           </div>
         </div>
         <span class="auth-form__section">Información del administrador</span>
@@ -104,11 +102,9 @@
             <label for="request-adminPhone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('adminPhone')">
               <mat-icon class="input-icon__icon">phone</mat-icon>
-              <input id="request-adminPhone" type="tel" formControlName="adminPhone" placeholder="+57 300 123 4567" maxlength="20" autocomplete="tel" />
+              <input id="request-adminPhone" type="tel" formControlName="adminPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
             </div>
-            @if (hasError('adminPhone')) {
-              <span class="form-field__error">{{ errorFor('adminPhone') }}</span>
-            }
+            <app-validate-errors [control]="form.get('adminPhone')" [messages]="phoneErrors" />
           </div>
         </div>
         @if (errorMessage()) {

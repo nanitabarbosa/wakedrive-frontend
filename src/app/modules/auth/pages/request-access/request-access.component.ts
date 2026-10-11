@@ -4,26 +4,25 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
+import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
+import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
 import { AlertService } from '../../../../core/services/alert.service';
 import { AccessRequestPayload, City } from '../../interfaces/access-request.interface';
 import { AccessRequestService } from '../../services/access-request.service';
 
-const PHONE_PATTERN = /^\+?[\d\s]{7,20}$/;
-
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
   nit: { pattern: 'Solo números y guiones, entre 5 y 15 caracteres.' },
-  companyPhone: { pattern: 'Ingresa un teléfono válido.' },
   adminEmail: { email: 'Ingresa un correo válido.' },
-  adminPhone: { pattern: 'Ingresa un teléfono válido.' },
 };
 
 @Component({
   selector: 'app-request-access',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, RouterLink],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, RouterLink],
   templateUrl: './request-access.component.html',
 })
 export class RequestAccessComponent implements OnInit {
+  readonly phoneErrors = PHONE_ERRORS;
   readonly cities = signal<City[]>([]);
   readonly loading = signal(false);
   readonly errorMessage = signal('');

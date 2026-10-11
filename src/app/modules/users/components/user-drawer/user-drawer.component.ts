@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 
+import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
+import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
@@ -13,16 +15,17 @@ import { UserService } from '../../services/user.service';
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
   document: { pattern: 'Solo números, entre 6 y 12 dígitos.' },
   email: { email: 'Ingresa un correo válido.' },
-  phone: { pattern: 'Solo números, entre 7 y 15 dígitos.' },
 };
 
 @Component({
   selector: 'app-user-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, DrawerComponent, FormActionsComponent],
   templateUrl: './user-drawer.component.html',
 })
 export class UserDrawerComponent implements OnInit, OnChanges {
+  readonly phoneErrors = PHONE_ERRORS;
+
   @Input() open = false;
   @Input() mode: DrawerMode = 'create';
   @Input() user: User | null = null;
@@ -58,7 +61,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
       document: ['', [Validators.required, Validators.pattern(/^\d{6,12}$/)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
-      phone: ['', Validators.pattern(/^\d{7,15}$/)],
+      phone: ['', Validators.pattern(PHONE_PATTERN)],
       status: ['ACTIVE', Validators.required],
     });
   }
