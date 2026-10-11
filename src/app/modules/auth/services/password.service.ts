@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { ForgotPasswordRequest, ResetPasswordRequest } from '../interfaces/password.interface';
+import { ChangePasswordRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../interfaces/password.interface';
 
 const ENDPOINT = `${environment.apiUrl}/auth`;
 
@@ -21,5 +21,9 @@ export class PasswordService {
 
   resetPassword(payload: ResetPasswordRequest): Observable<void> {
     return this._http.post<void>(`${ENDPOINT}/reset-password`, payload);
+  }
+
+  changePassword(payload: ChangePasswordRequest): Observable<void> {
+    return this._http.patch<void>(`${ENDPOINT}/change-password`, payload);
   }
 }

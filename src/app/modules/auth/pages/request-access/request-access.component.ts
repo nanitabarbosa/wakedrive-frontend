@@ -2,28 +2,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 
+import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
+import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
+import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
+import { AlertService } from '../../../../core/services/alert.service';
 import { AccessRequestPayload, City } from '../../interfaces/access-request.interface';
 import { AccessRequestService } from '../../services/access-request.service';
 
-const PHONE_PATTERN = /^\+?[\d\s]{7,20}$/;
-
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
   nit: { pattern: 'Solo números y guiones, entre 5 y 15 caracteres.' },
-  companyPhone: { pattern: 'Ingresa un teléfono válido.' },
   adminEmail: { email: 'Ingresa un correo válido.' },
-  adminPhone: { pattern: 'Ingresa un teléfono válido.' },
 };
 
 @Component({
   selector: 'app-request-access',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, RouterLink],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, RouterLink],
   templateUrl: './request-access.component.html',
 })
 export class RequestAccessComponent implements OnInit {
+  readonly phoneErrors = PHONE_ERRORS;
   readonly cities = signal<City[]>([]);
   readonly loading = signal(false);
   readonly errorMessage = signal('');
@@ -33,7 +33,7 @@ export class RequestAccessComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _accessRequestService: AccessRequestService,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -95,11 +95,13 @@ export class RequestAccessComponent implements OnInit {
       next: () => {
         this.loading.set(false);
         this.form.reset();
-        this._snackBar.open('¡Éxito! La solicitud fue enviada correctamente.', 'Cerrar', { duration: 4000 });
+        this._alert.success('La solicitud fue enviada correctamente. Nuestro equipo te contactará pronto.');
       },
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.');
+        const message = error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.';
+        this.errorMessage.set(message);
+        this._alert.error(message);
       },
     });
   }

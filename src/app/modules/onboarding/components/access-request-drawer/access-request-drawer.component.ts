@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, filter, switchMap, tap } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import {
@@ -35,7 +36,7 @@ export class AccessRequestDrawerComponent {
   constructor(
     private _onboardingService: OnboardingService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   approve(request: AccessRequest): void {
@@ -76,10 +77,18 @@ export class AccessRequestDrawerComponent {
           this.saving.set(false);
           this.reviewed.emit(message);
         },
-        error: () => {
+        error: (error: HttpErrorResponse) => {
           this.saving.set(false);
-          this._snackBar.open('No se pudo actualizar la solicitud. Intenta de nuevo.', 'Cerrar', { duration: 4000 });
+          this._alert.error(this.errorMessage(error));
         },
       });
+  }
+
+  private errorMessage(error: HttpErrorResponse): string {
+    const detail: string = error.error?.message ?? '';
+    if (error.status === 409 && detail.includes('email')) return `Ya existe un usuario con el correo ${detail.split('email: ')[1]}.`;
+    if (error.status === 409 && detail.includes('nit')) return `Ya existe una empresa con el NIT ${detail.split('nit: ')[1]}.`;
+    if (error.status === 409) return 'Ya existe una empresa o un usuario con los datos de esta solicitud.';
+    return 'No se pudo actualizar la solicitud. Intenta de nuevo.';
   }
 }

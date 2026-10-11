@@ -2,9 +2,9 @@ import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
@@ -51,7 +51,7 @@ export class UsersTabComponent implements OnInit {
   constructor(
     private _userService: UserService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
     private _destroyRef: DestroyRef,
   ) {}
 
@@ -116,7 +116,7 @@ export class UsersTabComponent implements OnInit {
 
   onSaved(message: string): void {
     this.closeDrawer();
-    this._snackBar.open(message, 'Cerrar', { duration: 3000 });
+    this._alert.success(message);
     this.loadUsers();
   }
 
@@ -132,10 +132,10 @@ export class UsersTabComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Conductor eliminado', 'Cerrar', { duration: 3000 });
+          this._alert.success('Conductor eliminado');
           this.loadUsers();
         },
-        error: () => this._snackBar.open('No se pudo eliminar el conductor', 'Cerrar', { duration: 4000 }),
+        error: () => this._alert.error('No se pudo eliminar el conductor'),
       });
   }
 

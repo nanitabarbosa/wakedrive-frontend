@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
@@ -57,7 +57,7 @@ export class OnboardingComponent implements OnInit {
 
   constructor(
     private _onboardingService: OnboardingService,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -109,7 +109,7 @@ export class OnboardingComponent implements OnInit {
 
   onReviewed(message: string): void {
     this.closeDrawer();
-    this._snackBar.open(message, 'Cerrar', { duration: 3000 });
+    this._alert.success(message);
     this.loadCounts();
     this.loadRequests();
   }

@@ -2,9 +2,9 @@ import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
@@ -48,7 +48,7 @@ export class DevicesTabComponent implements OnInit {
   constructor(
     private _deviceService: DeviceService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
     private _destroyRef: DestroyRef,
   ) {}
 
@@ -113,7 +113,7 @@ export class DevicesTabComponent implements OnInit {
 
   onSaved(message: string): void {
     this.closeDrawer();
-    this._snackBar.open(message, 'Cerrar', { duration: 3000 });
+    this._alert.success(message);
     this.loadDevices();
   }
 
@@ -129,10 +129,10 @@ export class DevicesTabComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Dispositivo eliminado', 'Cerrar', { duration: 3000 });
+          this._alert.success('Dispositivo eliminado');
           this.loadDevices();
         },
-        error: () => this._snackBar.open('No se pudo eliminar el dispositivo', 'Cerrar', { duration: 4000 }),
+        error: () => this._alert.error('No se pudo eliminar el dispositivo'),
       });
   }
 

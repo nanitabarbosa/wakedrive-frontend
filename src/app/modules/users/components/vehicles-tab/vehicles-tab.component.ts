@@ -2,9 +2,9 @@ import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
@@ -55,7 +55,7 @@ export class VehiclesTabComponent implements OnInit {
   constructor(
     private _vehicleService: VehicleService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
     private _destroyRef: DestroyRef,
   ) {}
 
@@ -125,7 +125,7 @@ export class VehiclesTabComponent implements OnInit {
 
   onSaved(message: string): void {
     this.closeDrawer();
-    this._snackBar.open(message, 'Cerrar', { duration: 3000 });
+    this._alert.success(message);
     this.loadVehicles();
   }
 
@@ -141,10 +141,10 @@ export class VehiclesTabComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this._snackBar.open('Vehículo eliminado', 'Cerrar', { duration: 3000 });
+          this._alert.success('Vehículo eliminado');
           this.loadVehicles();
         },
-        error: () => this._snackBar.open('No se pudo eliminar el vehículo', 'Cerrar', { duration: 4000 }),
+        error: () => this._alert.error('No se pudo eliminar el vehículo'),
       });
   }
 

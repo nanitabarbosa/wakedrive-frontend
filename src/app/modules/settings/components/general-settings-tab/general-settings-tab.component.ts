@@ -2,8 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { PHONE_ERRORS, PHONE_PATTERN } from '../../../../core/utils/phone';
+import { ValidateErrorsComponent } from '../../../../shared/components/validate-errors/validate-errors.component';
+import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers.directive';
+import { AlertService } from '../../../../core/services/alert.service';
 import { ALARM_SOUND_RULES, CompanySettings, LOGO_RULES, SettingsPayload, StoredFile } from '../../interfaces/settings.interface';
 import { SettingsService } from '../../services/settings.service';
 import { FileDropComponent } from '../file-drop/file-drop.component';
@@ -11,16 +14,17 @@ import { FileDropComponent } from '../file-drop/file-drop.component';
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
   alarmDurationSeconds: { min: 'Mínimo 1 segundo.', max: 'Máximo 60 segundos.' },
   nit: { pattern: 'Formato válido: 901234567-8.' },
-  phone: { pattern: 'Solo números, entre 7 y 15 dígitos.' },
 };
 
 @Component({
   selector: 'app-general-settings-tab',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, FileDropComponent],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, FileDropComponent],
   templateUrl: './general-settings-tab.component.html',
 })
 export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
+  readonly phoneErrors = PHONE_ERRORS;
+
   readonly alarmRules = ALARM_SOUND_RULES;
   readonly logoRules = LOGO_RULES;
 
@@ -41,7 +45,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
   constructor(
     private _fb: FormBuilder,
     private _settingsService: SettingsService,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -61,7 +65,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       companyName: ['', [Validators.required, Validators.maxLength(100)]],
       nit: ['', [Validators.required, Validators.pattern(/^\d{6,12}(-\d)?$/)]],
       address: ['', Validators.maxLength(150)],
-      phone: ['', Validators.pattern(/^\d{7,15}$/)],
+      phone: ['', Validators.pattern(PHONE_PATTERN)],
     });
   }
 
@@ -131,7 +135,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       next: settings => {
         this.saving.set(false);
         this.applySettings(settings);
-        this._snackBar.open('Configuración guardada', 'Cerrar', { duration: 3000 });
+        this._alert.success('Configuración guardada');
       },
       error: (error: HttpErrorResponse) => {
         this.saving.set(false);
