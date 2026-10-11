@@ -1,0 +1,7 @@
+<div class="alert alert--{{ data.type }}" role="alert">
+  <mat-icon class="alert__icon">{{ icon }}</mat-icon>
+  <span class="alert__message">{{ data.message }}</span>
+  <button type="button" class="alert__close" aria-label="Cerrar" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { PasswordService } from '../../services/password.service';
 
 type ResetState = 'validating' | 'invalid' | 'ready';
@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _passwordService: PasswordService,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
     private _router: Router,
   ) {}
 
@@ -95,7 +95,7 @@ export class ResetPasswordComponent implements OnInit {
     this.errorMessage.set('');
     this._passwordService.resetPassword({ token: this.token, password: this.form.getRawValue().password }).subscribe({
       next: () => {
-        this._snackBar.open('Tu contraseña fue actualizada. Ya puedes iniciar sesión.', 'Cerrar', { duration: 4000 });
+        this._alert.success('Tu contraseña fue actualizada. Ya puedes iniciar sesión.');
         this._router.navigate(['/auth/login']);
       },
       error: (error: HttpErrorResponse) => {

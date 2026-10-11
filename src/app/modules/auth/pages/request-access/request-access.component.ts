@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { AccessRequestPayload, City } from '../../interfaces/access-request.interface';
 import { AccessRequestService } from '../../services/access-request.service';
 
@@ -33,7 +33,7 @@ export class RequestAccessComponent implements OnInit {
   constructor(
     private _fb: FormBuilder,
     private _accessRequestService: AccessRequestService,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -95,11 +95,13 @@ export class RequestAccessComponent implements OnInit {
       next: () => {
         this.loading.set(false);
         this.form.reset();
-        this._snackBar.open('¡Éxito! La solicitud fue enviada correctamente.', 'Cerrar', { duration: 4000 });
+        this._alert.success('La solicitud fue enviada correctamente. Nuestro equipo te contactará pronto.');
       },
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this.errorMessage.set(error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.');
+        const message = error.error?.message ?? 'No se pudo enviar la solicitud. Intenta de nuevo.';
+        this.errorMessage.set(message);
+        this._alert.error(message);
       },
     });
   }

@@ -2,9 +2,9 @@ import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, filter, switchMap, tap } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import {
@@ -35,7 +35,7 @@ export class AccessRequestDrawerComponent {
   constructor(
     private _onboardingService: OnboardingService,
     private _dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private _alert: AlertService,
   ) {}
 
   approve(request: AccessRequest): void {
@@ -78,7 +78,7 @@ export class AccessRequestDrawerComponent {
         },
         error: () => {
           this.saving.set(false);
-          this._snackBar.open('No se pudo actualizar la solicitud. Intenta de nuevo.', 'Cerrar', { duration: 4000 });
+          this._alert.error('No se pudo actualizar la solicitud. Intenta de nuevo.');
         },
       });
   }
