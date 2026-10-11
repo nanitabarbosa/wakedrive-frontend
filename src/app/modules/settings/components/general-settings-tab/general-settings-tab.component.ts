@@ -13,7 +13,6 @@ import { FileDropComponent } from '../file-drop/file-drop.component';
 
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
   alarmDurationSeconds: { min: 'Mínimo 1 segundo.', max: 'Máximo 60 segundos.' },
-  nit: { pattern: 'Formato válido: 901234567-8.' },
 };
 
 @Component({
@@ -63,7 +62,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       notifyDeviceShutdown: [true],
       alarmDurationSeconds: [10, [Validators.required, Validators.min(1), Validators.max(60)]],
       companyName: ['', [Validators.required, Validators.maxLength(100)]],
-      nit: ['', [Validators.required, Validators.pattern(/^\d{6,12}(-\d)?$/)]],
+      nit: [{ value: '', disabled: true }],
       address: ['', Validators.maxLength(150)],
       phone: ['', Validators.pattern(PHONE_PATTERN)],
     });

@@ -82,11 +82,8 @@
       <div class="setting-field">
         <mat-icon class="setting-row__icon">badge</mat-icon>
         <div class="form-field">
-          <label for="settings-nit">NIT <span class="required">*</span></label>
-          <input id="settings-nit" formControlName="nit" placeholder="Ej. 901234567-8" maxlength="14" [class.is-invalid]="hasError('nit')" />
-          @if (hasError('nit')) {
-            <span class="form-field__error">{{ errorFor('nit') }}</span>
-          }
+          <label for="settings-nit">NIT</label>
+          <input id="settings-nit" formControlName="nit" title="El NIT de la empresa no se puede modificar" />
         </div>
       </div>
       <div class="setting-field">
