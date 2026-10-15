@@ -95,7 +95,7 @@
             </div>
           </div>
           <div class="form-field">
-            <label for="settings-phone">Teléfono</label>
+            <label for="settings-phone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('phone')">
               <mat-icon class="input-icon__icon">call</mat-icon>
               <input id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" />
@@ -103,15 +103,27 @@
             <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
           </div>
         </div>
-        <div class="form-field">
-          <label for="settings-address">Dirección</label>
-          <div class="input-icon" [class.is-invalid]="hasError('address')">
-            <mat-icon class="input-icon__icon">location_on</mat-icon>
-            <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" />
+        <div class="company-info__row">
+          <div class="form-field">
+            <label for="settings-email">Correo electrónico <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('email')">
+              <mat-icon class="input-icon__icon">mail_outline</mat-icon>
+              <input id="settings-email" type="email" formControlName="email" placeholder="Ej. contacto@empresa.com" maxlength="120" autocomplete="email" />
+            </div>
+            @if (hasError('email')) {
+              <span class="form-field__error">{{ errorFor('email') }}</span>
+            }
           </div>
-          @if (hasError('address')) {
-            <span class="form-field__error">{{ errorFor('address') }}</span>
-          }
+          <div class="form-field">
+            <label for="settings-address">Dirección <span class="required">*</span></label>
+            <div class="input-icon" [class.is-invalid]="hasError('address')">
+              <mat-icon class="input-icon__icon">location_on</mat-icon>
+              <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" />
+            </div>
+            @if (hasError('address')) {
+              <span class="form-field__error">{{ errorFor('address') }}</span>
+            }
+          </div>
         </div>
       </div>
     </div>

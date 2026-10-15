@@ -12,6 +12,7 @@ import { SettingsService } from '../../services/settings.service';
 import { FileDropComponent } from '../file-drop/file-drop.component';
 
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
+  email: { email: 'Ingresa un correo válido.' },
   alarmDurationSeconds: { min: 'Mínimo 1 segundo.', max: 'Máximo 60 segundos.' },
 };
 
@@ -62,8 +63,9 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       alarmDurationSeconds: [10, [Validators.required, Validators.min(1), Validators.max(60)]],
       companyName: ['', [Validators.required, Validators.maxLength(100)]],
       nit: [{ value: '', disabled: true }],
-      address: ['', Validators.maxLength(150)],
-      phone: ['', Validators.pattern(PHONE_PATTERN)],
+      address: ['', [Validators.required, Validators.maxLength(150)]],
+      phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
     });
   }
 
@@ -122,6 +124,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
     const payload: SettingsPayload = {
       ...value,
       companyName: value.companyName.trim(),
+      email: value.email.trim().toLowerCase(),
       address: value.address.trim(),
       removeAlarmSound: this._removeAlarmSound,
       removeLogo: this._removeLogo,
@@ -150,6 +153,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       nit: settings.nit,
       address: settings.address ?? '',
       phone: settings.phone ?? '',
+      email: settings.email ?? '',
     });
     this.revokeObjectUrls();
     this._alarmFile = null;

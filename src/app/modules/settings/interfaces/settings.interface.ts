@@ -13,6 +13,7 @@ export interface CompanySettings {
   nit: string;
   address: string;
   phone: string;
+  email: string;
   logo: StoredFile | null;
 }
 
@@ -24,6 +25,7 @@ export interface SettingsPayload {
   nit: string;
   address: string;
   phone: string;
+  email: string;
   removeAlarmSound: boolean;
   removeLogo: boolean;
 }

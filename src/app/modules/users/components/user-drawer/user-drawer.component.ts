@@ -63,14 +63,14 @@ export class UserDrawerComponent implements OnInit, OnChanges {
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
       document: ['', [Validators.required, Validators.pattern(/^\d{6,12}$/)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
-      phone: ['', Validators.pattern(PHONE_PATTERN)],
+      phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       status: ['ACTIVE', Validators.required],
     });
   }
 
   resetForm(): void {
     this.form.reset();
-    if (this.user) this.form.patchValue({ ...this.user, phone: this.user.phone ?? '' });
+    if (this.user) this.form.patchValue({ ...this.user, phone: this.user.phone });
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
   }
@@ -95,7 +95,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     }
 
     const value = this.form.getRawValue();
-    const payload: UserPayload = { ...value, email: value.email.trim().toLowerCase(), phone: value.phone || null };
+    const payload: UserPayload = { ...value, email: value.email.trim().toLowerCase() };
     const isEdit = this.mode === 'edit' && !!this.user;
     const request$ = isEdit ? this._userService.updateUser(this.user!.id, payload) : this._userService.createUser(payload);
 

@@ -10,7 +10,7 @@ export interface User {
   fullName: string;
   document: string;
   email: string;
-  phone: string | null;
+  phone: string;
   status: RecordStatus;
 }
 
