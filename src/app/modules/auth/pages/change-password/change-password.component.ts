@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../../../core/services/auth.service';
@@ -8,7 +7,7 @@ import { ChangePasswordFormComponent } from '../../components/change-password-fo
 @Component({
   selector: 'app-change-password',
   standalone: true,
-  imports: [MatIconModule, ChangePasswordFormComponent],
+  imports: [ChangePasswordFormComponent],
   templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent {
@@ -20,9 +19,5 @@ export class ChangePasswordComponent {
   onChanged(): void {
     this._authService.markPasswordChanged();
     this._router.navigateByUrl(this._authService.homeRoute());
-  }
-
-  logout(): void {
-    this._authService.logout();
   }
 }

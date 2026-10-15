@@ -66,6 +66,20 @@ export class ForgotPasswordComponent implements OnInit {
     });
   }
 
+  resend(): void {
+    this.loading.set(true);
+    this._passwordService.forgotPassword({ email: this.sentTo() }).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this._alert.success('Te reenviamos el enlace. Revisa tu correo.');
+      },
+      error: () => {
+        this.loading.set(false);
+        this._alert.error('No se pudo reenviar el enlace. Intenta de nuevo.');
+      },
+    });
+  }
+
   tryAgain(): void {
     this.sentTo.set('');
   }
