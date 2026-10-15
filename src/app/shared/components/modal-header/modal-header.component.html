@@ -1,0 +1,11 @@
+<div class="modal-header">
+  @if (icon) {
+    <span class="modal-header__icon" [class]="'modal-header__icon--' + variant" aria-hidden="true">
+      <mat-icon>{{ icon }}</mat-icon>
+    </span>
+  }
+  <span class="modal-header__title">{{ title }}</span>
+  <button type="button" class="btn-icon modal-header__close" (click)="closed.emit()" aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

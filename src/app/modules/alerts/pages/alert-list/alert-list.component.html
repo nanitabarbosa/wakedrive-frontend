@@ -51,6 +51,7 @@
     [total]="total()"
     (pageChange)="onPageChange($event)"
     [emptyMessage]="loadError() ? 'No se pudieron cargar las alertas. Intenta de nuevo más tarde.' : 'No hay alertas para los filtros seleccionados.'"
+    [emptyKind]="loadError() ? 'error' : 'search'"
   >
     <ng-template #cellTemplate let-alert let-column="column">
       @switch (column.key) {

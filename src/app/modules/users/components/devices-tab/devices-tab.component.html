@@ -8,7 +8,8 @@
   [pageSize]="pageSize"
   [total]="total()"
   (pageChange)="onPageChange($event)"
-  [emptyMessage]="loadError() ? 'No se pudieron cargar los dispositivos. Intenta de nuevo más tarde.' : 'No hay dispositivos que coincidan con la búsqueda.'"
+  [emptyMessage]="loadError() ? 'No se pudieron cargar los dispositivos. Intenta de nuevo más tarde.' : search() || status() ? 'No hay dispositivos que coincidan con la búsqueda.' : 'Aún no hay dispositivos registrados.'"
+  [emptyKind]="loadError() ? 'error' : search() || status() ? 'search' : 'empty'"
 >
   <div class="toolbar" table-actions>
     <div class="toolbar__row">

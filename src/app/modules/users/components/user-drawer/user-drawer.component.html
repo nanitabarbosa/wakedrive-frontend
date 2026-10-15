@@ -1,4 +1,4 @@
-<app-drawer [title]="title" [open]="open" (closed)="closed.emit()">
+<app-drawer [title]="title" icon="group" variant="primary" [open]="open" (closed)="closed.emit()">
   <form [formGroup]="form" (ngSubmit)="save()" novalidate>
     <div class="form-section">
       <span class="form-section__title"><mat-icon>person</mat-icon>Información personal</span>

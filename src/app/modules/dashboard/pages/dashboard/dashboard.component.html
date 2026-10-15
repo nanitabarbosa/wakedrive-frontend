@@ -88,6 +88,7 @@
     [data]="devices()"
     [customColumns]="['status', 'lastConnection']"
     [emptyMessage]="errors().devices ? 'No se pudieron cargar los dispositivos.' : 'No hay dispositivos para mostrar.'"
+    [emptyKind]="errors().devices ? 'error' : 'empty'"
   >
     <button type="button" class="btn-link" table-actions routerLink="/devices">Ver todos <mat-icon>arrow_forward</mat-icon></button>
     <ng-template #cellTemplate let-device let-column="column">
@@ -111,6 +112,7 @@
     [data]="alerts()"
     [customColumns]="['date', 'time', 'type', 'durationSeconds', 'level']"
     [emptyMessage]="errors().alerts ? 'No se pudieron cargar las alertas.' : 'No hay alertas para mostrar.'"
+    [emptyKind]="errors().alerts ? 'error' : 'empty'"
   >
     <button type="button" class="btn-link" table-actions routerLink="/alerts">Ver todas <mat-icon>arrow_forward</mat-icon></button>
     <ng-template #cellTemplate let-alert let-column="column">

@@ -1,0 +1,56 @@
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 20px 8px 24px;
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: var(--wd-primary);
+    background: var(--wd-primary-soft);
+    border-radius: 10px;
+
+    .mat-icon {
+      font-size: 22px;
+      width: 22px;
+      height: 22px;
+    }
+
+    &--success {
+      color: var(--wd-success);
+      background: var(--wd-success-soft);
+    }
+
+    &--warning {
+      color: #d97706;
+      background: var(--wd-warning-soft);
+    }
+
+    &--danger {
+      color: var(--wd-danger);
+      background: var(--wd-danger-soft);
+    }
+
+    &--purple {
+      color: var(--wd-purple);
+      background: var(--wd-purple-soft);
+    }
+  }
+
+  &__title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-size: 19px;
+    font-weight: 700;
+  }
+
+  &__close {
+    flex-shrink: 0;
+  }
+}
