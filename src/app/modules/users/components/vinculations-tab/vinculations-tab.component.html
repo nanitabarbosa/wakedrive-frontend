@@ -8,7 +8,8 @@
   [pageSize]="pageSize"
   [total]="total()"
   (pageChange)="onPageChange($event)"
-  [emptyMessage]="loadError() ? 'No se pudieron cargar las vinculaciones. Intenta de nuevo más tarde.' : 'No hay vinculaciones que coincidan con la búsqueda.'"
+  [emptyMessage]="loadError() ? 'No se pudieron cargar las vinculaciones. Intenta de nuevo más tarde.' : search() ? 'No hay vinculaciones que coincidan con la búsqueda.' : 'Aún no hay vinculaciones creadas.'"
+  [emptyKind]="loadError() ? 'error' : search() ? 'search' : 'empty'"
 >
   <div class="toolbar" table-actions>
     <div class="toolbar__row">

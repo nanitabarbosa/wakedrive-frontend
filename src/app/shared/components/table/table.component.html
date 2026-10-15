@@ -44,7 +44,7 @@
       }
     </div>
     @if (!data.length) {
-      <span class="table__empty">{{ emptyMessage }}</span>
+      <app-empty-state [kind]="emptyKind" [title]="emptyTitle" [description]="emptyMessage" [bordered]="false" />
     }
   </div>
   @if (paginated && total > 0) {

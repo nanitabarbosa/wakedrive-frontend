@@ -2,12 +2,14 @@ import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } fro
 import { NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
+import { EmptyStateComponent } from '../empty-state/empty-state.component';
+import { EmptyStateKind } from '../empty-state/interfaces/empty-state.interface';
 import { TableCellContext, TableColumn } from './interfaces/table.interface';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [NgTemplateOutlet, MatIconModule],
+  imports: [NgTemplateOutlet, MatIconModule, EmptyStateComponent],
   templateUrl: './table.component.html',
 })
 export class TableComponent<T> {
@@ -17,6 +19,8 @@ export class TableComponent<T> {
   @Input({ required: true }) columns: TableColumn[] = [];
   @Input() customColumns: string[] = [];
   @Input() emptyMessage = 'No hay registros para mostrar.';
+  @Input() emptyKind: EmptyStateKind = 'empty';
+  @Input() emptyTitle = '';
   @Input() showToolbar = false;
 
   @Input() selectable = false;

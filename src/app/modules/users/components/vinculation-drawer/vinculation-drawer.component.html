@@ -1,4 +1,4 @@
-<app-drawer title="Nueva vinculación" [open]="open" (closed)="closed.emit()">
+<app-drawer title="Nueva vinculación" icon="link" variant="primary" [open]="open" (closed)="closed.emit()">
   <form [formGroup]="form" (ngSubmit)="save()" novalidate>
     <div class="form-section">
       <span class="form-section__title"><mat-icon>link</mat-icon>Vinculación</span>

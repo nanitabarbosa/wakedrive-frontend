@@ -1,18 +1,21 @@
 import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatIconModule } from '@angular/material/icon';
 
 import { AlertService } from '../../../core/services/alert.service';
+import { ModalHeaderVariant } from '../modal-header/interfaces/modal-header.interface';
+import { ModalHeaderComponent } from '../modal-header/modal-header.component';
 
 @Component({
   selector: 'app-drawer',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [ModalHeaderComponent],
   templateUrl: './drawer.component.html',
 })
 export class DrawerComponent {
   @Input() open = false;
   @Input({ required: true }) title = '';
+  @Input() icon = '';
+  @Input() variant: ModalHeaderVariant = 'primary';
   @Output() closed = new EventEmitter<void>();
 
   constructor(private _alert: AlertService) {

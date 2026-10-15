@@ -1,4 +1,4 @@
-<app-drawer [title]="title" [open]="open" (closed)="closed.emit()">
+<app-drawer [title]="title" icon="memory" variant="purple" [open]="open" (closed)="closed.emit()">
   <form [formGroup]="form" (ngSubmit)="save()" novalidate>
     <div class="form-section">
       <span class="form-section__title"><mat-icon>memory</mat-icon>Información del dispositivo</span>

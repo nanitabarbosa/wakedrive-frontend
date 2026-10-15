@@ -1,0 +1,10 @@
+<div class="empty-state" [class.empty-state--bordered]="bordered" role="status">
+  <span class="empty-state__icon" [class.empty-state__icon--danger]="style.tone === 'danger'" aria-hidden="true">
+    <mat-icon>{{ icon || style.icon }}</mat-icon>
+  </span>
+  <span class="empty-state__title">{{ title || style.title }}</span>
+  @if (description) {
+    <span class="empty-state__description">{{ description }}</span>
+  }
+  <div class="empty-state__actions"><ng-content /></div>
+</div>

@@ -345,6 +345,10 @@
   flex-direction: column;
   padding: 28px 28px 24px;
 
+  .modal-header {
+    padding: 0 0 6px;
+  }
+
   .auth-form {
     margin-top: 18px;
   }
