@@ -50,13 +50,9 @@ export interface DateRange {
 }
 
 export interface DeviceFilters {
-  search: string;
-  status: DeviceStatus | '';
   limit: number;
 }
 
 export interface AlertFilters {
-  search: string;
-  type: AlertType | '';
   limit: number;
 }

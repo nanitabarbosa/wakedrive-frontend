@@ -1,12 +1,8 @@
-import { Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { DatePipe, formatDate } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { NgOptionComponent, NgSelectComponent } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableComponent } from '../../../../shared/components/table/table.component';
@@ -14,10 +10,8 @@ import { TableColumn } from '../../../../shared/components/table/interfaces/tabl
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import {
   AlertSummary,
-  AlertType,
   DailyAlerts,
   DashboardStats,
-  DeviceStatus,
   DeviceSummary,
   UserAlertRanking,
 } from '../../interfaces/dashboard.interface';
@@ -34,7 +28,7 @@ const LIMIT = 5;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [FormsModule, NgSelectComponent, NgOptionComponent, DatePipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
+  imports: [DatePipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
@@ -85,43 +79,17 @@ export class DashboardComponent implements OnInit {
   readonly errors = signal({ stats: false, devices: false, alerts: false, alertsByDay: false, topUsers: false });
 
   readonly dateRange = signal({ start: new Date(), end: new Date() });
-  readonly deviceSearch = signal('');
-  readonly deviceStatus = signal<DeviceStatus | ''>('');
-  readonly alertSearch = signal('');
-  readonly alertType = signal<AlertType | ''>('');
   readonly rangeDays = signal(7);
 
   readonly chartMax = computed(() => Math.max(5, Math.ceil(Math.max(0, ...this.alertsByDay().map(d => d.total)) / 5) * 5));
   readonly chartTicks = computed(() => Array.from({ length: this.chartMax() / 5 + 1 }, (_, i) => i * 5));
   readonly rankingMax = computed(() => Math.max(1, ...this.topUsers().map(u => u.total)));
 
-  private readonly _deviceSearch$ = new Subject<string>();
-  private readonly _alertSearch$ = new Subject<string>();
-
-  constructor(
-    private _dashboardService: DashboardService,
-    private _destroyRef: DestroyRef,
-  ) {}
+  constructor(private _dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    this.listenSearches();
     this.applyDateRange(this.rangePresets[1]);
     this.loadDashboard();
-  }
-
-  listenSearches(): void {
-    this._deviceSearch$
-      .pipe(debounceTime(350), distinctUntilChanged(), takeUntilDestroyed(this._destroyRef))
-      .subscribe(term => {
-        this.deviceSearch.set(term);
-        this.loadDevices();
-      });
-    this._alertSearch$
-      .pipe(debounceTime(350), distinctUntilChanged(), takeUntilDestroyed(this._destroyRef))
-      .subscribe(term => {
-        this.alertSearch.set(term);
-        this.loadAlerts();
-      });
   }
 
   setDateRange(preset: DateRangePreset): void {
@@ -154,14 +122,14 @@ export class DashboardComponent implements OnInit {
   }
 
   loadDevices(): void {
-    this._dashboardService.getDevices({ search: this.deviceSearch(), status: this.deviceStatus(), limit: LIMIT }).subscribe({
+    this._dashboardService.getDevices({ limit: LIMIT }).subscribe({
       next: devices => this.setResult('devices', () => this.devices.set(devices)),
       error: () => this.setError('devices', () => this.devices.set([])),
     });
   }
 
   loadAlerts(): void {
-    this._dashboardService.getLatestAlerts({ search: this.alertSearch(), type: this.alertType(), limit: LIMIT }).subscribe({
+    this._dashboardService.getLatestAlerts({ limit: LIMIT }).subscribe({
       next: alerts => this.setResult('alerts', () => this.alerts.set(alerts)),
       error: () => this.setError('alerts', () => this.alerts.set([])),
     });
@@ -179,24 +147,6 @@ export class DashboardComponent implements OnInit {
       next: users => this.setResult('topUsers', () => this.topUsers.set(users)),
       error: () => this.setError('topUsers', () => this.topUsers.set([])),
     });
-  }
-
-  onDeviceSearch(term: string): void {
-    this._deviceSearch$.next(term.trim());
-  }
-
-  onDeviceStatusChange(status: string): void {
-    this.deviceStatus.set(status as DeviceStatus | '');
-    this.loadDevices();
-  }
-
-  onAlertSearch(term: string): void {
-    this._alertSearch$.next(term.trim());
-  }
-
-  onAlertTypeChange(type: string): void {
-    this.alertType.set(type as AlertType | '');
-    this.loadAlerts();
   }
 
   initials(name: string): string {
