@@ -11,9 +11,9 @@
       </div>
       <div class="form-field">
         <label for="vehicle-brand">Marca <span class="required">*</span></label>
-        <input id="vehicle-brand" formControlName="brand" placeholder="Ej. Chevrolet" maxlength="50" [class.is-invalid]="hasError('brand')" />
-        @if (hasError('brand')) {
-          <span class="form-field__error">{{ errorFor('brand') }}</span>
+        <ng-select formControlName="brandId" [items]="brands()" bindLabel="name" bindValue="id" placeholder="Selecciona una marca" [clearable]="false" inputId="vehicle-brand" [class.is-invalid]="hasError('brandId')" />
+        @if (hasError('brandId')) {
+          <span class="form-field__error">{{ errorFor('brandId') }}</span>
         }
       </div>
       <div class="form-field">
@@ -32,20 +32,15 @@
       </div>
       <div class="form-field">
         <label for="vehicle-type">Tipo <span class="required">*</span></label>
-        <select id="vehicle-type" formControlName="type">
-          @for (option of typeOptions; track option[0]) {
-            <option [value]="option[0]">{{ option[1] }}</option>
-          }
-        </select>
+        <ng-select formControlName="vehicleTypeId" [items]="vehicleTypes()" bindLabel="name" bindValue="id" placeholder="Selecciona un tipo" [clearable]="false" inputId="vehicle-type" [class.is-invalid]="hasError('vehicleTypeId')" />
+        @if (hasError('vehicleTypeId')) {
+          <span class="form-field__error">{{ errorFor('vehicleTypeId') }}</span>
+        }
       </div>
       @if (mode !== 'create') {
         <div class="form-field">
           <label for="vehicle-status">Estado <span class="required">*</span></label>
-          <select id="vehicle-status" formControlName="status">
-            @for (option of statusOptions; track option[0]) {
-              <option [value]="option[0]">{{ option[1] }}</option>
-            }
-          </select>
+          <ng-select formControlName="status" [items]="statusOptions" bindLabel="1" bindValue="0" [clearable]="false" [searchable]="false" inputId="vehicle-status" />
         </div>
       }
     </div>

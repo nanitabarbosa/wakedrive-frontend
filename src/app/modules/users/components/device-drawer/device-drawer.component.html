@@ -12,11 +12,7 @@
       @if (mode !== 'create') {
         <div class="form-field">
           <label for="device-status">Estado <span class="required">*</span></label>
-          <select id="device-status" formControlName="status">
-            @for (option of statusOptions; track option[0]) {
-              <option [value]="option[0]">{{ option[1] }}</option>
-            }
-          </select>
+          <ng-select formControlName="status" [items]="statusOptions" bindLabel="1" bindValue="0" [clearable]="false" [searchable]="false" inputId="device-status" />
         </div>
       }
     </div>

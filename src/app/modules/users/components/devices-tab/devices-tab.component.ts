@@ -1,6 +1,8 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
@@ -17,7 +19,7 @@ import { DeviceDrawerComponent } from '../device-drawer/device-drawer.component'
 @Component({
   selector: 'app-devices-tab',
   standalone: true,
-  imports: [MatIconModule, TableComponent, DeviceDrawerComponent],
+  imports: [FormsModule, NgSelectComponent, MatIconModule, TableComponent, DeviceDrawerComponent],
   templateUrl: './devices-tab.component.html',
 })
 export class DevicesTabComponent implements OnInit {

@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink } from '@angular/router';
 
@@ -19,7 +20,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-request-access',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, RouterLink],
+  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, RouterLink],
   templateUrl: './request-access.component.html',
 })
 export class RequestAccessComponent implements OnInit {

@@ -21,12 +21,7 @@
       </button>
     </div>
     <div class="toolbar__row">
-      <select class="select" [value]="status()" (change)="onStatusChange($any($event.target).value)" aria-label="Filtrar por estado">
-        <option value="">Todos los estados</option>
-        @for (option of statusOptions; track option[0]) {
-          <option [value]="option[0]">{{ option[1] }}</option>
-        }
-      </select>
+      <ng-select class="ng-select--filter" [items]="statusOptions" bindLabel="1" bindValue="0" placeholder="Todos los estados" [searchable]="false" [ngModel]="status()" (ngModelChange)="onStatusChange($event ?? '')" aria-label="Filtrar por estado" />
     </div>
   </div>
   <ng-template #cellTemplate let-device let-column="column" let-index="index">

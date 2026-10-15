@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AlertService } from '../../../../core/services/alert.service';
@@ -14,7 +15,7 @@ import { DeviceService } from '../../services/device.service';
 @Component({
   selector: 'app-device-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
+  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
   templateUrl: './device-drawer.component.html',
 })
 export class DeviceDrawerComponent implements OnInit, OnChanges {

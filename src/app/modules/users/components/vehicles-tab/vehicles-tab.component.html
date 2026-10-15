@@ -1,7 +1,7 @@
 <app-table
   [columns]="columns"
   [data]="vehicles()"
-  [customColumns]="['index', 'plate', 'type', 'status', 'actions']"
+  [customColumns]="['index', 'plate', 'brand', 'type', 'status', 'actions']"
   [showToolbar]="true"
   [paginated]="true"
   [page]="page()"
@@ -21,18 +21,8 @@
       </button>
     </div>
     <div class="toolbar__row">
-      <select class="select" [value]="type()" (change)="onTypeChange($any($event.target).value)" aria-label="Filtrar por tipo">
-        <option value="">Todos los tipos</option>
-        @for (option of typeOptions; track option[0]) {
-          <option [value]="option[0]">{{ option[1] }}</option>
-        }
-      </select>
-      <select class="select" [value]="status()" (change)="onStatusChange($any($event.target).value)" aria-label="Filtrar por estado">
-        <option value="">Todos los estados</option>
-        @for (option of statusOptions; track option[0]) {
-          <option [value]="option[0]">{{ option[1] }}</option>
-        }
-      </select>
+      <ng-select class="ng-select--filter" [items]="typeOptions()" bindLabel="name" bindValue="id" placeholder="Todos los tipos" [searchable]="false" [ngModel]="type()" (ngModelChange)="onTypeChange($event ?? '')" aria-label="Filtrar por tipo" />
+      <ng-select class="ng-select--filter" [items]="statusOptions" bindLabel="1" bindValue="0" placeholder="Todos los estados" [searchable]="false" [ngModel]="status()" (ngModelChange)="onStatusChange($event ?? '')" aria-label="Filtrar por estado" />
     </div>
   </div>
   <ng-template #cellTemplate let-vehicle let-column="column" let-index="index">
@@ -43,8 +33,11 @@
       @case ('plate') {
         <span class="plate">{{ vehicle.plate }}</span>
       }
+      @case ('brand') {
+        {{ vehicle.brand.name }}
+      }
       @case ('type') {
-        <span class="chip">{{ typeLabels[vehicle.type] }}</span>
+        <span class="chip">{{ typeLabel(vehicle.type.name) }}</span>
       }
       @case ('status') {
         <span class="badge" [class.badge--success]="vehicle.status === 'ACTIVE'" [class.badge--danger]="vehicle.status === 'INACTIVE'">

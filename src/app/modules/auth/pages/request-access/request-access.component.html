@@ -44,12 +44,7 @@
             <label for="request-cityId">Ciudad <span class="required">*</span></label>
             <div class="input-icon input-icon--select" [class.is-invalid]="hasError('cityId')">
               <mat-icon class="input-icon__icon">location_on</mat-icon>
-              <select id="request-cityId" formControlName="cityId" required>
-                <option value="" disabled>Selecciona una ciudad</option>
-                @for (city of cities(); track city.id) {
-                  <option [value]="city.id">{{ city.name }}</option>
-                }
-              </select>
+              <ng-select formControlName="cityId" [items]="cities()" bindLabel="name" bindValue="id" placeholder="Selecciona una ciudad" [clearable]="false" inputId="request-cityId" />
             </div>
             @if (hasError('cityId')) {
               <span class="form-field__error">{{ errorFor('cityId') }}</span>
