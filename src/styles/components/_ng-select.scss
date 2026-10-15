@@ -1,0 +1,124 @@
+// Estilo único de ng-select para toda la plataforma (formularios y filtros)
+ng-select.ng-select {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  color: var(--wd-text);
+
+  .ng-select-container {
+    min-height: 40px;
+    height: 40px;
+    background: var(--wd-surface);
+    border: 1px solid var(--wd-border);
+    border-radius: var(--wd-radius-sm);
+    cursor: pointer;
+
+    .ng-value-container {
+      padding-left: 12px;
+      align-items: center;
+
+      .ng-placeholder {
+        color: var(--wd-text-muted);
+      }
+
+      .ng-input {
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 50px 0 12px;
+
+        > input {
+          width: 100%;
+          height: 100%;
+          padding: 0;
+          font: inherit;
+          line-height: normal;
+          background: none;
+          border: 0;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+  &.ng-select-focused:not(.ng-select-opened) > .ng-select-container,
+  &.ng-select-opened > .ng-select-container {
+    border-color: var(--wd-primary);
+    box-shadow: none;
+  }
+
+  &.ng-select-disabled > .ng-select-container {
+    background: #f8fafc;
+    cursor: default;
+
+    .ng-value {
+      color: var(--wd-text);
+    }
+  }
+
+  &.is-invalid > .ng-select-container {
+    border-color: var(--wd-danger);
+  }
+
+  .ng-arrow-wrapper .ng-arrow {
+    border-top-color: var(--wd-text-muted);
+  }
+
+  // Variante compacta para los filtros de las tablas
+  &.ng-select--filter {
+    min-width: 170px;
+    width: auto;
+    font-size: 13px;
+
+    .ng-select-container {
+      min-height: 36px;
+      height: 36px;
+    }
+  }
+}
+
+// El panel se agrega al body: debe quedar sobre el drawer (1001) y bajo las alertas (1100)
+.ng-dropdown-panel {
+  z-index: 1050;
+  border-color: var(--wd-border);
+  font-size: 14px;
+
+  &.ng-select-bottom,
+  &.ng-select-top {
+    border-radius: var(--wd-radius-sm);
+  }
+
+  .ng-dropdown-panel-items .ng-option {
+    &.ng-option-marked {
+      background: var(--wd-bg);
+    }
+
+    &.ng-option-selected,
+    &.ng-option-selected.ng-option-marked {
+      font-weight: 600;
+      background: var(--wd-bg);
+    }
+  }
+}
+
+// Select dentro de un campo con ícono (pantallas de autenticación)
+.input-icon--select ng-select.ng-select {
+  flex: 1;
+  min-width: 0;
+
+  .ng-select-container {
+    height: 100%;
+    min-height: 0;
+    background: transparent;
+    border: none;
+
+    .ng-value-container {
+      padding-left: 0;
+
+      .ng-input {
+        padding-left: 0;
+      }
+    }
+  }
+}

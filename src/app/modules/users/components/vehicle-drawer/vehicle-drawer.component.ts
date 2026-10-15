@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AlertService } from '../../../../core/services/alert.service';
@@ -8,7 +9,7 @@ import { DrawerComponent } from '../../../../shared/components/drawer/drawer.com
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
 import { RECORD_STATUS_LABELS } from '../../interfaces/user.interface';
-import { VEHICLE_TYPE_LABELS, Vehicle, VehiclePayload } from '../../interfaces/vehicle.interface';
+import { CatalogItem, Vehicle, VehiclePayload, vehicleTypeLabel } from '../../interfaces/vehicle.interface';
 import { VehicleService } from '../../services/vehicle.service';
 
 const MIN_YEAR = 1980;
@@ -17,7 +18,7 @@ const MAX_YEAR = new Date().getFullYear() + 1;
 @Component({
   selector: 'app-vehicle-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
+  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
   templateUrl: './vehicle-drawer.component.html',
 })
 export class VehicleDrawerComponent implements OnInit, OnChanges {
@@ -27,7 +28,8 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
   @Output() closed = new EventEmitter<void>();
   @Output() saved = new EventEmitter<string>();
 
-  readonly typeOptions = Object.entries(VEHICLE_TYPE_LABELS);
+  readonly brands = signal<CatalogItem[]>([]);
+  readonly vehicleTypes = signal<CatalogItem[]>([]);
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly minYear = MIN_YEAR;
   readonly maxYear = MAX_YEAR;
@@ -47,6 +49,7 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.buildForm();
+    this.loadCatalogs();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -56,17 +59,28 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
   buildForm(): void {
     this.form = this._fb.nonNullable.group({
       plate: ['', [Validators.required, Validators.pattern(/^[A-Za-z]{3}-?\d{2}[0-9A-Za-z]$/)]],
-      brand: ['', [Validators.required, Validators.maxLength(50)]],
+      brandId: [null as number | null, Validators.required],
       model: ['', [Validators.required, Validators.maxLength(50)]],
       year: [MAX_YEAR - 1, [Validators.required, Validators.min(MIN_YEAR), Validators.max(MAX_YEAR)]],
-      type: ['TRUCK', Validators.required],
+      vehicleTypeId: [null as number | null, Validators.required],
       status: ['ACTIVE', Validators.required],
+    });
+  }
+
+  loadCatalogs(): void {
+    this._vehicleService.getBrands().subscribe({
+      next: brands => this.brands.set(brands),
+      error: () => this._alert.error('No se pudieron cargar las marcas.'),
+    });
+    this._vehicleService.getVehicleTypes().subscribe({
+      next: types => this.vehicleTypes.set(types.map(type => ({ ...type, name: vehicleTypeLabel(type.name) }))),
+      error: () => this._alert.error('No se pudieron cargar los tipos de vehículo.'),
     });
   }
 
   resetForm(): void {
     this.form.reset();
-    if (this.vehicle) this.form.patchValue(this.vehicle);
+    if (this.vehicle) this.form.patchValue({ ...this.vehicle, brandId: this.vehicle.brand.id, vehicleTypeId: this.vehicle.type.id });
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
   }
@@ -93,11 +107,12 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
 
     const value = this.form.getRawValue();
     const payload: VehiclePayload = {
-      ...value,
       plate: value.plate.replace('-', '').toUpperCase(),
-      brand: value.brand.trim(),
+      brandId: value.brandId,
       model: value.model.trim(),
       year: Number(value.year),
+      vehicleTypeId: value.vehicleTypeId,
+      status: value.status,
     };
     const isEdit = this.mode === 'edit' && !!this.vehicle;
     const request$ = isEdit

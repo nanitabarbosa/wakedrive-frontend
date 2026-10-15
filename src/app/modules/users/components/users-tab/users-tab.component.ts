@@ -1,6 +1,8 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
@@ -17,7 +19,7 @@ import { UserDrawerComponent } from '../user-drawer/user-drawer.component';
 @Component({
   selector: 'app-users-tab',
   standalone: true,
-  imports: [MatIconModule, TableComponent, InitialsPipe, UserDrawerComponent],
+  imports: [FormsModule, NgSelectComponent, MatIconModule, TableComponent, InitialsPipe, UserDrawerComponent],
   templateUrl: './users-tab.component.html',
 })
 export class UsersTabComponent implements OnInit {

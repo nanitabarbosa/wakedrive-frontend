@@ -24,8 +24,8 @@ export class VinculationsTabComponent implements OnInit {
   readonly columns: TableColumn[] = [
     { key: 'index', label: '#' },
     { key: 'userName', label: 'Conductor' },
-    { key: 'vehiclePlate', label: 'Vehículo' },
-    { key: 'deviceSerial', label: 'Dispositivo' },
+    { key: 'vehiclePlate', label: 'Placa' },
+    { key: 'deviceSerial', label: 'Serial' },
     { key: 'linkedAt', label: 'Vinculado desde' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];

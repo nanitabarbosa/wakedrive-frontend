@@ -2,6 +2,8 @@ import { Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
 import { DatePipe, formatDate } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { NgOptionComponent, NgSelectComponent } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
@@ -32,7 +34,7 @@ const LIMIT = 5;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DatePipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
+  imports: [FormsModule, NgSelectComponent, NgOptionComponent, DatePipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {

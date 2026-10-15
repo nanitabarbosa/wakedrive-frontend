@@ -11,39 +11,19 @@
     </div>
     <div class="filters__field">
       <label for="alerts-user">Usuario</label>
-      <select id="alerts-user" class="select" (change)="onSelectChange('userId', $any($event.target).value)">
-        <option value="">Todos los usuarios</option>
-        @for (option of userOptions(); track option.id) {
-          <option [value]="option.id">{{ option.label }}</option>
-        }
-      </select>
+      <ng-select [items]="userOptions()" bindLabel="label" bindValue="id" placeholder="Todos los usuarios" [searchable]="true" [ngModel]="filters().userId || null" (ngModelChange)="onSelectChange('userId', $event ?? '')" inputId="alerts-user" />
     </div>
     <div class="filters__field">
       <label for="alerts-vehicle">Vehículo</label>
-      <select id="alerts-vehicle" class="select" (change)="onSelectChange('vehicleId', $any($event.target).value)">
-        <option value="">Todos los vehículos</option>
-        @for (option of vehicleOptions(); track option.id) {
-          <option [value]="option.id">{{ option.label }}</option>
-        }
-      </select>
+      <ng-select [items]="vehicleOptions()" bindLabel="label" bindValue="id" placeholder="Todos los vehículos" [searchable]="true" [ngModel]="filters().vehicleId || null" (ngModelChange)="onSelectChange('vehicleId', $event ?? '')" inputId="alerts-vehicle" />
     </div>
     <div class="filters__field">
       <label for="alerts-type">Tipo de alerta</label>
-      <select id="alerts-type" class="select" (change)="onSelectChange('type', $any($event.target).value)">
-        <option value="">Todos los tipos</option>
-        @for (option of typeOptions; track option[0]) {
-          <option [value]="option[0]">{{ option[1] }}</option>
-        }
-      </select>
+      <ng-select [items]="typeOptions" bindLabel="1" bindValue="0" placeholder="Todos los tipos" [searchable]="false" [ngModel]="filters().type || null" (ngModelChange)="onSelectChange('type', $event ?? '')" inputId="alerts-type" />
     </div>
     <div class="filters__field">
       <label for="alerts-level">Nivel</label>
-      <select id="alerts-level" class="select" (change)="onSelectChange('level', $any($event.target).value)">
-        <option value="">Todos los niveles</option>
-        @for (option of levelOptions; track option[0]) {
-          <option [value]="option[0]">{{ option[1] }}</option>
-        }
-      </select>
+      <ng-select [items]="levelOptions" bindLabel="1" bindValue="0" placeholder="Todos los niveles" [searchable]="false" [ngModel]="filters().level || null" (ngModelChange)="onSelectChange('level', $event ?? '')" inputId="alerts-level" />
     </div>
     <div class="filters__field filters__field--wide">
       <label for="alerts-location">Ubicación</label>

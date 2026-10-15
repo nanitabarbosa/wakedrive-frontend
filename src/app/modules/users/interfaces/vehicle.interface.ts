@@ -1,6 +1,9 @@
 import { RecordStatus } from './user.interface';
 
-export type VehicleType = 'TRUCK' | 'TRACTOR_TRAILER' | 'BUS' | 'VAN';
+export interface CatalogItem {
+  id: number;
+  name: string;
+}
 
 export const VEHICLE_TYPE_LABELS: Record<string, string> = {
   TRUCK: 'Camión',
@@ -9,21 +12,32 @@ export const VEHICLE_TYPE_LABELS: Record<string, string> = {
   VAN: 'Camioneta',
 };
 
+export function vehicleTypeLabel(name: string): string {
+  return VEHICLE_TYPE_LABELS[name] ?? name;
+}
+
 export interface Vehicle {
   id: number;
   plate: string;
-  brand: string;
+  brand: CatalogItem;
   model: string;
   year: number;
-  type: VehicleType;
+  type: CatalogItem;
   status: RecordStatus;
 }
 
-export type VehiclePayload = Omit<Vehicle, 'id'>;
+export interface VehiclePayload {
+  plate: string;
+  brandId: number;
+  model: string;
+  year: number;
+  vehicleTypeId: number;
+  status: RecordStatus;
+}
 
 export interface VehicleFilters {
   search: string;
-  type: VehicleType | '';
+  vehicleTypeId: number | '';
   status: RecordStatus | '';
   page: number;
   size: number;

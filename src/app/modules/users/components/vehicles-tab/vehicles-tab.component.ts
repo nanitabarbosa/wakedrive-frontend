@@ -1,6 +1,8 @@
 import { Component, DestroyRef, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject, debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs';
 
@@ -10,14 +12,14 @@ import { DrawerMode } from '../../../../shared/components/drawer/interfaces/draw
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { RECORD_STATUS_LABELS, RecordStatus } from '../../interfaces/user.interface';
-import { VEHICLE_TYPE_LABELS, Vehicle, VehicleType } from '../../interfaces/vehicle.interface';
+import { CatalogItem, Vehicle, vehicleTypeLabel } from '../../interfaces/vehicle.interface';
 import { VehicleService } from '../../services/vehicle.service';
 import { VehicleDrawerComponent } from '../vehicle-drawer/vehicle-drawer.component';
 
 @Component({
   selector: 'app-vehicles-tab',
   standalone: true,
-  imports: [MatIconModule, TableComponent, VehicleDrawerComponent],
+  imports: [FormsModule, NgSelectComponent, MatIconModule, TableComponent, VehicleDrawerComponent],
   templateUrl: './vehicles-tab.component.html',
 })
 export class VehiclesTabComponent implements OnInit {
@@ -31,9 +33,9 @@ export class VehiclesTabComponent implements OnInit {
     { key: 'status', label: 'Estado' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];
-  readonly typeLabels = VEHICLE_TYPE_LABELS;
+  readonly typeLabel = vehicleTypeLabel;
   readonly statusLabels = RECORD_STATUS_LABELS;
-  readonly typeOptions = Object.entries(VEHICLE_TYPE_LABELS);
+  readonly typeOptions = signal<CatalogItem[]>([]);
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly pageSize = 8;
 
@@ -43,7 +45,7 @@ export class VehiclesTabComponent implements OnInit {
   readonly loadError = signal(false);
 
   readonly search = signal('');
-  readonly type = signal<VehicleType | ''>('');
+  readonly type = signal<number | ''>('');
   readonly status = signal<RecordStatus | ''>('');
 
   readonly drawerOpen = signal(false);
@@ -61,6 +63,7 @@ export class VehiclesTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.listenSearch();
+    this.loadTypes();
     this.loadVehicles();
   }
 
@@ -73,10 +76,17 @@ export class VehiclesTabComponent implements OnInit {
       });
   }
 
+  loadTypes(): void {
+    this._vehicleService.getVehicleTypes().subscribe({
+      next: types => this.typeOptions.set(types.map(type => ({ ...type, name: vehicleTypeLabel(type.name) }))),
+      error: () => this.typeOptions.set([]),
+    });
+  }
+
   loadVehicles(): void {
     this.loadError.set(false);
     this._vehicleService
-      .getVehicles({ search: this.search(), type: this.type(), status: this.status(), page: this.page(), size: this.pageSize })
+      .getVehicles({ search: this.search(), vehicleTypeId: this.type(), status: this.status(), page: this.page(), size: this.pageSize })
       .subscribe({
         next: response => {
           this.vehicles.set(response.content);
@@ -95,7 +105,7 @@ export class VehiclesTabComponent implements OnInit {
   }
 
   onTypeChange(type: string): void {
-    this.type.set(type as VehicleType | '');
+    this.type.set(type === '' ? '' : Number(type));
     this.resetAndLoad();
   }
 

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 import { forkJoin } from 'rxjs';
 
@@ -13,7 +14,7 @@ import { VinculationService } from '../../services/vinculation.service';
 @Component({
   selector: 'app-vinculation-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
+  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, DrawerComponent, FormActionsComponent],
   templateUrl: './vinculation-drawer.component.html',
 })
 export class VinculationDrawerComponent implements OnInit, OnChanges {

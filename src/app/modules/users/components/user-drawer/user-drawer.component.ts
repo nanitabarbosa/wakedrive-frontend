@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AlertService } from '../../../../core/services/alert.service';
@@ -22,7 +23,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-user-drawer',
   standalone: true,
-  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, DrawerComponent, FormActionsComponent],
+  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, DrawerComponent, FormActionsComponent],
   templateUrl: './user-drawer.component.html',
 })
 export class UserDrawerComponent implements OnInit, OnChanges {

@@ -93,11 +93,10 @@
       <mat-icon>search</mat-icon>
       <input type="search" placeholder="Buscar por serial, vehículo o usuario..." (input)="onDeviceSearch($any($event.target).value)" />
     </label>
-    <select class="select" table-actions [value]="deviceStatus()" (change)="onDeviceStatusChange($any($event.target).value)" aria-label="Filtrar por estado">
-      <option value="">Todos los estados</option>
-      <option value="ACTIVE">Activo</option>
-      <option value="OFFLINE">Sin conexión</option>
-    </select>
+    <ng-select class="ng-select--filter" table-actions placeholder="Todos los estados" [searchable]="false" [ngModel]="deviceStatus() || null" (ngModelChange)="onDeviceStatusChange($event ?? '')" aria-label="Filtrar por estado">
+      <ng-option value="ACTIVE">Activo</ng-option>
+      <ng-option value="OFFLINE">Sin conexión</ng-option>
+    </ng-select>
     <button type="button" class="btn-link" table-actions routerLink="/devices">Ver todos <mat-icon>arrow_forward</mat-icon></button>
     <ng-template #cellTemplate let-device let-column="column">
       @switch (column.key) {
@@ -125,13 +124,12 @@
       <mat-icon>search</mat-icon>
       <input type="search" placeholder="Buscar por conductor, vehículo o ubicación..." (input)="onAlertSearch($any($event.target).value)" />
     </label>
-    <select class="select" table-actions [value]="alertType()" (change)="onAlertTypeChange($any($event.target).value)" aria-label="Filtrar por tipo">
-      <option value="">Todos los tipos</option>
-      <option value="DROWSINESS">Somnolencia detectada</option>
-      <option value="FACE_NOT_DETECTED">Rostro no detectado</option>
-      <option value="DEVICE_OFF">Dispositivo apagado</option>
-      <option value="CONNECTION_LOST">Pérdida de conexión</option>
-    </select>
+    <ng-select class="ng-select--filter" table-actions placeholder="Todos los tipos" [searchable]="false" [ngModel]="alertType() || null" (ngModelChange)="onAlertTypeChange($event ?? '')" aria-label="Filtrar por tipo">
+      <ng-option value="DROWSINESS">Somnolencia detectada</ng-option>
+      <ng-option value="FACE_NOT_DETECTED">Rostro no detectado</ng-option>
+      <ng-option value="DEVICE_OFF">Dispositivo apagado</ng-option>
+      <ng-option value="CONNECTION_LOST">Pérdida de conexión</ng-option>
+    </ng-select>
     <button type="button" class="btn-link" table-actions routerLink="/alerts">Ver todas <mat-icon>arrow_forward</mat-icon></button>
     <ng-template #cellTemplate let-alert let-column="column">
       @switch (column.key) {
