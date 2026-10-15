@@ -48,10 +48,13 @@
                   <span class="company-devices__serial">{{ device.serial }}</span>
                 }
                 @case ('status') {
-                  <span class="badge badge--toggle" [class.badge--success]="device.status === 'ACTIVE'" [class.badge--danger]="device.status === 'INACTIVE'">
-                    <span class="mini-toggle" [class.mini-toggle--on]="device.status === 'ACTIVE'" aria-hidden="true"></span>
-                    {{ statusLabel(device.status) }}
-                  </span>
+                  <span
+                    class="mini-toggle"
+                    [class.mini-toggle--on]="device.status === 'ACTIVE'"
+                    role="img"
+                    [attr.aria-label]="statusLabel(device.status)"
+                    [title]="statusLabel(device.status)"
+                  ></span>
                 }
                 @case ('actions') {
                   <button
