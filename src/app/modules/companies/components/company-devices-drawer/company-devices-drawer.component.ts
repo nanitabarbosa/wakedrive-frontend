@@ -21,15 +21,17 @@ export class CompanyDevicesDrawerComponent implements OnInit, OnChanges {
   @Output() closed = new EventEmitter<void>();
 
   readonly columns: TableColumn[] = [{ key: 'serial', label: 'Serial' }];
-  readonly pageSize = 10;
+  readonly pageSize = 30;
 
   readonly devices = signal<CompanyDevice[]>([]);
   readonly total = signal(0);
   readonly page = signal(1);
   readonly search = signal('');
+  readonly loading = signal(false);
   readonly loadError = signal(false);
 
   private readonly _search$ = new Subject<string>();
+  private _requestId = 0;
 
   constructor(
     private _companyAdminService: CompanyAdminService,
@@ -49,33 +51,40 @@ export class CompanyDevicesDrawerComponent implements OnInit, OnChanges {
       .pipe(debounceTime(350), distinctUntilChanged(), takeUntilDestroyed(this._destroyRef))
       .subscribe(term => {
         this.search.set(term);
-        this.page.set(1);
-        this.loadDevices();
+        this.loadDevices(true);
       });
   }
 
   reset(): void {
     this.search.set('');
-    this.page.set(1);
     this.devices.set([]);
     this.total.set(0);
-    this.loadDevices();
+    this.loadDevices(true);
   }
 
-  loadDevices(): void {
+  loadDevices(reset: boolean): void {
     if (!this.company) return;
+    if (reset) this.page.set(1);
+    const requestId = ++this._requestId;
+    this.loading.set(true);
     this.loadError.set(false);
     this._companyAdminService
       .getDevices(this.company.id, { search: this.search(), page: this.page(), size: this.pageSize })
       .subscribe({
         next: response => {
-          this.devices.set(response.content);
+          if (requestId !== this._requestId) return;
+          this.devices.update(current => (reset ? response.content : [...current, ...response.content]));
           this.total.set(response.page.totalElements);
+          this.loading.set(false);
         },
         error: () => {
-          this.devices.set([]);
-          this.total.set(0);
+          if (requestId !== this._requestId) return;
+          if (reset) {
+            this.devices.set([]);
+            this.total.set(0);
+          }
           this.loadError.set(true);
+          this.loading.set(false);
         },
       });
   }
@@ -84,8 +93,11 @@ export class CompanyDevicesDrawerComponent implements OnInit, OnChanges {
     this._search$.next(term.trim());
   }
 
-  onPageChange(page: number): void {
-    this.page.set(page);
-    this.loadDevices();
+  onScroll(event: Event): void {
+    const list = event.target as HTMLElement;
+    const nearBottom = list.scrollHeight - list.scrollTop - list.clientHeight < 80;
+    if (!nearBottom || this.loading() || this.devices().length >= this.total()) return;
+    this.page.update(page => page + 1);
+    this.loadDevices(false);
   }
 }

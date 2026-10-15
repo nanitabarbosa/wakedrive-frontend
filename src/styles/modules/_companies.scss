@@ -1,4 +1,12 @@
 .company-devices {
+  height: 100%;
+
+  &__list {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
   &__heading {
     display: flex;
     flex-direction: column;
@@ -22,11 +30,5 @@
   .card {
     border: none;
     box-shadow: none;
-  }
-
-  .pagination {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 16px 0 0;
   }
 }

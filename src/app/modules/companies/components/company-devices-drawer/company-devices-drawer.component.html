@@ -9,16 +9,13 @@
         <mat-icon>search</mat-icon>
         <input type="search" placeholder="Buscar serial..." [value]="search()" (input)="onSearch($any($event.target).value)" />
       </label>
-      <app-table
-        [columns]="columns"
-        [data]="devices()"
-        [paginated]="true"
-        [page]="page()"
-        [pageSize]="pageSize"
-        [total]="total()"
-        (pageChange)="onPageChange($event)"
-        [emptyMessage]="loadError() ? 'No se pudieron cargar los dispositivos.' : 'No hay dispositivos que coincidan con la búsqueda.'"
-      />
+      <div class="company-devices__list" (scroll)="onScroll($event)">
+        <app-table
+          [columns]="columns"
+          [data]="devices()"
+          [emptyMessage]="loading() ? 'Cargando dispositivos...' : loadError() ? 'No se pudieron cargar los dispositivos.' : 'No hay dispositivos que coincidan con la búsqueda.'"
+        />
+      </div>
     </div>
   }
 </app-drawer>
