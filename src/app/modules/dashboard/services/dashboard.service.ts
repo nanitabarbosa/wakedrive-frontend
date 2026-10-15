@@ -7,10 +7,12 @@ import {
   AlertFilters,
   AlertSummary,
   DailyAlerts,
+  DailyAlertsFilters,
   DashboardStats,
   DateRange,
   DeviceFilters,
   DeviceSummary,
+  TopUsersFilters,
   UserAlertRanking,
 } from '../interfaces/dashboard.interface';
 
@@ -32,12 +34,12 @@ export class DashboardService {
     return this._http.get<AlertSummary[]>(`${ENDPOINT}/alerts`, { params: this.toParams({ ...filters }) });
   }
 
-  getAlertsByDay(days: number): Observable<DailyAlerts[]> {
-    return this._http.get<DailyAlerts[]>(`${ENDPOINT}/alerts/by-day`, { params: this.toParams({ days }) });
+  getAlertsByDay(filters: DailyAlertsFilters): Observable<DailyAlerts[]> {
+    return this._http.get<DailyAlerts[]>(`${ENDPOINT}/alerts/by-day`, { params: this.toParams({ ...filters }) });
   }
 
-  getTopUsers(days: number, limit: number): Observable<UserAlertRanking[]> {
-    return this._http.get<UserAlertRanking[]>(`${ENDPOINT}/alerts/top-users`, { params: this.toParams({ days, limit }) });
+  getTopUsers(filters: TopUsersFilters): Observable<UserAlertRanking[]> {
+    return this._http.get<UserAlertRanking[]>(`${ENDPOINT}/alerts/top-users`, { params: this.toParams({ ...filters }) });
   }
 
   private toParams(values: Record<string, string | number>): HttpParams {

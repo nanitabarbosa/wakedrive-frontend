@@ -120,7 +120,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const value = this.form.getRawValue();
+    const { nit, ...value } = this.form.getRawValue();
     const payload: SettingsPayload = {
       ...value,
       companyName: value.companyName.trim(),

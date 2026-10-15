@@ -94,9 +94,7 @@ export class DashboardComponent implements OnInit {
 
   setDateRange(preset: DateRangePreset): void {
     this.applyDateRange(preset);
-    this.loadStats();
-    this.loadAlertsByDay();
-    this.loadTopUsers();
+    this.loadDashboard();
   }
 
   applyDateRange(preset: DateRangePreset): void {
@@ -114,36 +112,35 @@ export class DashboardComponent implements OnInit {
   }
 
   loadStats(): void {
-    const { start, end } = this.dateRange();
-    this._dashboardService.getStats({ from: this.toIsoDate(start), to: this.toIsoDate(end) }).subscribe({
+    this._dashboardService.getStats(this.isoRange()).subscribe({
       next: stats => this.setResult('stats', () => this.stats.set(stats)),
       error: () => this.setError('stats', () => this.stats.set(null)),
     });
   }
 
   loadDevices(): void {
-    this._dashboardService.getDevices({ limit: LIMIT }).subscribe({
+    this._dashboardService.getDevices({ ...this.isoRange(), limit: LIMIT }).subscribe({
       next: devices => this.setResult('devices', () => this.devices.set(devices)),
       error: () => this.setError('devices', () => this.devices.set([])),
     });
   }
 
   loadAlerts(): void {
-    this._dashboardService.getLatestAlerts({ limit: LIMIT }).subscribe({
+    this._dashboardService.getLatestAlerts({ ...this.isoRange(), limit: LIMIT }).subscribe({
       next: alerts => this.setResult('alerts', () => this.alerts.set(alerts)),
       error: () => this.setError('alerts', () => this.alerts.set([])),
     });
   }
 
   loadAlertsByDay(): void {
-    this._dashboardService.getAlertsByDay(this.rangeDays()).subscribe({
+    this._dashboardService.getAlertsByDay({ ...this.isoRange(), days: this.rangeDays() }).subscribe({
       next: data => this.setResult('alertsByDay', () => this.alertsByDay.set(data)),
       error: () => this.setError('alertsByDay', () => this.alertsByDay.set([])),
     });
   }
 
   loadTopUsers(): void {
-    this._dashboardService.getTopUsers(this.rangeDays(), LIMIT).subscribe({
+    this._dashboardService.getTopUsers({ ...this.isoRange(), days: this.rangeDays(), limit: LIMIT }).subscribe({
       next: users => this.setResult('topUsers', () => this.topUsers.set(users)),
       error: () => this.setError('topUsers', () => this.topUsers.set([])),
     });
@@ -167,6 +164,11 @@ export class DashboardComponent implements OnInit {
   private setError(block: keyof ReturnType<typeof this.errors>, apply: () => void): void {
     apply();
     this.errors.update(errors => ({ ...errors, [block]: true }));
+  }
+
+  private isoRange(): { from: string; to: string } {
+    const { start, end } = this.dateRange();
+    return { from: this.toIsoDate(start), to: this.toIsoDate(end) };
   }
 
   private toIsoDate(date: Date): string {

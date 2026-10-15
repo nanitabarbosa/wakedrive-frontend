@@ -49,10 +49,18 @@ export interface DateRange {
   to: string;
 }
 
-export interface DeviceFilters {
+export interface DeviceFilters extends DateRange {
   limit: number;
 }
 
-export interface AlertFilters {
+export interface AlertFilters extends DateRange {
+  limit: number;
+}
+
+export interface DailyAlertsFilters extends DateRange {
+  days: number;
+}
+
+export interface TopUsersFilters extends DailyAlertsFilters {
   limit: number;
 }

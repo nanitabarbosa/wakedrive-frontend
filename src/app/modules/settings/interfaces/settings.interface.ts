@@ -22,7 +22,6 @@ export interface SettingsPayload {
   notifyDeviceShutdown: boolean;
   alarmDurationSeconds: number;
   companyName: string;
-  nit: string;
   address: string;
   phone: string;
   email: string;
@@ -53,6 +52,6 @@ export const LOGO_RULES: FileRules = {
   accept: '.png,.jpg,.jpeg,image/png,image/jpeg',
   extensions: ['png', 'jpg', 'jpeg'],
   mimeTypes: ['image/png', 'image/jpeg'],
-  maxSizeMb: 2,
+  maxSizeMb: 5,
   label: 'PNG o JPG',
 };
