@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AlertService } from '../../../../core/services/alert.service';
@@ -12,6 +11,7 @@ import { OnlyNumbersDirective } from '../../../../shared/directives/only-numbers
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { FormActionsComponent } from '../../../../shared/components/form-actions/form-actions.component';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { RECORD_STATUS_LABELS, User, UserPayload } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
 
@@ -23,7 +23,7 @@ const ERROR_MESSAGES: Record<string, Record<string, string>> = {
 @Component({
   selector: 'app-user-drawer',
   standalone: true,
-  imports: [NgSelectComponent, ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, DrawerComponent, FormActionsComponent],
+  imports: [ReactiveFormsModule, MatIconModule, ValidateErrorsComponent, OnlyNumbersDirective, DrawerComponent, FormActionsComponent, InitialsPipe],
   templateUrl: './user-drawer.component.html',
 })
 export class UserDrawerComponent implements OnInit, OnChanges {
@@ -74,6 +74,11 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     if (this.user) this.form.patchValue({ ...this.user, phone: this.user.phone });
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
+  }
+
+  setStatus(status: string): void {
+    this.form.get('status')?.setValue(status);
+    this.form.markAsDirty();
   }
 
   hasError(control: string): boolean {

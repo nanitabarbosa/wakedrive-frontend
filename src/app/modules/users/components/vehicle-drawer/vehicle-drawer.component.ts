@@ -30,6 +30,7 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
 
   readonly brands = signal<CatalogItem[]>([]);
   readonly vehicleTypes = signal<CatalogItem[]>([]);
+  readonly statusLabels = RECORD_STATUS_LABELS;
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly minYear = MIN_YEAR;
   readonly maxYear = MAX_YEAR;
@@ -83,6 +84,11 @@ export class VehicleDrawerComponent implements OnInit, OnChanges {
     if (this.vehicle) this.form.patchValue({ ...this.vehicle, brandId: this.vehicle.brand.id, vehicleTypeId: this.vehicle.type.id });
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
+  }
+
+  setStatus(status: string): void {
+    this.form.get('status')?.setValue(status);
+    this.form.markAsDirty();
   }
 
   hasError(control: string): boolean {

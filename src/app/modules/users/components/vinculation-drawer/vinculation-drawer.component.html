@@ -1,30 +1,46 @@
 <app-drawer title="Nueva vinculación" icon="link" variant="primary" [open]="open" (closed)="closed.emit()">
-  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>link</mat-icon>Vinculación</span>
+  <form class="drawer-cards drawer-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+    <section class="info-card">
+      <span class="info-card__title">
+        <span class="info-card__icon"><mat-icon>link</mat-icon></span>
+        Vinculación
+      </span>
       <span class="form-section__hint">Asigna un conductor a un vehículo y al dispositivo instalado en él. Solo se listan los registrados que aún no están vinculados.</span>
+
       <div class="form-field">
         <label for="vinculation-user">Conductor <span class="required">*</span></label>
-        <ng-select formControlName="userId" [items]="drivers()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un conductor'" [clearable]="false" inputId="vinculation-user" [class.is-invalid]="hasError('userId')" />
+        <div class="input-icon input-icon--select" [class.is-invalid]="hasError('userId')">
+          <mat-icon class="input-icon__icon">person_outline</mat-icon>
+          <ng-select formControlName="userId" [items]="drivers()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un conductor'" [clearable]="false" inputId="vinculation-user" />
+        </div>
         @if (hasError('userId')) {
           <span class="form-field__error">Selecciona un conductor.</span>
         }
       </div>
+
       <div class="form-field">
         <label for="vinculation-vehicle">Vehículo <span class="required">*</span></label>
-        <ng-select formControlName="vehicleId" [items]="vehicles()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un vehículo'" [clearable]="false" inputId="vinculation-vehicle" [class.is-invalid]="hasError('vehicleId')" />
+        <div class="input-icon input-icon--select" [class.is-invalid]="hasError('vehicleId')">
+          <mat-icon class="input-icon__icon">directions_car</mat-icon>
+          <ng-select formControlName="vehicleId" [items]="vehicles()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un vehículo'" [clearable]="false" inputId="vinculation-vehicle" />
+        </div>
         @if (hasError('vehicleId')) {
           <span class="form-field__error">Selecciona un vehículo.</span>
         }
       </div>
+
       <div class="form-field">
         <label for="vinculation-device">Dispositivo <span class="required">*</span></label>
-        <ng-select formControlName="deviceSerial" [items]="devices()" bindLabel="label" bindValue="label" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un dispositivo'" [clearable]="false" inputId="vinculation-device" [class.is-invalid]="hasError('deviceSerial')" />
+        <div class="input-icon input-icon--select" [class.is-invalid]="hasError('deviceSerial')">
+          <mat-icon class="input-icon__icon">memory</mat-icon>
+          <ng-select formControlName="deviceSerial" [items]="devices()" bindLabel="label" bindValue="label" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un dispositivo'" [clearable]="false" inputId="vinculation-device" />
+        </div>
         @if (hasError('deviceSerial')) {
           <span class="form-field__error">Selecciona un dispositivo.</span>
         }
       </div>
-    </div>
+    </section>
+
     @if (errorMessage()) {
       <span class="form-alert" role="alert">{{ errorMessage() }}</span>
     }

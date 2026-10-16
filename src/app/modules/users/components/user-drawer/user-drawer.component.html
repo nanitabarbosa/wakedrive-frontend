@@ -1,42 +1,90 @@
 <app-drawer [title]="title" icon="group" variant="primary" [open]="open" (closed)="closed.emit()">
-  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>person</mat-icon>Información personal</span>
+  <form class="drawer-cards drawer-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+    @if (mode !== 'create' && user; as u) {
+      <section class="info-card profile-card">
+        <span class="profile-card__avatar">{{ u.fullName | initials }}</span>
+        <div class="profile-card__body">
+          <span class="profile-card__name">{{ u.fullName }}</span>
+          <span class="profile-card__role">Conductor</span>
+        </div>
+        <span class="badge" [class.badge--success]="u.status === 'ACTIVE'" [class.badge--neutral]="u.status !== 'ACTIVE'">
+          {{ statusLabels[u.status] }}
+        </span>
+      </section>
+    }
+
+    <section class="info-card">
+      <span class="info-card__title">
+        <span class="info-card__icon"><mat-icon>person_outline</mat-icon></span>
+        Información personal
+      </span>
+
       <div class="form-field">
         <label for="user-fullName">Nombre completo <span class="required">*</span></label>
-        <input id="user-fullName" formControlName="fullName" placeholder="Ej. Juan Pérez" maxlength="100" [class.is-invalid]="hasError('fullName')" />
+        <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('fullName')">
+          <mat-icon class="input-icon__icon">person_outline</mat-icon>
+          <input id="user-fullName" formControlName="fullName" placeholder="Ej. Juan Pérez" maxlength="100" />
+        </div>
         @if (hasError('fullName')) {
           <span class="form-field__error">{{ errorFor('fullName') }}</span>
         }
       </div>
-      <div class="form-field">
-        <label for="user-document">Documento <span class="required">*</span></label>
-        <input id="user-document" formControlName="document" inputmode="numeric" placeholder="Ej. 1092345678" maxlength="12" [class.is-invalid]="hasError('document')" />
-        @if (hasError('document')) {
-          <span class="form-field__error">{{ errorFor('document') }}</span>
-        }
+
+      <div class="drawer-form__row">
+        <div class="form-field">
+          <label for="user-document">Documento <span class="required">*</span></label>
+          <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('document')">
+            <mat-icon class="input-icon__icon">badge</mat-icon>
+            <input id="user-document" formControlName="document" inputmode="numeric" placeholder="1092345678" maxlength="12" />
+          </div>
+          @if (hasError('document')) {
+            <span class="form-field__error">{{ errorFor('document') }}</span>
+          }
+        </div>
+        <div class="form-field">
+          <label for="user-phone">Teléfono <span class="required">*</span></label>
+          <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('phone')">
+            <mat-icon class="input-icon__icon">phone</mat-icon>
+            <input id="user-phone" type="tel" appOnlyNumbers formControlName="phone" inputmode="numeric" placeholder="3001234567" maxlength="10" />
+          </div>
+          <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
+        </div>
       </div>
+
       <div class="form-field">
         <label for="user-email">Correo electrónico <span class="required">*</span></label>
-        <input id="user-email" type="email" formControlName="email" placeholder="Ej. juan.perez@abc.com" maxlength="120" [class.is-invalid]="hasError('email')" />
+        <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('email')">
+          <mat-icon class="input-icon__icon">mail_outline</mat-icon>
+          <input id="user-email" type="email" formControlName="email" placeholder="Ej. juan.perez@abc.com" maxlength="120" />
+        </div>
         @if (hasError('email')) {
           <span class="form-field__error">{{ errorFor('email') }}</span>
         }
       </div>
-      <div class="form-field">
-        <label for="user-phone">Teléfono <span class="required">*</span></label>
-        <input id="user-phone" type="tel" appOnlyNumbers formControlName="phone" inputmode="numeric" placeholder="3001234567" maxlength="10" [class.is-invalid]="hasError('phone')" />
-        <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
-      </div>
-    </div>
-    @if (mode !== 'create') {
-      <div class="form-section">
-        <span class="form-section__title"><mat-icon>toggle_on</mat-icon>Estado</span>
-        <div class="form-field">
-          <label for="user-status">Estado <span class="required">*</span></label>
-          <ng-select formControlName="status" [items]="statusOptions" bindLabel="1" bindValue="0" [clearable]="false" [searchable]="false" inputId="user-status" />
+    </section>
+
+    @if (mode === 'edit') {
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>toggle_on</mat-icon></span>
+          Estado <span class="required">*</span>
+        </span>
+        <div class="segmented" role="radiogroup" aria-label="Estado del conductor">
+          @for (option of statusOptions; track option[0]) {
+            <button
+              type="button"
+              role="radio"
+              class="segmented__tab status-option"
+              [class.segmented__tab--active]="form.get('status')?.value === option[0]"
+              [class.status-option--on]="option[0] === 'ACTIVE'"
+              [attr.aria-checked]="form.get('status')?.value === option[0]"
+              (click)="setStatus(option[0])"
+            >
+              {{ option[1] }}
+            </button>
+          }
         </div>
-      </div>
+      </section>
     }
   </form>
   @if (mode !== 'view') {

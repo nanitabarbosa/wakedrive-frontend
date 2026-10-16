@@ -1,6 +1,6 @@
 <app-drawer title="Solicitud de acceso" icon="assignment" variant="purple" [open]="open" (closed)="closed.emit()">
   @if (request; as r) {
-    <div class="request-detail">
+    <div class="drawer-cards">
       <section class="request-status" [ngClass]="'request-status--' + tones[r.status]">
         <mat-icon class="request-status__icon">{{ statusIcons[r.status] }}</mat-icon>
         <div class="request-status__body">
