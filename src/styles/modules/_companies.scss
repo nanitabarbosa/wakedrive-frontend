@@ -8,13 +8,6 @@
     overflow-y: auto;
   }
 
-  &__serial {
-    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-
   &__more {
     display: block;
     padding: 10px 0 14px;
@@ -163,14 +156,6 @@
     background: none;
     border: none;
     outline: none;
-  }
-
-  &__meta {
-    flex-shrink: 0;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--wd-primary);
-    white-space: nowrap;
   }
 
   &__clear {

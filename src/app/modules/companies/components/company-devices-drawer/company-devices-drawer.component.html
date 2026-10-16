@@ -29,9 +29,6 @@
       <label class="search-field">
         <mat-icon>search</mat-icon>
         <input type="text" placeholder="Buscar serial..." autocomplete="off" [value]="term()" (input)="onSearch($any($event.target).value)" />
-        @if (tabTotal !== null) {
-          <span class="search-field__meta">{{ total() }} de {{ tabTotal }}</span>
-        }
         @if (term()) {
           <button type="button" class="search-field__clear" (click)="clearSearch()" aria-label="Limpiar búsqueda">
             <mat-icon>close</mat-icon>
@@ -45,7 +42,7 @@
             <ng-template #cellTemplate let-device let-column="column">
               @switch (column.key) {
                 @case ('serial') {
-                  <span class="company-devices__serial">{{ device.serial }}</span>
+                  <span class="serial-texto">{{ device.serial }}</span>
                 }
                 @case ('status') {
                   <span

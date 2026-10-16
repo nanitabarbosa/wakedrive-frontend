@@ -65,12 +65,6 @@ export class CompanyDevicesDrawerComponent implements OnInit, OnChanges {
     return this.counts()?.total ?? this.company?.deviceCount ?? 0;
   }
 
-  get tabTotal(): number | null {
-    const counts = this.counts();
-    const tab = this.tabs.find(item => item.value === this.status());
-    return counts && tab ? counts[tab.key] : null;
-  }
-
   get emptyDescription(): string {
     if (this.status() === 'ACTIVE') return 'Esta empresa no tiene dispositivos activos.';
     if (this.status() === 'INACTIVE') return 'Esta empresa no tiene dispositivos inactivos.';
