@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, LowerCasePipe, NgClass } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,10 +8,12 @@ import { Observable, filter, switchMap, tap } from 'rxjs';
 import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent, ConfirmDialogData } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
+import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import {
   ACCESS_REQUEST_STATUS_ICONS,
   ACCESS_REQUEST_STATUS_LABELS,
   ACCESS_REQUEST_STATUS_MESSAGES,
+  ACCESS_REQUEST_STATUS_TONES,
   AccessRequest,
 } from '../../interfaces/access-request.interface';
 import { OnboardingService } from '../../services/onboarding.service';
@@ -19,7 +21,7 @@ import { OnboardingService } from '../../services/onboarding.service';
 @Component({
   selector: 'app-access-request-drawer',
   standalone: true,
-  imports: [DatePipe, MatIconModule, DrawerComponent],
+  imports: [DatePipe, LowerCasePipe, NgClass, MatIconModule, DrawerComponent, InitialsPipe],
   templateUrl: './access-request-drawer.component.html',
 })
 export class AccessRequestDrawerComponent {
@@ -31,13 +33,34 @@ export class AccessRequestDrawerComponent {
   readonly statusLabels = ACCESS_REQUEST_STATUS_LABELS;
   readonly statusMessages = ACCESS_REQUEST_STATUS_MESSAGES;
   readonly statusIcons = ACCESS_REQUEST_STATUS_ICONS;
+  readonly tones = ACCESS_REQUEST_STATUS_TONES;
   readonly saving = signal(false);
+  readonly copied = signal<string | null>(null);
 
   constructor(
     private _onboardingService: OnboardingService,
     private _dialog: MatDialog,
     private _alert: AlertService,
   ) {}
+
+  contacts(request: AccessRequest): { key: string; icon: string; label: string; value: string }[] {
+    return [
+      { key: 'email', icon: 'mail_outline', label: 'Correo corporativo', value: request.adminEmail },
+      { key: 'phone', icon: 'phone', label: 'Teléfono', value: request.adminPhone },
+    ];
+  }
+
+  copy(key: string, value: string): void {
+    navigator.clipboard
+      ?.writeText(value)
+      .then(() => {
+        this.copied.set(key);
+        setTimeout(() => {
+          if (this.copied() === key) this.copied.set(null);
+        }, 1500);
+      })
+      .catch(() => undefined);
+  }
 
   approve(request: AccessRequest): void {
     this.review(

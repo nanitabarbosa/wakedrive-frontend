@@ -31,7 +31,7 @@
         <span class="text-strong">{{ rowNumber(index) }}</span>
       }
       @case ('serial') {
-        <span class="plate">{{ device.serial }}</span>
+        <span class="serial-texto">{{ device.serial }}</span>
       }
       @case ('status') {
         <span class="badge" [class.badge--success]="device.status === 'ACTIVE'" [class.badge--danger]="device.status === 'INACTIVE'">

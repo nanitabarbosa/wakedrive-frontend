@@ -1,61 +1,81 @@
 <app-drawer title="Solicitud de acceso" icon="assignment" variant="purple" [open]="open" (closed)="closed.emit()">
   @if (request; as r) {
-    <div class="form-section">
-      <div class="detail-badges">
-        <span
-          class="badge"
-          [class.badge--warning]="r.status === 'PENDING'"
-          [class.badge--success]="r.status === 'APPROVED'"
-          [class.badge--danger]="r.status === 'REJECTED'"
-          [class.badge--neutral]="r.status === 'INACTIVE'"
-        >
-          {{ statusLabels[r.status] }}
-        </span>
-      </div>
-      <span class="form-section__hint">Solicitud recibida el {{ r.createdAt | date: 'dd/MM/yyyy' }} – {{ r.createdAt | date: 'h:mm a' }}</span>
-    </div>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>apartment</mat-icon>Información de la empresa</span>
-      <div class="detail-list detail-list--wide">
-        <span class="detail-list__label">Nombre de la empresa</span>
-        <span class="detail-list__value">{{ r.companyName }}</span>
-        <span class="detail-list__label">NIT</span>
-        <span class="detail-list__value">{{ r.nit }}</span>
-        <span class="detail-list__label">País</span>
-        <span class="detail-list__value">{{ r.country }}</span>
-        <span class="detail-list__label">Ciudad</span>
-        <span class="detail-list__value">{{ r.city }}</span>
-        <span class="detail-list__label">Dirección</span>
-        <span class="detail-list__value">{{ r.address }}</span>
-        <span class="detail-list__label">Teléfono</span>
-        <span class="detail-list__value">{{ r.companyPhone }}</span>
-      </div>
-    </div>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>person_outline</mat-icon>Información del administrador</span>
-      <div class="detail-list detail-list--wide">
-        <span class="detail-list__label">Nombre completo</span>
-        <span class="detail-list__value">{{ r.adminName }}</span>
-        <span class="detail-list__label">Correo corporativo</span>
-        <span class="detail-list__value">{{ r.adminEmail }}</span>
-        <span class="detail-list__label">Teléfono</span>
-        <span class="detail-list__value">{{ r.adminPhone }}</span>
-      </div>
-    </div>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>fact_check</mat-icon>Estado de la solicitud</span>
-      <div
-        class="status-box"
-        [class.status-box--warning]="r.status === 'PENDING'"
-        [class.status-box--success]="r.status === 'APPROVED'"
-        [class.status-box--danger]="r.status === 'REJECTED'"
-      >
-        <mat-icon class="status-box__icon">{{ statusIcons[r.status] }}</mat-icon>
-        <div class="status-box__body">
-          <span class="status-box__title">{{ statusLabels[r.status] }}</span>
-          <span class="status-box__text">{{ statusMessages[r.status] }}</span>
+    <div class="request-detail">
+      <section class="request-status" [ngClass]="'request-status--' + tones[r.status]">
+        <mat-icon class="request-status__icon">{{ statusIcons[r.status] }}</mat-icon>
+        <div class="request-status__body">
+          <span class="request-status__title">Solicitud {{ statusLabels[r.status] | lowercase }}</span>
+          <span class="request-status__meta">Recibida el {{ r.createdAt | date: 'dd/MM/yyyy · h:mm a' }}</span>
         </div>
-      </div>
+      </section>
+
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>apartment</mat-icon></span>
+          Información de la empresa
+        </span>
+        <div class="info-card__lead">
+          <span class="info-card__label">Nombre de la empresa</span>
+          <span class="info-card__name">{{ r.companyName }}</span>
+        </div>
+        <div class="info-grid">
+          <div class="info-grid__item">
+            <span class="info-card__label">NIT</span>
+            <span class="info-card__value">{{ r.nit }}</span>
+          </div>
+          <div class="info-grid__item">
+            <span class="info-card__label">Teléfono</span>
+            <span class="info-card__value">{{ r.companyPhone }}</span>
+          </div>
+          <div class="info-grid__item">
+            <span class="info-card__label">País</span>
+            <span class="info-card__value">{{ r.country }}</span>
+          </div>
+          <div class="info-grid__item">
+            <span class="info-card__label">Ciudad</span>
+            <span class="info-card__value">{{ r.city }}</span>
+          </div>
+          <div class="info-grid__item info-grid__item--full">
+            <span class="info-card__label">Dirección</span>
+            <span class="info-card__value">{{ r.address }}</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>person_outline</mat-icon></span>
+          Información del administrador
+        </span>
+        <div class="admin-profile">
+          <span class="admin-profile__avatar">{{ r.adminName | initials }}</span>
+          <div class="admin-profile__body">
+            <span class="admin-profile__name">{{ r.adminName }}</span>
+            <span class="admin-profile__role">Administrador</span>
+          </div>
+        </div>
+        <ul class="contact-list">
+          @for (item of contacts(r); track item.key) {
+            <li class="contact-list__item">
+              <mat-icon class="contact-list__icon">{{ item.icon }}</mat-icon>
+              <div class="contact-list__body">
+                <span class="info-card__label">{{ item.label }}</span>
+                <span class="info-card__value">{{ item.value }}</span>
+              </div>
+              <button
+                type="button"
+                class="copy-btn"
+                [class.copy-btn--done]="copied() === item.key"
+                (click)="copy(item.key, item.value)"
+                [attr.aria-label]="'Copiar ' + item.label.toLowerCase()"
+                [title]="copied() === item.key ? 'Copiado' : 'Copiar'"
+              >
+                <mat-icon>{{ copied() === item.key ? 'check' : 'content_copy' }}</mat-icon>
+              </button>
+            </li>
+          }
+        </ul>
+      </section>
     </div>
   }
   @if (request?.status === 'PENDING') {
