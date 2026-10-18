@@ -4,6 +4,7 @@
   --mat-snack-bar-button-color: transparent;
 
   .mdc-snackbar__surface {
+    box-sizing: border-box;
     min-width: 0;
     max-width: 420px;
     padding: 0;
@@ -17,6 +18,7 @@
 }
 
 .alert {
+  box-sizing: border-box;
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -35,6 +37,7 @@
   }
 
   &__message {
+    box-sizing: border-box;
     flex: 1;
     padding-top: 2px;
     font-size: 14px;
@@ -43,6 +46,8 @@
   }
 
   &__close {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     flex-shrink: 0;
     padding: 2px;
@@ -57,6 +62,7 @@
     }
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 18px;
       width: 18px;
       height: 18px;

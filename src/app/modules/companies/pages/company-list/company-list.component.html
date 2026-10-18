@@ -2,7 +2,7 @@
   <app-page-header title="Empresas" subtitle="Empresas registradas en la plataforma.">
     <label class="search">
       <mat-icon>search</mat-icon>
-      <input type="search" placeholder="Buscar empresa..." (input)="onSearch($any($event.target).value)" />
+      <input class="search__input" type="search" placeholder="Buscar empresa..." (input)="onSearch($any($event.target).value)" />
     </label>
   </app-page-header>
   <app-table

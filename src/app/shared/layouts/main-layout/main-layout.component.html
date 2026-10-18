@@ -1,8 +1,8 @@
 <div class="layout" [class.layout--collapsed]="collapsed()">
   <section class="sidebar">
     <div class="sidebar__brand">
-      <span class="sidebar__brand-text">Wake<span>Drive</span></span>
-      <span class="sidebar__brand-short">W<span>D</span></span>
+      <span class="sidebar__brand-text">Wake<span class="sidebar__brand-accent">Drive</span></span>
+      <span class="sidebar__brand-short">W<span class="sidebar__brand-accent">D</span></span>
     </div>
     <div class="sidebar__nav" role="navigation">
       @for (item of navItems; track item.route) {
@@ -36,7 +36,7 @@
       <button type="button" class="topbar__user" [matMenuTriggerFor]="userMenu">
         @if (user; as u) {
           @if (logoUrl) {
-            <span class="avatar avatar--lg avatar--logo"><img [src]="logoUrl" alt="Logo de la empresa" /></span>
+            <span class="avatar avatar--lg avatar--logo"><img class="avatar__img" [src]="logoUrl" alt="Logo de la empresa" /></span>
           } @else {
             <span class="avatar avatar--lg">{{ initials(u.name) }}</span>
           }

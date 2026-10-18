@@ -8,7 +8,7 @@
     (drop)="onDrop($event)"
   >
     @if (file) {
-      <div class="file-drop__preview"><img [src]="file.url" [alt]="file.name" /></div>
+      <div class="file-drop__preview"><img class="file-drop__preview-img" [src]="file.url" [alt]="file.name" /></div>
     } @else {
       <label class="file-drop__empty" [for]="inputId">
         <mat-icon class="file-drop__upload-icon">cloud_upload</mat-icon>
@@ -62,7 +62,7 @@
         </div>
       } @else {
         <div class="file-drop__image">
-          <img [src]="file.url" [alt]="file.name" />
+          <img class="file-drop__img" [src]="file.url" [alt]="file.name" />
         </div>
       }
       <button type="button" class="file-drop__remove" (click)="remove()" aria-label="Eliminar archivo" title="Eliminar">

@@ -17,7 +17,7 @@
       <div class="table__header" role="row">
         @if (selectable) {
           <div class="table__head-cell table__check" role="columnheader">
-            <input type="checkbox" [checked]="allSelected" (change)="toggleAll()" aria-label="Seleccionar todos" />
+            <input class="table__checkbox" type="checkbox" [checked]="allSelected" (change)="toggleAll()" aria-label="Seleccionar todos" />
           </div>
         }
         @for (column of columns; track column.key) {
@@ -28,7 +28,7 @@
         <div class="table__row" role="row" [class.table__row--selected]="selected.has(row)">
           @if (selectable) {
             <div class="table__cell table__check" role="cell">
-              <input type="checkbox" [checked]="selected.has(row)" (change)="toggleRow(row)" aria-label="Seleccionar fila" />
+              <input class="table__checkbox" type="checkbox" [checked]="selected.has(row)" (change)="toggleRow(row)" aria-label="Seleccionar fila" />
             </div>
           }
           @for (column of columns; track column.key) {

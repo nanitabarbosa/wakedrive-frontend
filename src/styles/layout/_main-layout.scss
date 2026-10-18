@@ -1,4 +1,5 @@
 .layout {
+  box-sizing: border-box;
   display: flex;
   height: 100vh;
   overflow: hidden;
@@ -15,9 +16,38 @@
     flex: 1;
     padding: 0;
   }
+
+  &--collapsed .sidebar {
+    box-sizing: border-box;
+    width: var(--wd-sidebar-collapsed-width);
+
+    .sidebar__brand {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .sidebar__brand-short {
+      display: inline;
+    }
+
+    .sidebar__label,
+    .sidebar__brand-text {
+      display: none;
+    }
+
+    .sidebar__link,
+    .sidebar__collapse {
+      box-sizing: border-box;
+      font-family: inherit;
+      justify-content: center;
+      padding: 9px;
+    }
+  }
 }
 
 .sidebar {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -29,6 +59,7 @@
   transition: width 0.2s ease;
 
   &__brand {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,10 +69,10 @@
     font-weight: 700;
     color: theme-color('white');
     white-space: nowrap;
+  }
 
-    span span {
-      color: theme-color('sidebar-accent');
-    }
+  &__brand-accent {
+    color: theme-color('sidebar-accent');
   }
 
   &__brand-short {
@@ -50,6 +81,8 @@
 
   &__link,
   &__collapse {
+    box-sizing: border-box;
+    font-family: inherit;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -64,6 +97,7 @@
     cursor: pointer;
 
     .mat-icon {
+      box-sizing: border-box;
       flex-shrink: 0;
       font-size: 20px;
       width: 20px;
@@ -89,36 +123,13 @@
   }
 
   &__collapse {
+    font-family: inherit;
     margin-top: auto;
   }
 }
 
-.layout--collapsed .sidebar {
-  width: var(--wd-sidebar-collapsed-width);
-
-  .sidebar__brand {
-    justify-content: center;
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .sidebar__brand-short {
-    display: inline;
-  }
-
-  .sidebar__label,
-  .sidebar__brand-text {
-    display: none;
-  }
-
-  .sidebar__link,
-  .sidebar__collapse {
-    justify-content: center;
-    padding: 9px;
-  }
-}
-
 .topbar {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -126,6 +137,8 @@
   padding: 12px 24px 0;
 
   &__bell {
+    box-sizing: border-box;
+    font-family: inherit;
     position: relative;
     display: inline-flex;
     padding: 6px;
@@ -141,6 +154,7 @@
   }
 
   &__badge {
+    box-sizing: border-box;
     position: absolute;
     top: 0;
     right: 0;
@@ -159,6 +173,7 @@
   }
 
   &__dot {
+    box-sizing: border-box;
     position: absolute;
     top: 6px;
     right: 7px;
@@ -170,6 +185,8 @@
   }
 
   &__user {
+    box-sizing: border-box;
+    font-family: inherit;
     display: flex;
     align-items: center;
     gap: 10px;

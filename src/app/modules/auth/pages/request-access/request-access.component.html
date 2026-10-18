@@ -20,10 +20,10 @@
       <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <span class="auth-form__section">Información de la empresa</span>
         <div class="form-field">
-          <label for="request-companyName">Nombre de la empresa <span class="required">*</span></label>
+          <label class="form-field__label" for="request-companyName">Nombre de la empresa <span class="required">*</span></label>
           <div class="input-icon" [class.is-invalid]="hasError('companyName')">
             <mat-icon class="input-icon__icon">apartment</mat-icon>
-            <input id="request-companyName" formControlName="companyName" placeholder="Nombre de la empresa" maxlength="120" autocomplete="organization" />
+            <input class="input-icon__field" id="request-companyName" formControlName="companyName" placeholder="Nombre de la empresa" maxlength="120" autocomplete="organization" />
           </div>
           @if (hasError('companyName')) {
             <span class="form-field__error">{{ errorFor('companyName') }}</span>
@@ -31,17 +31,17 @@
         </div>
         <div class="auth-form__row">
           <div class="form-field">
-            <label for="request-nit">NIT <span class="required">*</span></label>
+            <label class="form-field__label" for="request-nit">NIT <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('nit')">
               <mat-icon class="input-icon__icon">description</mat-icon>
-              <input id="request-nit" formControlName="nit" placeholder="Ingresa el NIT" maxlength="15" />
+              <input class="input-icon__field" id="request-nit" formControlName="nit" placeholder="Ingresa el NIT" maxlength="15" />
             </div>
             @if (hasError('nit')) {
               <span class="form-field__error">{{ errorFor('nit') }}</span>
             }
           </div>
           <div class="form-field">
-            <label for="request-cityId">Ciudad <span class="required">*</span></label>
+            <label class="form-field__label" for="request-cityId">Ciudad <span class="required">*</span></label>
             <div class="input-icon input-icon--select" [class.is-invalid]="hasError('cityId')">
               <mat-icon class="input-icon__icon">location_on</mat-icon>
               <ng-select formControlName="cityId" [items]="cities()" bindLabel="name" bindValue="id" placeholder="Selecciona una ciudad" [clearable]="false" inputId="request-cityId" />
@@ -53,30 +53,30 @@
         </div>
         <div class="auth-form__row">
           <div class="form-field">
-            <label for="request-address">Dirección <span class="required">*</span></label>
+            <label class="form-field__label" for="request-address">Dirección <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('address')">
               <mat-icon class="input-icon__icon">home</mat-icon>
-              <input id="request-address" formControlName="address" placeholder="Dirección de la empresa" maxlength="150" autocomplete="street-address" />
+              <input class="input-icon__field" id="request-address" formControlName="address" placeholder="Dirección de la empresa" maxlength="150" autocomplete="street-address" />
             </div>
             @if (hasError('address')) {
               <span class="form-field__error">{{ errorFor('address') }}</span>
             }
           </div>
           <div class="form-field">
-            <label for="request-companyPhone">Teléfono <span class="required">*</span></label>
+            <label class="form-field__label" for="request-companyPhone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('companyPhone')">
               <mat-icon class="input-icon__icon">phone</mat-icon>
-              <input id="request-companyPhone" type="tel" appOnlyNumbers formControlName="companyPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
+              <input class="input-icon__field" id="request-companyPhone" type="tel" appOnlyNumbers formControlName="companyPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
             </div>
             <app-validate-errors [control]="form.get('companyPhone')" [messages]="phoneErrors" />
           </div>
         </div>
         <span class="auth-form__section">Información del administrador</span>
         <div class="form-field">
-          <label for="request-adminName">Nombre completo <span class="required">*</span></label>
+          <label class="form-field__label" for="request-adminName">Nombre completo <span class="required">*</span></label>
           <div class="input-icon" [class.is-invalid]="hasError('adminName')">
             <mat-icon class="input-icon__icon">person_outline</mat-icon>
-            <input id="request-adminName" formControlName="adminName" placeholder="Nombre del administrador" maxlength="100" autocomplete="name" />
+            <input class="input-icon__field" id="request-adminName" formControlName="adminName" placeholder="Nombre del administrador" maxlength="100" autocomplete="name" />
           </div>
           @if (hasError('adminName')) {
             <span class="form-field__error">{{ errorFor('adminName') }}</span>
@@ -84,20 +84,20 @@
         </div>
         <div class="auth-form__row">
           <div class="form-field">
-            <label for="request-adminEmail">Correo corporativo <span class="required">*</span></label>
+            <label class="form-field__label" for="request-adminEmail">Correo corporativo <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('adminEmail')">
               <mat-icon class="input-icon__icon">mail_outline</mat-icon>
-              <input id="request-adminEmail" type="email" formControlName="adminEmail" placeholder="admin@empresa.com" maxlength="120" autocomplete="email" />
+              <input class="input-icon__field" id="request-adminEmail" type="email" formControlName="adminEmail" placeholder="admin@empresa.com" maxlength="120" autocomplete="email" />
             </div>
             @if (hasError('adminEmail')) {
               <span class="form-field__error">{{ errorFor('adminEmail') }}</span>
             }
           </div>
           <div class="form-field">
-            <label for="request-adminPhone">Teléfono <span class="required">*</span></label>
+            <label class="form-field__label" for="request-adminPhone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('adminPhone')">
               <mat-icon class="input-icon__icon">phone</mat-icon>
-              <input id="request-adminPhone" type="tel" appOnlyNumbers formControlName="adminPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
+              <input class="input-icon__field" id="request-adminPhone" type="tel" appOnlyNumbers formControlName="adminPhone" placeholder="3001234567" inputmode="numeric" maxlength="10" autocomplete="tel" />
             </div>
             <app-validate-errors [control]="form.get('adminPhone')" [messages]="phoneErrors" />
           </div>
