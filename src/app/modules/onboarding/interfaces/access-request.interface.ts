@@ -16,9 +16,16 @@ export const ACCESS_REQUEST_STATUS_MESSAGES: Record<string, string> = {
 
 export const ACCESS_REQUEST_STATUS_ICONS: Record<string, string> = {
   PENDING: 'schedule',
-  APPROVED: 'check_circle',
-  REJECTED: 'cancel',
+  APPROVED: 'check_circle_outline',
+  REJECTED: 'highlight_off',
   INACTIVE: 'block',
+};
+
+export const ACCESS_REQUEST_STATUS_TONES: Record<string, string> = {
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'danger',
+  INACTIVE: 'neutral',
 };
 
 export interface AccessRequest {

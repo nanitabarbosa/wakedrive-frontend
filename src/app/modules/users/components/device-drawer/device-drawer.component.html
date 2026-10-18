@@ -1,21 +1,59 @@
-<app-drawer [title]="title" [open]="open" (closed)="closed.emit()">
-  <form [formGroup]="form" (ngSubmit)="save()" novalidate>
-    <div class="form-section">
-      <span class="form-section__title"><mat-icon>memory</mat-icon>Información del dispositivo</span>
+<app-drawer [title]="title" icon="memory" variant="purple" [open]="open" (closed)="closed.emit()">
+  <form class="drawer-cards drawer-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+    @if (mode !== 'create' && device; as d) {
+      <section class="info-card profile-card">
+        <span class="profile-card__avatar profile-card__avatar--purple"><mat-icon>memory</mat-icon></span>
+        <div class="profile-card__body">
+          <span class="profile-card__name serial-texto">{{ d.serial }}</span>
+          <span class="profile-card__role">Dispositivo</span>
+        </div>
+        <span class="badge" [class.badge--success]="d.status === 'ACTIVE'" [class.badge--neutral]="d.status !== 'ACTIVE'">
+          {{ statusLabels[d.status] }}
+        </span>
+      </section>
+    }
+
+    <section class="info-card">
+      <span class="info-card__title">
+        <span class="info-card__icon"><mat-icon>memory</mat-icon></span>
+        Información del dispositivo
+      </span>
+
       <div class="form-field">
         <label for="device-serial">Serial <span class="required">*</span></label>
-        <input id="device-serial" formControlName="serial" placeholder="Ej. WD-000123" maxlength="50" class="uppercase" [class.is-invalid]="hasError('serial')" />
+        <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('serial')">
+          <mat-icon class="input-icon__icon">qr_code</mat-icon>
+          <input id="device-serial" formControlName="serial" placeholder="Ej. WD-000123" maxlength="50" class="uppercase" />
+        </div>
         @if (hasError('serial')) {
           <span class="form-field__error">{{ errorFor('serial') }}</span>
         }
       </div>
-      @if (mode !== 'create') {
-        <div class="form-field">
-          <label for="device-status">Estado <span class="required">*</span></label>
-          <ng-select formControlName="status" [items]="statusOptions" bindLabel="1" bindValue="0" [clearable]="false" [searchable]="false" inputId="device-status" />
+    </section>
+
+    @if (mode === 'edit') {
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>toggle_on</mat-icon></span>
+          Estado <span class="required">*</span>
+        </span>
+        <div class="segmented" role="radiogroup" aria-label="Estado del dispositivo">
+          @for (option of statusOptions; track option[0]) {
+            <button
+              type="button"
+              role="radio"
+              class="segmented__tab status-option"
+              [class.segmented__tab--active]="form.get('status')?.value === option[0]"
+              [class.status-option--on]="option[0] === 'ACTIVE'"
+              [attr.aria-checked]="form.get('status')?.value === option[0]"
+              (click)="setStatus(option[0])"
+            >
+              {{ option[1] }}
+            </button>
+          }
         </div>
-      }
-    </div>
+      </section>
+    }
   </form>
   @if (mode !== 'view') {
     <app-form-actions

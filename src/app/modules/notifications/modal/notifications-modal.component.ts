@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, signa
 import { MatIconModule } from '@angular/material/icon';
 
 import { DrawerComponent } from '../../../shared/components/drawer/drawer.component';
+import { EmptyStateComponent } from '../../../shared/components/empty-state/empty-state.component';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 import { AppNotification, NOTIFICATION_STYLES, NotificationCounts, NotificationFilter, NotificationStyle } from '../interfaces/notification.interface';
 import { NotificationService } from '../services/notification.service';
@@ -9,7 +10,7 @@ import { NotificationService } from '../services/notification.service';
 @Component({
   selector: 'app-notifications-modal',
   standalone: true,
-  imports: [MatIconModule, TimeAgoPipe, DrawerComponent],
+  imports: [MatIconModule, TimeAgoPipe, DrawerComponent, EmptyStateComponent],
   templateUrl: './notifications-modal.component.html',
 })
 export class NotificationsModalComponent implements OnChanges {

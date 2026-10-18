@@ -1,4 +1,4 @@
-<app-drawer title="Notificaciones" [open]="open" (closed)="closed.emit()">
+<app-drawer title="Notificaciones" icon="notifications" variant="primary" [open]="open" (closed)="closed.emit()">
   <div class="notifications">
     <div class="notifications__toolbar">
       <div class="notifications__tabs" role="tablist">
@@ -30,7 +30,13 @@
         </button>
       } @empty {
         @if (!loading()) {
-          <span class="notifications__empty">{{ loadError() ? 'No se pudieron cargar las notificaciones.' : filter() === 'UNREAD' ? 'No tienes notificaciones sin leer.' : 'No tienes notificaciones.' }}</span>
+          @if (loadError()) {
+            <app-empty-state kind="error" description="No se pudieron cargar las notificaciones." />
+          } @else if (filter() === 'UNREAD') {
+            <app-empty-state icon="mark_email_read" title="Todo al día" description="No tienes notificaciones sin leer." />
+          } @else {
+            <app-empty-state icon="notifications_off" title="Sin notificaciones" description="Cuando haya novedades, las verás aquí." />
+          }
         }
       }
       @if (loading()) {

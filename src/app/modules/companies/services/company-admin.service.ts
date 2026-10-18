@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Page } from '../../../core/interfaces/page.interface';
 import { buildPageParams } from '../../../core/utils/http-params';
-import { CompanyDevice, CompanyFilters, CompanySummary } from '../interfaces/company.interface';
+import { CompanyDevice, CompanyDeviceCounts, CompanyDeviceFilters, CompanyFilters, CompanySummary } from '../interfaces/company.interface';
 
 const ENDPOINT = `${environment.apiUrl}/companies`;
 
@@ -17,7 +17,11 @@ export class CompanyAdminService {
     return this._http.get<Page<CompanySummary>>(`${ENDPOINT}/summary`, { params: buildPageParams({ ...filters }) });
   }
 
-  getDevices(companyId: number, filters: CompanyFilters): Observable<Page<CompanyDevice>> {
+  getDevices(companyId: number, filters: CompanyDeviceFilters): Observable<Page<CompanyDevice>> {
     return this._http.get<Page<CompanyDevice>>(`${ENDPOINT}/${companyId}/devices`, { params: buildPageParams({ ...filters }) });
+  }
+
+  getDeviceCounts(companyId: number): Observable<CompanyDeviceCounts> {
+    return this._http.get<CompanyDeviceCounts>(`${ENDPOINT}/${companyId}/devices/counts`);
   }
 }

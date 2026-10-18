@@ -24,7 +24,8 @@
     [pageSize]="pageSize"
     [total]="total()"
     (pageChange)="onPageChange($event)"
-    [emptyMessage]="loadError() ? 'No se pudieron cargar las solicitudes. Intenta de nuevo más tarde.' : 'No hay solicitudes en este estado.'"
+    [emptyMessage]="loadError() ? 'No se pudieron cargar las solicitudes. Intenta de nuevo más tarde.' : status() ? 'No hay solicitudes en este estado.' : 'Aún no hay solicitudes de acceso.'"
+    [emptyKind]="loadError() ? 'error' : status() ? 'search' : 'empty'"
   >
     <ng-template #cellTemplate let-request let-column="column">
       @switch (column.key) {

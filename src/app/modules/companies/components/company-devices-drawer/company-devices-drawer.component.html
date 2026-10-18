@@ -1,21 +1,98 @@
-<app-drawer title="Dispositivos de la empresa" [open]="open" (closed)="closed.emit()">
+<app-drawer title="Dispositivos de la empresa" icon="domain" variant="purple" [open]="open" (closed)="closed.emit()">
   @if (company; as c) {
     <div class="form-section company-devices">
-      <div class="company-devices__heading">
-        <span class="company-devices__name">{{ c.name }}</span>
-        <span class="company-devices__count">{{ c.deviceCount }} {{ c.deviceCount === 1 ? 'dispositivo asignado' : 'dispositivos asignados' }}</span>
+      <div class="company-card">
+        <div class="company-card__info">
+          <span class="company-card__name">{{ c.name }}</span>
+          <span class="company-card__count">{{ assigned }} {{ assigned === 1 ? 'dispositivo asignado' : 'dispositivos asignados' }}</span>
+        </div>
       </div>
-      <label class="search company-devices__search">
+
+      <div class="segmented" role="tablist" aria-label="Filtrar por estado">
+        @for (tab of tabs; track tab.value) {
+          <button
+            type="button"
+            role="tab"
+            class="segmented__tab"
+            [class.segmented__tab--active]="status() === tab.value"
+            [attr.aria-selected]="status() === tab.value"
+            (click)="setStatus(tab.value)"
+          >
+            {{ tab.label }}
+            @if (counts(); as n) {
+              <span class="segmented__count">{{ n[tab.key] }}</span>
+            }
+          </button>
+        }
+      </div>
+
+      <label class="search-field">
         <mat-icon>search</mat-icon>
-        <input type="search" placeholder="Buscar serial..." [value]="search()" (input)="onSearch($any($event.target).value)" />
+        <input type="text" placeholder="Buscar serial..." autocomplete="off" [value]="term()" (input)="onSearch($any($event.target).value)" />
+        @if (term()) {
+          <button type="button" class="search-field__clear" (click)="clearSearch()" aria-label="Limpiar búsqueda">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
       </label>
-      <div class="company-devices__list" (scroll)="onScroll($event)">
-        <app-table
-          [columns]="columns"
-          [data]="devices()"
-          [emptyMessage]="loading() ? 'Cargando dispositivos...' : loadError() ? 'No se pudieron cargar los dispositivos.' : 'No hay dispositivos que coincidan con la búsqueda.'"
-        />
-      </div>
+
+      @if (devices().length) {
+        <div class="company-devices__list" #list (scroll)="onScroll($event)">
+          <app-table [columns]="columns" [data]="devices()" [customColumns]="['serial', 'status', 'actions']">
+            <ng-template #cellTemplate let-device let-column="column">
+              @switch (column.key) {
+                @case ('serial') {
+                  <span class="serial-texto">{{ device.serial }}</span>
+                }
+                @case ('status') {
+                  <span
+                    class="mini-toggle"
+                    [class.mini-toggle--on]="device.status === 'ACTIVE'"
+                    role="img"
+                    [attr.aria-label]="statusLabel(device.status)"
+                    [title]="statusLabel(device.status)"
+                  ></span>
+                }
+                @case ('actions') {
+                  <button
+                    type="button"
+                    class="copy-btn"
+                    [class.copy-btn--done]="copiedId() === device.id"
+                    (click)="copySerial(device)"
+                    [attr.aria-label]="'Copiar serial ' + device.serial"
+                    [title]="copiedId() === device.id ? 'Copiado' : 'Copiar serial'"
+                  >
+                    <mat-icon>{{ copiedId() === device.id ? 'check' : 'content_copy' }}</mat-icon>
+                  </button>
+                }
+              }
+            </ng-template>
+          </app-table>
+          @if (loading()) {
+            <span class="company-devices__more">Cargando más...</span>
+          }
+        </div>
+      } @else {
+        <div class="company-devices__list" #list>
+          @if (loading()) {
+            <app-empty-state icon="hourglass_empty" title="Cargando dispositivos" description="Un momento, estamos buscando la información." />
+          } @else if (loadError()) {
+            <app-empty-state kind="error" description="No se pudieron cargar los dispositivos. Intenta de nuevo.">
+              <button type="button" class="btn btn--outline" (click)="loadDevices(true)">Reintentar</button>
+            </app-empty-state>
+          } @else if (search()) {
+            <app-empty-state
+              kind="search"
+              [title]="'Sin resultados para “' + search() + '”'"
+              description="Revisa que el serial esté bien escrito o prueba con menos caracteres."
+            >
+              <button type="button" class="btn btn--outline" (click)="clearSearch()">Limpiar búsqueda</button>
+            </app-empty-state>
+          } @else {
+            <app-empty-state icon="memory" title="Sin dispositivos" [description]="emptyDescription" />
+          }
+        </div>
+      }
     </div>
   }
 </app-drawer>

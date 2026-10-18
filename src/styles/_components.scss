@@ -66,6 +66,11 @@
     color: #d97706;
     background: var(--wd-warning-soft);
   }
+
+  &--neutral {
+    color: var(--wd-text-muted);
+    background: #f1f5f9;
+  }
 }
 
 .search {

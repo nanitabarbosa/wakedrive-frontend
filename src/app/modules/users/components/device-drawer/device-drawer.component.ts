@@ -25,6 +25,7 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
   @Output() closed = new EventEmitter<void>();
   @Output() saved = new EventEmitter<string>();
 
+  readonly statusLabels = RECORD_STATUS_LABELS;
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
   readonly saving = signal(false);
 
@@ -60,6 +61,11 @@ export class DeviceDrawerComponent implements OnInit, OnChanges {
     if (this.device) this.form.patchValue(this.device);
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
+  }
+
+  setStatus(status: string): void {
+    this.form.get('status')?.setValue(status);
+    this.form.markAsDirty();
   }
 
   hasError(control: string): boolean {

@@ -43,14 +43,6 @@
   .text-right {
     text-align: right;
   }
-
-  &__empty {
-    display: block;
-    padding: 24px 20px;
-    text-align: center;
-    font-size: 13px;
-    color: var(--wd-text-muted);
-  }
 }
 
 .pagination {
