@@ -12,7 +12,7 @@ import { RECORD_STATUS_LABELS } from '../../interfaces/user.interface';
 import { CatalogItem, Vehicle, VehiclePayload, vehicleTypeLabel } from '../../interfaces/vehicle.interface';
 import { VehicleService } from '../../services/vehicle.service';
 
-const MIN_YEAR = 1980;
+const MIN_YEAR = 1900;
 const MAX_YEAR = new Date().getFullYear() + 1;
 
 @Component({

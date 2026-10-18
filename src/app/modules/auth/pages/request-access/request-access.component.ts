@@ -13,7 +13,7 @@ import { AccessRequestPayload, City } from '../../interfaces/access-request.inte
 import { AccessRequestService } from '../../services/access-request.service';
 
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
-  nit: { pattern: 'Solo números y guiones, entre 5 y 15 caracteres.' },
+  nit: { pattern: 'Formato: 900123456-7' },
   adminEmail: { email: 'Ingresa un correo válido.' },
 };
 
@@ -46,7 +46,7 @@ export class RequestAccessComponent implements OnInit {
   buildForm(): void {
     this.form = this._fb.nonNullable.group({
       companyName: ['', [Validators.required, Validators.maxLength(120)]],
-      nit: ['', [Validators.required, Validators.pattern(/^[\d-]{5,15}$/)]],
+      nit: ['', [Validators.required, Validators.pattern(/^\d{9,10}-\d$/)]],
       cityId: ['', Validators.required],
       address: ['', [Validators.required, Validators.maxLength(150)]],
       companyPhone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],

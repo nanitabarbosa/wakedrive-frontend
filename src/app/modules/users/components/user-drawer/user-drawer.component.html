@@ -35,7 +35,7 @@
           <label class="form-field__label" for="user-document">Documento <span class="required">*</span></label>
           <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('document')">
             <mat-icon class="input-icon__icon">badge</mat-icon>
-            <input class="input-icon__field" id="user-document" formControlName="document" inputmode="numeric" placeholder="1092345678" maxlength="12" />
+            <input class="input-icon__field" id="user-document" formControlName="document" inputmode="numeric" placeholder="1092345678" maxlength="10" />
           </div>
           @if (hasError('document')) {
             <span class="form-field__error">{{ errorFor('document') }}</span>

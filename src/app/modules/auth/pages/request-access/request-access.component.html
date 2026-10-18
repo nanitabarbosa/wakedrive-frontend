@@ -34,7 +34,7 @@
             <label class="form-field__label" for="request-nit">NIT <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('nit')">
               <mat-icon class="input-icon__icon">description</mat-icon>
-              <input class="input-icon__field" id="request-nit" formControlName="nit" placeholder="Ingresa el NIT" maxlength="15" />
+              <input class="input-icon__field" id="request-nit" formControlName="nit" placeholder="900123456-7" maxlength="12" />
             </div>
             @if (hasError('nit')) {
               <span class="form-field__error">{{ errorFor('nit') }}</span>
