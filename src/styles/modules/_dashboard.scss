@@ -82,10 +82,25 @@
 .stat-card {
   box-sizing: border-box;
   display: flex;
-  gap: 16px;
-  padding: 20px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  background: theme-color('surface');
   border: 1px solid theme-color('border');
   border-radius: var(--wd-radius);
+
+  &__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: theme-color('text-muted');
+  }
 
   &__icon {
     box-sizing: border-box;
@@ -93,137 +108,95 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+
+    .mat-icon {
+      box-sizing: border-box;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__value {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  &__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    min-height: 24px;
+    margin-top: auto;
+  }
+
+  &__hint {
+    font-size: 12px;
+    color: theme-color('text-muted');
+  }
+
+  &__chip {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 24px;
+    padding: 0 9px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
     border-radius: 12px;
 
     .mat-icon {
       box-sizing: border-box;
-      font-size: 30px;
-      width: 30px;
-      height: 30px;
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
     }
-  }
-
-  &__label {
-    margin: 4px 0 6px;
-    font-size: 13px;
-  }
-
-  &__value {
-    margin: 0;
-    font-size: 30px;
-    font-weight: 800;
-    line-height: 1.1;
-  }
-
-  &__trend {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    margin-top: 8px;
-    font-size: 12px;
-    font-weight: 600;
-
-    .mat-icon {
-      box-sizing: border-box;
-      font-size: 15px;
-      width: 15px;
-      height: 15px;
-    }
-
-    &--good {
-      color: theme-color('success');
-    }
-
-    &--bad {
-      color: theme-color('danger');
-    }
-  }
-
-  &__hint {
-    margin: 2px 0 0;
-    font-size: 12px;
-    color: theme-color('text');
-  }
-
-  &__split {
-    display: flex;
-    gap: 24px;
-    margin-top: 10px;
-  }
-
-  &__split-item {
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-
-    .text-strong {
-      display: block;
-      font-size: 13px;
-    }
-  }
-
-  &__dot {
-    box-sizing: border-box;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 7px solid;
 
     &--success {
-      background: theme-color('success');
-      border-color: theme-color('success-soft');
-    }
-
-    &--danger {
-      background: theme-color('danger');
-      border-color: theme-color('danger-soft');
-    }
-  }
-
-  &--blue {
-    background: theme-color('primary-tint');
-
-    .stat-card__icon {
-      color: theme-color('primary');
-      background: theme-color('primary-soft-hover');
-    }
-  }
-
-  &--green {
-    background: theme-color('success-tint');
-
-    .stat-card__icon {
       color: theme-color('success');
       background: theme-color('success-soft');
     }
-  }
 
-  &--purple {
-    background: theme-color('surface');
-
-    .stat-card__icon {
-      color: theme-color('purple');
-      background: theme-color('purple-soft');
-    }
-  }
-
-  &--red {
-    background: theme-color('danger-tint');
-
-    .stat-card__icon {
+    &--danger {
       color: theme-color('danger');
       background: theme-color('danger-soft');
     }
   }
 
-  &__label,
-  &__value,
-  &__hint {
-    display: block;
+  &__dot {
+    box-sizing: border-box;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &--blue .stat-card__icon {
+    color: theme-color('primary');
+    background: theme-color('primary-soft-hover');
+  }
+
+  &--green .stat-card__icon {
+    color: theme-color('success');
+    background: theme-color('success-soft');
+  }
+
+  &--purple .stat-card__icon {
+    color: theme-color('purple');
+    background: theme-color('purple-soft');
+  }
+
+  &--red .stat-card__icon {
+    color: theme-color('danger');
+    background: theme-color('danger-soft');
   }
 }
 
@@ -347,7 +320,7 @@
   }
 }
 
-@media (max-width: 1200px) {
+@include respond('md-down') {
   .dashboard__stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -357,7 +330,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@include respond('sm') {
   .dashboard__stats {
     grid-template-columns: minmax(0, 1fr);
   }

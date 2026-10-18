@@ -103,6 +103,10 @@
   width: 340px;
   max-width: 100%;
 
+  @include respond('sm') {
+    width: 100%;
+  }
+
   .mat-icon {
     box-sizing: border-box;
     position: absolute;
@@ -259,11 +263,21 @@
     flex: 1;
     width: auto;
     min-width: 220px;
+
+    @include respond('sm') {
+      flex-basis: 100%;
+      min-width: 0;
+    }
   }
 
   .select {
     box-sizing: border-box;
     min-width: 170px;
+
+    @include respond('sm') {
+      flex: 1;
+      min-width: 0;
+    }
   }
 }
 
@@ -307,6 +321,11 @@
       color: theme-color('primary');
       background: theme-color('surface');
       border-bottom-color: theme-color('primary');
+    }
+
+    @include respond('sm') {
+      padding: 10px 16px;
+      font-size: 14px;
     }
   }
 }

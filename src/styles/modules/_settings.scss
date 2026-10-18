@@ -468,7 +468,7 @@
   }
 }
 
-@media (max-width: 900px) {
+@include respond('md-down') {
   .company-info {
     grid-template-columns: minmax(0, 1fr);
 
@@ -482,3 +482,16 @@
   }
 }
 
+@include respond('sm') {
+  .setting-row__number {
+    width: 100%;
+  }
+
+  .company-info__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .audio-player {
+    min-width: 0;
+  }
+}

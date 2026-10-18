@@ -439,7 +439,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@include respond('md-down') {
   .auth-page {
     padding: 32px 16px;
     background:
@@ -488,7 +488,7 @@
 }
 
 // md (tablet): compacto para que el formulario quepa sin scroll
-@media (min-width: 641px) and (max-width: 1024px) {
+@include respond('md') {
   .auth-page {
     min-height: 100vh;
     padding: 16px;
@@ -556,7 +556,7 @@
 }
 
 // lg (monitor grande, >=1600px): todo más amplio y proporcional
-@media (min-width: 1600px) and (min-height: 850px) {
+@include respond('xl') {
   .auth-page {
     padding: clamp(32px, 12vh, 140px) 6vw 40px;
   }
@@ -648,7 +648,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@include respond('sm') {
   .auth-form__row {
     grid-template-columns: 1fr;
   }

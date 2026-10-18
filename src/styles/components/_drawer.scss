@@ -23,6 +23,20 @@
   box-shadow: 0 20px 50px theme-color('text', 0.18);
   animation: drawer-slide 0.25s ease;
 
+  @include respond('md') {
+    width: 420px;
+  }
+
+  @include respond('sm') {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
   &__body {
     flex: 1;
     overflow-y: auto;
