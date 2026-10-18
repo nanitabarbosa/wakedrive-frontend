@@ -3,6 +3,7 @@
 }
 
 .table {
+  box-sizing: border-box;
   display: table;
   width: 100%;
   border-collapse: collapse;
@@ -15,6 +16,7 @@
 
   &__head-cell,
   &__cell {
+    box-sizing: border-box;
     display: table-cell;
     vertical-align: middle;
     white-space: nowrap;
@@ -22,6 +24,7 @@
   }
 
   &__head-cell {
+    box-sizing: border-box;
     padding: 10px 20px;
     text-align: left;
     font-weight: 600;
@@ -29,6 +32,7 @@
   }
 
   &__cell {
+    box-sizing: border-box;
     padding: 8px 20px;
   }
 
@@ -43,9 +47,27 @@
   .text-right {
     text-align: right;
   }
+
+  &__check {
+    box-sizing: border-box;
+    width: 44px;
+  }
+
+  &__checkbox {
+    box-sizing: border-box;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: theme-color('primary');
+  }
+
+  &__row--selected &__cell {
+    background: theme-color('primary-tint');
+  }
 }
 
 .pagination {
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -61,6 +83,8 @@
   }
 
   &__btn {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -75,6 +99,7 @@
     cursor: pointer;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 18px;
       width: 18px;
       height: 18px;
@@ -96,21 +121,16 @@
       background: theme-color('primary');
     }
   }
-}
 
-.table__check {
-  width: 44px;
-
-  input {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-    accent-color: theme-color('primary');
+  &__ellipsis {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 24px;
+    padding-bottom: 8px;
+    color: theme-color('text-muted');
   }
-}
-
-.table__row--selected .table__cell {
-  background: theme-color('primary-tint');
 }
 
 .row-actions {
@@ -118,6 +138,8 @@
   gap: 4px;
 
   &__btn {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     padding: 5px;
     color: theme-color('primary');
@@ -127,6 +149,7 @@
     cursor: pointer;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 20px;
       width: 20px;
       height: 20px;
@@ -144,21 +167,13 @@
       }
     }
   }
-}
 
-.row-actions__btn--neutral {
-  color: theme-color('text');
+  &__btn--neutral {
+    color: theme-color('text');
 
-  &:hover {
-    background: theme-color('bg');
+    &:hover {
+      background: theme-color('bg');
+    }
   }
 }
 
-.pagination__ellipsis {
-  display: inline-flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-width: 24px;
-  padding-bottom: 8px;
-  color: theme-color('text-muted');
-}

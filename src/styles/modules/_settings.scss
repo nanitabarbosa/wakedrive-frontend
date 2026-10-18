@@ -4,6 +4,7 @@
   gap: 20px;
 
   &__alert {
+    box-sizing: border-box;
     display: block;
     padding: 10px 12px;
     font-size: 13px;
@@ -17,6 +18,7 @@
     justify-content: flex-end;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 20px;
       width: 20px;
       height: 20px;
@@ -25,6 +27,7 @@
 }
 
 .settings-card {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 20px 24px;
@@ -48,12 +51,14 @@
 }
 
 .setting-row {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 14px 0;
 
   & + & {
+    box-sizing: border-box;
     border-top: 1px solid theme-color('border');
   }
 
@@ -70,10 +75,10 @@
     gap: 4px;
     flex: 1;
     min-width: 0;
+  }
 
-    app-file-drop {
-      margin-top: 10px;
-    }
+  &__file {
+    margin-top: 10px;
   }
 
   &__label {
@@ -87,6 +92,7 @@
   }
 
   &__number {
+    box-sizing: border-box;
     width: 140px;
     flex-shrink: 0;
 
@@ -106,10 +112,10 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+  }
 
-    app-file-drop {
-      margin-top: 8px;
-    }
+  &__file {
+    margin-top: 8px;
   }
 
   &__label {
@@ -132,7 +138,7 @@
     flex-direction: column;
     gap: 16px;
 
-    .form-field label {
+    .form-field__label {
       font-size: 13px;
       font-weight: 600;
     }
@@ -145,12 +151,14 @@
   }
 }
 
-.input-icon--disabled {
-  background: theme-color('surface-muted');
+.input-icon {
+  &--disabled {
+    background: theme-color('surface-muted');
 
-  .form-field & input {
-    color: theme-color('text');
-    cursor: not-allowed;
+    .input-icon__field {
+      color: theme-color('text');
+      cursor: not-allowed;
+    }
   }
 }
 
@@ -160,7 +168,7 @@
   flex-shrink: 0;
   cursor: pointer;
 
-  input {
+  &__input {
     position: absolute;
     inset: 0;
     margin: 0;
@@ -169,6 +177,7 @@
   }
 
   &__track {
+    box-sizing: border-box;
     position: relative;
     width: 44px;
     height: 24px;
@@ -177,6 +186,7 @@
     transition: background 0.2s ease;
 
     &::after {
+      box-sizing: border-box;
       content: '';
       position: absolute;
       top: 3px;
@@ -190,7 +200,7 @@
     }
   }
 
-  input:checked + &__track {
+  &__input:checked + &__track {
     background: theme-color('primary');
 
     &::after {
@@ -198,13 +208,14 @@
     }
   }
 
-  input:focus-visible + &__track {
+  &__input:focus-visible + &__track {
     outline: 2px solid theme-color('primary');
     outline-offset: 2px;
   }
 }
 
 .file-drop {
+  box-sizing: border-box;
   position: relative;
   min-height: 84px;
   background: theme-color('surface-subtle');
@@ -222,6 +233,7 @@
   }
 
   &__empty {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -240,6 +252,7 @@
   }
 
   &__input {
+    box-sizing: border-box;
     position: absolute;
     width: 1px;
     height: 1px;
@@ -248,6 +261,7 @@
   }
 
   &__upload-icon {
+    box-sizing: border-box;
     font-size: 32px;
     width: 32px;
     height: 32px;
@@ -268,6 +282,7 @@
   }
 
   &__audio {
+    box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -280,6 +295,7 @@
   }
 
   &__info {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -297,19 +313,23 @@
   }
 
   &__image {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 16px 56px;
+  }
 
-    img {
-      max-width: 100%;
-      max-height: 110px;
-      object-fit: contain;
-    }
+  &__img {
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: 110px;
+    object-fit: contain;
   }
 
   &__remove {
+    box-sizing: border-box;
+    font-family: inherit;
     position: absolute;
     top: 50%;
     right: 20px;
@@ -328,12 +348,84 @@
   }
 
   &__image + &__remove {
+    font-family: inherit;
     top: 12px;
     transform: none;
+  }
+
+  &--compact {
+    min-height: 0;
+    aspect-ratio: 1;
+
+    .file-drop__empty {
+      box-sizing: border-box;
+      min-height: 0;
+      height: 100%;
+      padding: 12px;
+    }
+
+    .file-drop__preview {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 12px;
+    }
+
+    .file-drop__preview-img {
+      box-sizing: border-box;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  &__change {
+    box-sizing: border-box;
+    flex: 1;
+    gap: 6px;
+    height: 36px;
+    font-size: 13px;
+    cursor: pointer;
+
+    .mat-icon {
+      box-sizing: border-box;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__delete {
+    box-sizing: border-box;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: theme-color('danger');
+    background: theme-color('surface');
+    border: 1px solid theme-color('danger');
+    border-radius: var(--wd-radius);
+    cursor: pointer;
+
+    &:hover {
+      background: theme-color('danger-soft');
+    }
   }
 }
 
 .audio-player {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -345,6 +437,8 @@
   border-radius: 999px;
 
   &__btn {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     padding: 4px;
     color: theme-color('text');
@@ -366,6 +460,7 @@
   }
 
   &__progress {
+    box-sizing: border-box;
     flex: 1;
     min-width: 60px;
     accent-color: theme-color('primary');
@@ -387,65 +482,3 @@
   }
 }
 
-.file-drop--compact {
-  min-height: 0;
-  aspect-ratio: 1;
-
-  .file-drop__empty {
-    min-height: 0;
-    height: 100%;
-    padding: 12px;
-  }
-
-  .file-drop__preview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    padding: 12px;
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-  }
-}
-
-.file-drop__actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-
-.file-drop__change {
-  flex: 1;
-  gap: 6px;
-  height: 36px;
-  font-size: 13px;
-  cursor: pointer;
-
-  .mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.file-drop__delete {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  color: theme-color('danger');
-  background: theme-color('surface');
-  border: 1px solid theme-color('danger');
-  border-radius: var(--wd-radius);
-  cursor: pointer;
-
-  &:hover {
-    background: theme-color('danger-soft');
-  }
-}

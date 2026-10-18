@@ -14,20 +14,20 @@
       <span class="auth-card__description">Ingresa a tu cuenta para monitorear y gestionar tu flota de conductores.</span>
       <form class="auth-form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
         <div class="form-field">
-          <label for="login-email">Correo electrónico</label>
+          <label class="form-field__label" for="login-email">Correo electrónico</label>
           <div class="input-icon" [class.is-invalid]="hasError('email')">
             <mat-icon class="input-icon__icon">mail_outline</mat-icon>
-            <input id="login-email" type="email" formControlName="email" placeholder="tu@empresa.com" autocomplete="email" maxlength="120" />
+            <input class="input-icon__field" id="login-email" type="email" formControlName="email" placeholder="tu@empresa.com" autocomplete="email" maxlength="120" />
           </div>
           @if (hasError('email')) {
             <span class="form-field__error">{{ errorFor('email') }}</span>
           }
         </div>
         <div class="form-field">
-          <label for="login-password">Contraseña</label>
+          <label class="form-field__label" for="login-password">Contraseña</label>
           <div class="input-icon" [class.is-invalid]="hasError('password')">
             <mat-icon class="input-icon__icon">lock_outline</mat-icon>
-            <input
+            <input class="input-icon__field"
               id="login-password"
               [type]="showPassword() ? 'text' : 'password'"
               formControlName="password"

@@ -1,4 +1,5 @@
 .notifications {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -11,12 +12,15 @@
   }
 
   &__tabs {
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: 1fr 1fr;
     border-bottom: 1px solid theme-color('border');
   }
 
   &__tab {
+    box-sizing: border-box;
+    font-family: inherit;
     padding: 10px 8px;
     font-size: 14px;
     font-weight: 500;
@@ -40,6 +44,8 @@
   }
 
   &__link {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     align-items: center;
     align-self: flex-end;
@@ -54,6 +60,7 @@
     cursor: pointer;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 18px;
       width: 18px;
       height: 18px;
@@ -71,6 +78,7 @@
   }
 
   &__error {
+    box-sizing: border-box;
     display: block;
     padding: 8px 12px;
     font-size: 13px;
@@ -85,6 +93,7 @@
   }
 
   &__empty {
+    box-sizing: border-box;
     display: block;
     padding: 32px 0;
     text-align: center;
@@ -93,6 +102,8 @@
   }
 
   &__more {
+    box-sizing: border-box;
+    font-family: inherit;
     width: 100%;
     height: 42px;
     font-size: 14px;
@@ -110,6 +121,8 @@
 }
 
 .notification-item {
+  box-sizing: border-box;
+  font-family: inherit;
   display: flex;
   align-items: flex-start;
   gap: 14px;
@@ -131,6 +144,7 @@
   }
 
   &__icon {
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -140,6 +154,7 @@
     border-radius: 10px;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 22px;
       width: 22px;
       height: 22px;
@@ -191,6 +206,7 @@
   }
 
   &__dot {
+    box-sizing: border-box;
     flex-shrink: 0;
     width: 10px;
     height: 10px;

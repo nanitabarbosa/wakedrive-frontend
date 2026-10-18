@@ -1,6 +1,8 @@
 .dashboard {
   &__range,
   &__refresh {
+    box-sizing: border-box;
+    font-family: inherit;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -14,6 +16,7 @@
     cursor: pointer;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 18px;
       width: 18px;
       height: 18px;
@@ -25,6 +28,8 @@
   }
 
   &__refresh {
+    box-sizing: border-box;
+    font-family: inherit;
     padding: 0 10px;
   }
 
@@ -39,9 +44,43 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 16px;
   }
+
+  &__notice {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: theme-color('danger');
+    background: theme-color('danger-soft');
+    border-radius: var(--wd-radius-sm);
+
+    .mat-icon {
+      box-sizing: border-box;
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__empty {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 13px;
+    color: theme-color('text-muted');
+  }
+
+  &__empty {
+    display: block;
+  }
 }
 
 .stat-card {
+  box-sizing: border-box;
   display: flex;
   gap: 16px;
   padding: 20px;
@@ -49,6 +88,7 @@
   border-radius: var(--wd-radius);
 
   &__icon {
+    box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -58,6 +98,7 @@
     border-radius: 12px;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 30px;
       width: 30px;
       height: 30px;
@@ -85,6 +126,7 @@
     font-weight: 600;
 
     .mat-icon {
+      box-sizing: border-box;
       font-size: 15px;
       width: 15px;
       height: 15px;
@@ -125,6 +167,7 @@
   }
 
   &__dot {
+    box-sizing: border-box;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -176,29 +219,39 @@
       background: theme-color('danger-soft');
     }
   }
+
+  &__label,
+  &__value,
+  &__hint {
+    display: block;
+  }
 }
 
-.card__title .mat-icon {
-  &.icon--success {
-    color: theme-color('success');
-  }
+.card {
+  &__title .mat-icon {
+    &.icon--success {
+      color: theme-color('success');
+    }
 
-  &.icon--danger {
-    color: theme-color('danger');
-  }
+    &.icon--danger {
+      color: theme-color('danger');
+    }
 
-  &.icon--primary {
-    color: theme-color('primary');
+    &.icon--primary {
+      color: theme-color('primary');
+    }
   }
 }
 
 .bar-chart {
+  box-sizing: border-box;
   display: flex;
   gap: 12px;
   height: 160px;
   padding: 4px 20px 16px;
 
   &__axis {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
@@ -208,6 +261,7 @@
   }
 
   &__bars {
+    box-sizing: border-box;
     flex: 1;
     display: flex;
     align-items: flex-end;
@@ -217,6 +271,7 @@
   }
 
   &__col {
+    box-sizing: border-box;
     position: relative;
     flex: 1;
     display: flex;
@@ -233,6 +288,7 @@
   }
 
   &__bar {
+    box-sizing: border-box;
     width: 100%;
     max-width: 56px;
     min-height: 2px;
@@ -250,11 +306,13 @@
 }
 
 .ranking {
+  box-sizing: border-box;
   margin: 0;
   padding: 4px 20px 16px;
   list-style: none;
 
   &__item {
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: 24px 32px minmax(90px, 140px) 1fr 32px;
     align-items: center;
@@ -269,6 +327,7 @@
   }
 
   &__track {
+    box-sizing: border-box;
     height: 10px;
     background: theme-color('surface-muted');
     border-radius: 5px;
@@ -276,6 +335,7 @@
   }
 
   &__fill {
+    box-sizing: border-box;
     display: block;
     height: 100%;
     background: theme-color('danger');
@@ -307,35 +367,3 @@
   }
 }
 
-.dashboard__notice {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0;
-  padding: 10px 14px;
-  font-size: 13px;
-  color: theme-color('danger');
-  background: theme-color('danger-soft');
-  border-radius: var(--wd-radius-sm);
-
-  .mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.dashboard__empty {
-  margin: 0;
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 13px;
-  color: theme-color('text-muted');
-}
-
-.stat-card__label,
-.stat-card__value,
-.stat-card__hint,
-.dashboard__empty {
-  display: block;
-}

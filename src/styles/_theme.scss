@@ -69,3 +69,7 @@ $avatar-tones: 10;
 
   @return rgba($color, $alpha);
 }
+
+@function theme-color-url($name) {
+  @return '%23' + str-slice('#{theme-color($name)}', 2);
+}

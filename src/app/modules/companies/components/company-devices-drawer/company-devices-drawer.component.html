@@ -28,7 +28,7 @@
 
       <label class="search-field">
         <mat-icon>search</mat-icon>
-        <input type="text" placeholder="Buscar serial..." autocomplete="off" [value]="term()" (input)="onSearch($any($event.target).value)" />
+        <input class="search-field__input" type="text" placeholder="Buscar serial..." autocomplete="off" [value]="term()" (input)="onSearch($any($event.target).value)" />
         @if (term()) {
           <button type="button" class="search-field__clear" (click)="clearSearch()" aria-label="Limpiar búsqueda">
             <mat-icon>close</mat-icon>

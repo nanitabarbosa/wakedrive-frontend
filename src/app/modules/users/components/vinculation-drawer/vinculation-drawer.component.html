@@ -8,7 +8,7 @@
       <span class="form-section__hint">Asigna un conductor a un vehículo y al dispositivo instalado en él. Solo se listan los registrados que aún no están vinculados.</span>
 
       <div class="form-field">
-        <label for="vinculation-user">Conductor <span class="required">*</span></label>
+        <label class="form-field__label" for="vinculation-user">Conductor <span class="required">*</span></label>
         <div class="input-icon input-icon--select" [class.is-invalid]="hasError('userId')">
           <mat-icon class="input-icon__icon">person_outline</mat-icon>
           <ng-select formControlName="userId" [items]="drivers()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un conductor'" [clearable]="false" inputId="vinculation-user" />
@@ -19,7 +19,7 @@
       </div>
 
       <div class="form-field">
-        <label for="vinculation-vehicle">Vehículo <span class="required">*</span></label>
+        <label class="form-field__label" for="vinculation-vehicle">Vehículo <span class="required">*</span></label>
         <div class="input-icon input-icon--select" [class.is-invalid]="hasError('vehicleId')">
           <mat-icon class="input-icon__icon">directions_car</mat-icon>
           <ng-select formControlName="vehicleId" [items]="vehicles()" bindLabel="label" bindValue="id" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un vehículo'" [clearable]="false" inputId="vinculation-vehicle" />
@@ -30,7 +30,7 @@
       </div>
 
       <div class="form-field">
-        <label for="vinculation-device">Dispositivo <span class="required">*</span></label>
+        <label class="form-field__label" for="vinculation-device">Dispositivo <span class="required">*</span></label>
         <div class="input-icon input-icon--select" [class.is-invalid]="hasError('deviceSerial')">
           <mat-icon class="input-icon__icon">memory</mat-icon>
           <ng-select formControlName="deviceSerial" [items]="devices()" bindLabel="label" bindValue="label" [placeholder]="loadingOptions() ? 'Cargando...' : 'Selecciona un dispositivo'" [clearable]="false" inputId="vinculation-device" />

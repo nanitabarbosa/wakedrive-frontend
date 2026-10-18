@@ -20,10 +20,10 @@
       </span>
 
       <div class="form-field">
-        <label for="device-serial">Serial <span class="required">*</span></label>
+        <label class="form-field__label" for="device-serial">Serial <span class="required">*</span></label>
         <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('serial')">
           <mat-icon class="input-icon__icon">qr_code</mat-icon>
-          <input id="device-serial" formControlName="serial" placeholder="Ej. WD-000123" maxlength="50" class="uppercase" />
+          <input id="device-serial" formControlName="serial" placeholder="Ej. WD-000123" maxlength="50" class="input-icon__field uppercase" />
         </div>
         @if (hasError('serial')) {
           <span class="form-field__error">{{ errorFor('serial') }}</span>

@@ -20,10 +20,10 @@
       </span>
 
       <div class="form-field">
-        <label for="vehicle-plate">Placa <span class="required">*</span></label>
+        <label class="form-field__label" for="vehicle-plate">Placa <span class="required">*</span></label>
         <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('plate')">
           <mat-icon class="input-icon__icon">pin</mat-icon>
-          <input id="vehicle-plate" formControlName="plate" placeholder="Ej. ABC123" maxlength="7" class="uppercase" />
+          <input id="vehicle-plate" formControlName="plate" placeholder="Ej. ABC123" maxlength="7" class="input-icon__field uppercase" />
         </div>
         @if (hasError('plate')) {
           <span class="form-field__error">{{ errorFor('plate') }}</span>
@@ -31,7 +31,7 @@
       </div>
 
       <div class="form-field">
-        <label for="vehicle-brand">Marca <span class="required">*</span></label>
+        <label class="form-field__label" for="vehicle-brand">Marca <span class="required">*</span></label>
         <div class="input-icon input-icon--select" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('brandId')">
           <mat-icon class="input-icon__icon">sell</mat-icon>
           <ng-select formControlName="brandId" [items]="brands()" bindLabel="name" bindValue="id" placeholder="Selecciona una marca" [clearable]="false" inputId="vehicle-brand" />
@@ -42,10 +42,10 @@
       </div>
 
       <div class="form-field">
-        <label for="vehicle-model">Modelo <span class="required">*</span></label>
+        <label class="form-field__label" for="vehicle-model">Modelo <span class="required">*</span></label>
         <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('model')">
           <mat-icon class="input-icon__icon">directions_car</mat-icon>
-          <input id="vehicle-model" formControlName="model" placeholder="Ej. NPR" maxlength="50" />
+          <input class="input-icon__field" id="vehicle-model" formControlName="model" placeholder="Ej. NPR" maxlength="50" />
         </div>
         @if (hasError('model')) {
           <span class="form-field__error">{{ errorFor('model') }}</span>
@@ -53,10 +53,10 @@
       </div>
 
       <div class="form-field">
-        <label for="vehicle-year">Año <span class="required">*</span></label>
+        <label class="form-field__label" for="vehicle-year">Año <span class="required">*</span></label>
         <div class="input-icon" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('year')">
           <mat-icon class="input-icon__icon">calendar_today</mat-icon>
-          <input id="vehicle-year" type="number" formControlName="year" placeholder="Ej. 2022" [min]="minYear" [max]="maxYear" />
+          <input class="input-icon__field" id="vehicle-year" type="number" formControlName="year" placeholder="Ej. 2022" [min]="minYear" [max]="maxYear" />
         </div>
         @if (hasError('year')) {
           <span class="form-field__error">{{ errorFor('year') }}</span>
@@ -64,7 +64,7 @@
       </div>
 
       <div class="form-field">
-        <label for="vehicle-type">Tipo <span class="required">*</span></label>
+        <label class="form-field__label" for="vehicle-type">Tipo <span class="required">*</span></label>
         <div class="input-icon input-icon--select" [class.input-icon--disabled]="mode === 'view'" [class.is-invalid]="hasError('vehicleTypeId')">
           <mat-icon class="input-icon__icon">tune</mat-icon>
           <ng-select formControlName="vehicleTypeId" [items]="vehicleTypes()" bindLabel="name" bindValue="id" placeholder="Selecciona un tipo" [clearable]="false" inputId="vehicle-type" />

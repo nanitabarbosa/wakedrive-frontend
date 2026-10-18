@@ -14,7 +14,7 @@
         <span class="setting-row__description">Mantiene el reconocimiento de rostro activo mientras el dispositivo esté encendido.</span>
       </div>
       <label class="switch">
-        <input type="checkbox" role="switch" formControlName="faceRecognitionAlways" aria-label="Reconocimiento de rostro siempre" />
+        <input class="switch__input" type="checkbox" role="switch" formControlName="faceRecognitionAlways" aria-label="Reconocimiento de rostro siempre" />
         <span class="switch__track"></span>
       </label>
     </div>
@@ -25,7 +25,7 @@
         <span class="setting-row__description">Envía una notificación cuando el dispositivo se apague o pierda conexión.</span>
       </div>
       <label class="switch">
-        <input type="checkbox" role="switch" formControlName="notifyDeviceShutdown" aria-label="Notificar apagado del dispositivo" />
+        <input class="switch__input" type="checkbox" role="switch" formControlName="notifyDeviceShutdown" aria-label="Notificar apagado del dispositivo" />
         <span class="switch__track"></span>
       </label>
     </div>
@@ -54,6 +54,7 @@
         <span class="setting-row__label">Sonido de la alarma</span>
         <span class="setting-row__description">Archivo de audio en formato MP3. Tamaño máximo 5 MB.</span>
         <app-file-drop
+          class="setting-row__file"
           inputId="settings-alarmSound"
           [rules]="alarmRules"
           [file]="alarmSound()"
@@ -72,14 +73,14 @@
       <div class="company-info__logo">
         <span class="company-info__label">Logo <span class="company-info__optional">(opcional)</span></span>
         <span class="company-info__hint">PNG o JPG, máx. 5 MB</span>
-        <app-file-drop [compact]="true" inputId="settings-logo" [rules]="logoRules" [file]="logo()" (fileSelected)="onLogoSelected($event)" (removed)="onLogoRemoved()" />
+        <app-file-drop class="company-info__file" [compact]="true" inputId="settings-logo" [rules]="logoRules" [file]="logo()" (fileSelected)="onLogoSelected($event)" (removed)="onLogoRemoved()" />
       </div>
       <div class="company-info__fields">
         <div class="form-field">
-          <label for="settings-companyName">Nombre de la empresa <span class="required">*</span></label>
+          <label class="form-field__label" for="settings-companyName">Nombre de la empresa <span class="required">*</span></label>
           <div class="input-icon" [class.is-invalid]="hasError('companyName')">
             <mat-icon class="input-icon__icon">apartment</mat-icon>
-            <input id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" />
+            <input class="input-icon__field" id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" />
           </div>
           @if (hasError('companyName')) {
             <span class="form-field__error">{{ errorFor('companyName') }}</span>
@@ -87,38 +88,38 @@
         </div>
         <div class="company-info__row">
           <div class="form-field">
-            <label for="settings-nit">NIT</label>
+            <label class="form-field__label" for="settings-nit">NIT</label>
             <div class="input-icon input-icon--disabled" title="El NIT de la empresa no se puede modificar">
               <mat-icon class="input-icon__icon">badge</mat-icon>
-              <input id="settings-nit" formControlName="nit" />
+              <input class="input-icon__field" id="settings-nit" formControlName="nit" />
               <mat-icon class="input-icon__icon">lock_outline</mat-icon>
             </div>
           </div>
           <div class="form-field">
-            <label for="settings-phone">Teléfono <span class="required">*</span></label>
+            <label class="form-field__label" for="settings-phone">Teléfono <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('phone')">
               <mat-icon class="input-icon__icon">call</mat-icon>
-              <input id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" />
+              <input class="input-icon__field" id="settings-phone" type="tel" appOnlyNumbers inputmode="numeric" formControlName="phone" placeholder="3001234567" maxlength="10" />
             </div>
             <app-validate-errors [control]="form.get('phone')" [messages]="phoneErrors" />
           </div>
         </div>
         <div class="company-info__row">
           <div class="form-field">
-            <label for="settings-email">Correo electrónico <span class="required">*</span></label>
+            <label class="form-field__label" for="settings-email">Correo electrónico <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('email')">
               <mat-icon class="input-icon__icon">mail_outline</mat-icon>
-              <input id="settings-email" type="email" formControlName="email" placeholder="Ej. contacto@empresa.com" maxlength="120" autocomplete="email" />
+              <input class="input-icon__field" id="settings-email" type="email" formControlName="email" placeholder="Ej. contacto@empresa.com" maxlength="120" autocomplete="email" />
             </div>
             @if (hasError('email')) {
               <span class="form-field__error">{{ errorFor('email') }}</span>
             }
           </div>
           <div class="form-field">
-            <label for="settings-address">Dirección <span class="required">*</span></label>
+            <label class="form-field__label" for="settings-address">Dirección <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('address')">
               <mat-icon class="input-icon__icon">location_on</mat-icon>
-              <input id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" />
+              <input class="input-icon__field" id="settings-address" formControlName="address" placeholder="Ej. Calle 123 # 45-67" maxlength="150" />
             </div>
             @if (hasError('address')) {
               <span class="form-field__error">{{ errorFor('address') }}</span>
