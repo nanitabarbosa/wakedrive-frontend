@@ -22,12 +22,12 @@
   gap: 12px;
   width: 100%;
   padding: 14px 14px 14px 16px;
-  color: var(--wd-text);
-  background: var(--wd-surface);
-  border: 1px solid var(--wd-border);
+  color: theme-color('text');
+  background: theme-color('surface');
+  border: 1px solid theme-color('border');
   border-left: 4px solid var(--alert-color);
   border-radius: var(--wd-radius);
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+  box-shadow: 0 12px 32px theme-color('text', 0.16);
 
   &__icon {
     flex-shrink: 0;
@@ -46,14 +46,14 @@
     display: inline-flex;
     flex-shrink: 0;
     padding: 2px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
     background: none;
     border: none;
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
     &:hover {
-      color: var(--wd-text);
+      color: theme-color('text');
     }
 
     .mat-icon {
@@ -64,18 +64,18 @@
   }
 
   &--success {
-    --alert-color: var(--wd-success);
+    --alert-color: theme-color('success');
   }
 
   &--error {
-    --alert-color: var(--wd-danger);
+    --alert-color: theme-color('danger');
   }
 
   &--warning {
-    --alert-color: var(--wd-warning);
+    --alert-color: theme-color('warning');
   }
 
   &--info {
-    --alert-color: var(--wd-primary);
+    --alert-color: theme-color('primary');
   }
 }

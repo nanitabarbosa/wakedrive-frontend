@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: rgba(15, 23, 42, 0.25);
+  background: theme-color('text', 0.25);
   animation: drawer-fade 0.2s ease;
 }
 
@@ -16,10 +16,10 @@
   flex-direction: column;
   width: 380px;
   max-width: calc(100vw - 32px);
-  background: var(--wd-surface);
-  border: 1px solid var(--wd-border);
+  background: theme-color('surface');
+  border: 1px solid theme-color('border');
   border-radius: 14px;
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 20px 50px theme-color('text', 0.18);
   animation: drawer-slide 0.25s ease;
 
   &__body {
@@ -29,7 +29,7 @@
 
   &__footer {
     padding: 20px 24px;
-    border-top: 1px solid var(--wd-border);
+    border-top: 1px solid theme-color('border');
 
     &:empty {
       display: none;
@@ -44,7 +44,7 @@
   padding: 20px 24px;
 
   & + & {
-    border-top: 1px solid var(--wd-border);
+    border-top: 1px solid theme-color('border');
   }
 
   &__title {
@@ -73,7 +73,7 @@
   }
 
   .required {
-    color: var(--wd-danger);
+    color: theme-color('danger');
   }
 
   input,
@@ -84,14 +84,14 @@
     padding: 0 12px;
     font: inherit;
     font-size: 14px;
-    color: var(--wd-text);
-    background: var(--wd-surface);
-    border: 1px solid var(--wd-border);
+    color: theme-color('text');
+    background: theme-color('surface');
+    border: 1px solid theme-color('border');
     border-radius: var(--wd-radius-sm);
     outline: none;
 
     &:focus {
-      border-color: var(--wd-primary);
+      border-color: theme-color('primary');
     }
   }
 }
@@ -113,26 +113,26 @@
   display: block;
   margin: -4px 0 0;
   font-size: 13px;
-  color: var(--wd-text-muted);
+  color: theme-color('text-muted');
 }
 
 .form-field {
   input.is-invalid,
   select.is-invalid {
-    border-color: var(--wd-danger);
+    border-color: theme-color('danger');
   }
 
   input:disabled,
   select:disabled {
-    color: var(--wd-text);
-    background: #f8fafc;
+    color: theme-color('text');
+    background: theme-color('surface-subtle');
     cursor: default;
   }
 
   &__error {
     margin-top: -2px;
     font-size: 12px;
-    color: var(--wd-danger);
+    color: theme-color('danger');
   }
 }
 
@@ -141,8 +141,8 @@
   margin: 0 24px 16px;
   padding: 10px 12px;
   font-size: 13px;
-  color: #b91c1c;
-  background: var(--wd-danger-soft);
+  color: theme-color('danger');
+  background: theme-color('danger-soft');
   border-radius: var(--wd-radius-sm);
 }
 
@@ -160,7 +160,7 @@
   font-size: 14px;
 
   &__label {
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__value {
@@ -179,7 +179,7 @@
   gap: 14px;
   min-height: 100%;
   padding: 16px;
-  background: var(--wd-bg);
+  background: theme-color('bg');
 }
 
 .info-card {
@@ -187,8 +187,8 @@
   flex-direction: column;
   gap: 16px;
   padding: 16px;
-  background: var(--wd-surface);
-  border: 1px solid var(--wd-border);
+  background: theme-color('surface');
+  border: 1px solid theme-color('border');
   border-radius: 12px;
 
   &__title {
@@ -205,8 +205,8 @@
     justify-content: center;
     width: 28px;
     height: 28px;
-    color: var(--wd-text-muted);
-    background: var(--wd-bg);
+    color: theme-color('text-muted');
+    background: theme-color('bg');
     border-radius: 8px;
 
     .mat-icon {
@@ -221,12 +221,12 @@
     flex-direction: column;
     gap: 4px;
     padding-bottom: 16px;
-    border-bottom: 1px solid var(--wd-border);
+    border-bottom: 1px solid theme-color('border');
   }
 
   &__label {
     font-size: 12px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__name {
@@ -255,18 +255,18 @@
     height: 44px;
     font-size: 14px;
     font-weight: 700;
-    color: var(--wd-primary);
-    background: var(--wd-primary-soft);
+    color: theme-color('primary');
+    background: theme-color('primary-soft');
     border-radius: 50%;
 
     &--success {
-      color: var(--wd-success);
-      background: var(--wd-success-soft);
+      color: theme-color('success');
+      background: theme-color('success-soft');
     }
 
     &--purple {
-      color: var(--wd-purple);
-      background: var(--wd-purple-soft);
+      color: theme-color('purple');
+      background: theme-color('purple-soft');
     }
 
     .mat-icon {
@@ -292,7 +292,7 @@
 
   &__role {
     font-size: 12px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   .badge {
@@ -328,10 +328,10 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #94a3b8;
+    background: theme-color('text-subtle');
   }
 
   &--on::before {
-    background: var(--wd-success);
+    background: theme-color('success');
   }
 }

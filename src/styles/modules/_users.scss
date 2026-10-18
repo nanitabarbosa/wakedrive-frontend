@@ -9,8 +9,8 @@
   padding: 2px 8px;
   font-weight: 600;
   letter-spacing: 0.5px;
-  background: #fef9c3;
-  border: 1px solid #eab308;
+  background: theme-color('warning-soft');
+  border: 1px solid theme-color('warning');
   border-radius: 4px;
 }
 

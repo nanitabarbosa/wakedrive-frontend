@@ -3,13 +3,13 @@ ng-select.ng-select {
   display: block;
   width: 100%;
   font-size: 14px;
-  color: var(--wd-text);
+  color: theme-color('text');
 
   .ng-select-container {
     min-height: 40px;
     height: 40px;
-    background: var(--wd-surface);
-    border: 1px solid var(--wd-border);
+    background: theme-color('surface');
+    border: 1px solid theme-color('border');
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
@@ -18,7 +18,7 @@ ng-select.ng-select {
       align-items: center;
 
       .ng-placeholder {
-        color: var(--wd-text-muted);
+        color: theme-color('text-muted');
       }
 
       .ng-input {
@@ -44,25 +44,25 @@ ng-select.ng-select {
 
   &.ng-select-focused:not(.ng-select-opened) > .ng-select-container,
   &.ng-select-opened > .ng-select-container {
-    border-color: var(--wd-primary);
+    border-color: theme-color('primary');
     box-shadow: none;
   }
 
   &.ng-select-disabled > .ng-select-container {
-    background: #f8fafc;
+    background: theme-color('surface-subtle');
     cursor: default;
 
     .ng-value {
-      color: var(--wd-text);
+      color: theme-color('text');
     }
   }
 
   &.is-invalid > .ng-select-container {
-    border-color: var(--wd-danger);
+    border-color: theme-color('danger');
   }
 
   .ng-arrow-wrapper .ng-arrow {
-    border-top-color: var(--wd-text-muted);
+    border-top-color: theme-color('text-muted');
   }
 
   // Variante compacta para los filtros de las tablas
@@ -81,7 +81,7 @@ ng-select.ng-select {
 // El panel se agrega al body: debe quedar sobre el drawer (1001) y bajo las alertas (1100)
 .ng-dropdown-panel {
   z-index: 1050;
-  border-color: var(--wd-border);
+  border-color: theme-color('border');
   font-size: 14px;
 
   &.ng-select-bottom,
@@ -91,13 +91,13 @@ ng-select.ng-select {
 
   .ng-dropdown-panel-items .ng-option {
     &.ng-option-marked {
-      background: var(--wd-bg);
+      background: theme-color('bg');
     }
 
     &.ng-option-selected,
     &.ng-option-selected.ng-option-marked {
       font-weight: 600;
-      background: var(--wd-bg);
+      background: theme-color('bg');
     }
   }
 }

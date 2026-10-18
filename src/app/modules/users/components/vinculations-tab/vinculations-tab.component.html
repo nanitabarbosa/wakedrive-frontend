@@ -29,7 +29,7 @@
       }
       @case ('userName') {
         <span class="user-cell">
-          <span class="avatar avatar--lg" [style.background]="avatarColors[item.userId % avatarColors.length]">{{ item.userName | initials }}</span>
+          <span class="avatar avatar--lg avatar--tone-{{ (item.userId % 10) + 1 }}">{{ item.userName | initials }}</span>
           {{ item.userName }}
         </span>
       }
