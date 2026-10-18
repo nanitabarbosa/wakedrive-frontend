@@ -22,57 +22,51 @@
   }
   <div class="dashboard__stats">
     <article class="stat-card stat-card--blue">
-      <span class="stat-card__icon"><mat-icon>local_shipping</mat-icon></span>
-      <div>
+      <div class="stat-card__head">
         <span class="stat-card__label">Vehículos registrados</span>
-        <span class="stat-card__value">{{ s?.vehicles?.total ?? '—' }}</span>
-        @if (s) {
-          <span class="stat-card__trend" [class.stat-card__trend--good]="s.vehicles.variation >= 0" [class.stat-card__trend--bad]="s.vehicles.variation < 0">
-            <mat-icon>{{ s.vehicles.variation >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ s.vehicles.variation }}%
-          </span>
-          <span class="stat-card__hint">vs. mes anterior</span>
-        }
+        <span class="stat-card__icon"><mat-icon>local_shipping</mat-icon></span>
+      </div>
+      <span class="stat-card__value">{{ s?.vehicles?.total ?? '—' }}</span>
+      <div class="stat-card__foot">
+        <span class="stat-card__hint">En tu flota</span>
       </div>
     </article>
     <article class="stat-card stat-card--green">
-      <span class="stat-card__icon"><mat-icon>group</mat-icon></span>
-      <div>
+      <div class="stat-card__head">
         <span class="stat-card__label">Usuarios activos</span>
-        <span class="stat-card__value">{{ s?.activeUsers?.total ?? '—' }}</span>
-        @if (s) {
-          <span class="stat-card__trend" [class.stat-card__trend--good]="s.activeUsers.variation >= 0" [class.stat-card__trend--bad]="s.activeUsers.variation < 0">
-            <mat-icon>{{ s.activeUsers.variation >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ s.activeUsers.variation }}%
-          </span>
-          <span class="stat-card__hint">vs. mes anterior</span>
-        }
+        <span class="stat-card__icon"><mat-icon>group</mat-icon></span>
+      </div>
+      <span class="stat-card__value">{{ s?.activeUsers?.total ?? '—' }}</span>
+      <div class="stat-card__foot">
+        <span class="stat-card__hint">Con acceso a la plataforma</span>
       </div>
     </article>
     <article class="stat-card stat-card--purple">
-      <span class="stat-card__icon"><mat-icon>tablet_android</mat-icon></span>
-      <div>
+      <div class="stat-card__head">
         <span class="stat-card__label">Dispositivos</span>
-        <span class="stat-card__value">{{ s?.devices?.total ?? '—' }}</span>
+        <span class="stat-card__icon"><mat-icon>tablet_android</mat-icon></span>
+      </div>
+      <span class="stat-card__value">{{ s?.devices?.total ?? '—' }}</span>
+      <div class="stat-card__foot">
         @if (s) {
-          <div class="stat-card__split">
-            <span class="stat-card__split-item">
-              <span class="stat-card__dot stat-card__dot--success"></span>
-              <span><span class="text-strong">{{ s.devices.active }}</span>Activos</span>
-            </span>
-            <span class="stat-card__split-item">
-              <span class="stat-card__dot stat-card__dot--danger"></span>
-              <span><span class="text-strong">{{ s.devices.offline }}</span>Sin conexión</span>
-            </span>
-          </div>
+          <span class="stat-card__chip stat-card__chip--success">
+            <span class="stat-card__dot"></span>{{ s.devices.active }} activos
+          </span>
+          <span class="stat-card__chip stat-card__chip--danger">
+            <span class="stat-card__dot"></span>{{ s.devices.offline }} sin conexión
+          </span>
         }
       </div>
     </article>
     <article class="stat-card stat-card--red">
-      <span class="stat-card__icon"><mat-icon>warning</mat-icon></span>
-      <div>
+      <div class="stat-card__head">
         <span class="stat-card__label">Alertas hoy</span>
-        <span class="stat-card__value">{{ s?.alertsToday?.total ?? '—' }}</span>
+        <span class="stat-card__icon"><mat-icon>warning</mat-icon></span>
+      </div>
+      <span class="stat-card__value">{{ s?.alertsToday?.total ?? '—' }}</span>
+      <div class="stat-card__foot">
         @if (s) {
-          <span class="stat-card__trend" [class.stat-card__trend--bad]="s.alertsToday.variation > 0" [class.stat-card__trend--good]="s.alertsToday.variation <= 0">
+          <span class="stat-card__chip" [class.stat-card__chip--danger]="s.alertsToday.variation > 0" [class.stat-card__chip--success]="s.alertsToday.variation <= 0">
             <mat-icon>{{ s.alertsToday.variation >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ s.alertsToday.variation }}%
           </span>
           <span class="stat-card__hint">vs. día anterior</span>

@@ -64,6 +64,16 @@
   &__row--selected &__cell {
     background: theme-color('primary-tint');
   }
+
+  @include respond('sm') {
+    &__head-cell {
+      padding: 8px 12px;
+    }
+
+    &__cell {
+      padding: 8px 12px;
+    }
+  }
 }
 
 .pagination {
@@ -177,3 +187,9 @@
   }
 }
 
+@include respond('sm') {
+  .pagination {
+    justify-content: center;
+    padding: 12px 16px;
+  }
+}

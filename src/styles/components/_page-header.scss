@@ -31,4 +31,15 @@
       display: none;
     }
   }
+
+  @include respond('sm') {
+    &__title {
+      font-size: 22px;
+    }
+
+    &__actions {
+      width: 100%;
+      margin-top: 0;
+    }
+  }
 }

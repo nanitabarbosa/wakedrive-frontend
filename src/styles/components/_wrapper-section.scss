@@ -5,4 +5,13 @@
   gap: 20px;
   width: 100%;
   padding: 0 50px 30px 50px;
+
+  @include respond('md') {
+    padding: 0 28px 24px;
+  }
+
+  @include respond('sm') {
+    gap: 16px;
+    padding: 0 16px 20px;
+  }
 }

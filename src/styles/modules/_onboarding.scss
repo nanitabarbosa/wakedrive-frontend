@@ -137,6 +137,10 @@
   grid-template-columns: 1fr 1fr;
   gap: 16px 12px;
 
+  @include respond('sm') {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   &__item {
     display: flex;
     flex-direction: column;
