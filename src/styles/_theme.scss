@@ -1,0 +1,71 @@
+$theme-colors: (
+  'white': #ffffff,
+
+  'bg': #f5f7fb,
+  'surface': #ffffff,
+  'surface-subtle': #f8fafc,
+  'surface-muted': #f1f5f9,
+
+  'border': #e8ecf3,
+  'border-strong': #cbd5e1,
+
+  'text': #0f172a,
+  'text-secondary': #475569,
+  'text-muted': #64748b,
+  'text-subtle': #94a3b8,
+
+  'primary': #2f6fed,
+  'primary-hover': #245fd6,
+  'primary-tint': #f4f8ff,
+  'primary-soft': #e8f0fe,
+  'primary-soft-hover': #dce8ff,
+
+  'success': #16a34a,
+  'success-tint': #f2fbf5,
+  'success-soft': #e7f7ed,
+  'success-border': #c6ebd3,
+
+  'danger': #dc2626,
+  'danger-tint': #fff6f6,
+  'danger-soft': #fdecec,
+  'danger-border': #f8cfcf,
+
+  'warning': #d97706,
+  'warning-soft': #fef5e1,
+  'warning-border': #fbe2b0,
+
+  'purple': #7c5cf5,
+  'purple-soft': #efeafe,
+
+  'sidebar-bg': #14233c,
+  'sidebar-text': #c7d0e0,
+  'sidebar-active': #1f3a66,
+  'sidebar-accent': #6ea0ff,
+
+  'avatar-1': #4f6f9f,
+  'avatar-2': #5b8070,
+  'avatar-3': #9a7b4f,
+  'avatar-4': #6f6598,
+  'avatar-5': #986a76,
+  'avatar-6': #4f8591,
+  'avatar-7': #7a8450,
+  'avatar-8': #a0644f,
+  'avatar-9': #8a5f8a,
+  'avatar-10': #667585,
+);
+
+$avatar-tones: 10;
+
+@function theme-color($name, $alpha: 1) {
+  @if not map-has-key($theme-colors, $name) {
+    @error 'theme-color: "#{$name}" no existe en $theme-colors.';
+  }
+
+  $color: map-get($theme-colors, $name);
+
+  @if $alpha == 1 {
+    @return $color;
+  }
+
+  @return rgba($color, $alpha);
+}

@@ -8,7 +8,7 @@
 
   &--bordered {
     margin: 4px 0;
-    border: 1px dashed var(--wd-border);
+    border: 1px dashed theme-color('border');
     border-radius: 14px;
   }
 
@@ -19,8 +19,8 @@
     width: 52px;
     height: 52px;
     margin-bottom: 8px;
-    color: var(--wd-text-muted);
-    background: #f1f5f9;
+    color: theme-color('text-muted');
+    background: theme-color('surface-muted');
     border-radius: 50%;
 
     .mat-icon {
@@ -30,8 +30,8 @@
     }
 
     &--danger {
-      color: var(--wd-danger);
-      background: var(--wd-danger-soft);
+      color: theme-color('danger');
+      background: theme-color('danger-soft');
     }
   }
 
@@ -44,7 +44,7 @@
     max-width: 260px;
     font-size: 13px;
     line-height: 1.45;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__actions {

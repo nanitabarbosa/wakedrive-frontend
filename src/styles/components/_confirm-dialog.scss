@@ -14,8 +14,8 @@
     width: 52px;
     height: 52px;
     margin-bottom: 4px;
-    color: var(--wd-danger);
-    background: var(--wd-danger-soft);
+    color: theme-color('danger');
+    background: theme-color('danger-soft');
     border-radius: 50%;
   }
 
@@ -28,7 +28,7 @@
   &__message {
     margin: 0 0 12px;
     font-size: 14px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__actions {

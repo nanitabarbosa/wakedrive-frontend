@@ -18,14 +18,14 @@
     display: table-cell;
     vertical-align: middle;
     white-space: nowrap;
-    border-bottom: 1px solid var(--wd-border);
+    border-bottom: 1px solid theme-color('border');
   }
 
   &__head-cell {
     padding: 10px 20px;
     text-align: left;
     font-weight: 600;
-    background: #f8fafc;
+    background: theme-color('surface-subtle');
   }
 
   &__cell {
@@ -53,7 +53,7 @@
   gap: 12px;
   padding: 16px 20px;
   font-size: 13px;
-  border-top: 1px solid var(--wd-border);
+  border-top: 1px solid theme-color('border');
 
   &__pages {
     display: flex;
@@ -68,8 +68,8 @@
     height: 34px;
     padding: 0 8px;
     font-size: 13px;
-    color: var(--wd-text);
-    background: var(--wd-surface);
+    color: theme-color('text');
+    background: theme-color('surface');
     border: 1px solid transparent;
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
@@ -78,11 +78,11 @@
       font-size: 18px;
       width: 18px;
       height: 18px;
-      color: var(--wd-primary);
+      color: theme-color('primary');
     }
 
     &:hover:not(:disabled) {
-      background: var(--wd-primary-soft);
+      background: theme-color('primary-soft');
     }
 
     &:disabled {
@@ -92,8 +92,8 @@
 
     &--active,
     &--active:hover:not(:disabled) {
-      color: #fff;
-      background: var(--wd-primary);
+      color: theme-color('white');
+      background: theme-color('primary');
     }
   }
 }
@@ -105,12 +105,12 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
-    accent-color: var(--wd-primary);
+    accent-color: theme-color('primary');
   }
 }
 
 .table__row--selected .table__cell {
-  background: #f5f9ff;
+  background: theme-color('primary-tint');
 }
 
 .row-actions {
@@ -120,7 +120,7 @@
   &__btn {
     display: inline-flex;
     padding: 5px;
-    color: var(--wd-primary);
+    color: theme-color('primary');
     background: none;
     border: none;
     border-radius: var(--wd-radius-sm);
@@ -133,24 +133,24 @@
     }
 
     &:hover {
-      background: var(--wd-primary-soft);
+      background: theme-color('primary-soft');
     }
 
     &--danger {
-      color: var(--wd-danger);
+      color: theme-color('danger');
 
       &:hover {
-        background: var(--wd-danger-soft);
+        background: theme-color('danger-soft');
       }
     }
   }
 }
 
 .row-actions__btn--neutral {
-  color: var(--wd-text);
+  color: theme-color('text');
 
   &:hover {
-    background: var(--wd-bg);
+    background: theme-color('bg');
   }
 }
 
@@ -160,5 +160,5 @@
   justify-content: center;
   min-width: 24px;
   padding-bottom: 8px;
-  color: var(--wd-text-muted);
+  color: theme-color('text-muted');
 }

@@ -7,9 +7,9 @@
     height: 38px;
     padding: 0 14px;
     font-size: 13px;
-    color: var(--wd-text);
-    background: var(--wd-surface);
-    border: 1px solid var(--wd-border);
+    color: theme-color('text');
+    background: theme-color('surface');
+    border: 1px solid theme-color('border');
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
@@ -20,7 +20,7 @@
     }
 
     &:hover {
-      border-color: var(--wd-primary);
+      border-color: theme-color('primary');
     }
   }
 
@@ -45,7 +45,7 @@
   display: flex;
   gap: 16px;
   padding: 20px;
-  border: 1px solid var(--wd-border);
+  border: 1px solid theme-color('border');
   border-radius: var(--wd-radius);
 
   &__icon {
@@ -91,18 +91,18 @@
     }
 
     &--good {
-      color: var(--wd-success);
+      color: theme-color('success');
     }
 
     &--bad {
-      color: var(--wd-danger);
+      color: theme-color('danger');
     }
   }
 
   &__hint {
     margin: 2px 0 0;
     font-size: 12px;
-    color: var(--wd-text);
+    color: theme-color('text');
   }
 
   &__split {
@@ -131,64 +131,64 @@
     border: 7px solid;
 
     &--success {
-      background: var(--wd-success);
-      border-color: var(--wd-success-soft);
+      background: theme-color('success');
+      border-color: theme-color('success-soft');
     }
 
     &--danger {
-      background: var(--wd-danger);
-      border-color: var(--wd-danger-soft);
+      background: theme-color('danger');
+      border-color: theme-color('danger-soft');
     }
   }
 
   &--blue {
-    background: #f4f8ff;
+    background: theme-color('primary-tint');
 
     .stat-card__icon {
-      color: var(--wd-primary);
-      background: #dce8ff;
+      color: theme-color('primary');
+      background: theme-color('primary-soft-hover');
     }
   }
 
   &--green {
-    background: #f2fbf5;
+    background: theme-color('success-tint');
 
     .stat-card__icon {
-      color: var(--wd-success);
-      background: #d9f3e2;
+      color: theme-color('success');
+      background: theme-color('success-soft');
     }
   }
 
   &--purple {
-    background: var(--wd-surface);
+    background: theme-color('surface');
 
     .stat-card__icon {
-      color: var(--wd-purple);
-      background: var(--wd-purple-soft);
+      color: theme-color('purple');
+      background: theme-color('purple-soft');
     }
   }
 
   &--red {
-    background: #fff6f6;
+    background: theme-color('danger-tint');
 
     .stat-card__icon {
-      color: var(--wd-danger);
-      background: #fde1e1;
+      color: theme-color('danger');
+      background: theme-color('danger-soft');
     }
   }
 }
 
 .card__title .mat-icon {
   &.icon--success {
-    color: var(--wd-success);
+    color: theme-color('success');
   }
 
   &.icon--danger {
-    color: var(--wd-danger);
+    color: theme-color('danger');
   }
 
   &.icon--primary {
-    color: var(--wd-primary);
+    color: theme-color('primary');
   }
 }
 
@@ -204,7 +204,7 @@
     justify-content: space-between;
     padding-bottom: 20px;
     font-size: 11px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__bars {
@@ -212,7 +212,7 @@
     display: flex;
     align-items: flex-end;
     gap: 16px;
-    border-bottom: 1px solid var(--wd-border);
+    border-bottom: 1px solid theme-color('border');
     margin-bottom: 20px;
   }
 
@@ -236,7 +236,7 @@
     width: 100%;
     max-width: 56px;
     min-height: 2px;
-    background: linear-gradient(180deg, #fca5a5 0%, #fecaca 100%);
+    background: linear-gradient(180deg, theme-color('danger', 0.5) 0%, theme-color('danger', 0.3) 100%);
     border-radius: 4px 4px 0 0;
   }
 
@@ -244,7 +244,7 @@
     position: absolute;
     bottom: -20px;
     font-size: 11px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
     white-space: nowrap;
   }
 }
@@ -270,7 +270,7 @@
 
   &__track {
     height: 10px;
-    background: #f1f5f9;
+    background: theme-color('surface-muted');
     border-radius: 5px;
     overflow: hidden;
   }
@@ -278,7 +278,7 @@
   &__fill {
     display: block;
     height: 100%;
-    background: #f87171;
+    background: theme-color('danger');
     border-radius: 5px;
   }
 
@@ -314,8 +314,8 @@
   margin: 0;
   padding: 10px 14px;
   font-size: 13px;
-  color: #b91c1c;
-  background: var(--wd-danger-soft);
+  color: theme-color('danger');
+  background: theme-color('danger-soft');
   border-radius: var(--wd-radius-sm);
 
   .mat-icon {
@@ -330,7 +330,7 @@
   padding: 40px 20px;
   text-align: center;
   font-size: 13px;
-  color: var(--wd-text-muted);
+  color: theme-color('text-muted');
 }
 
 .stat-card__label,

@@ -13,8 +13,8 @@ body {
   margin: 0;
   font-family: var(--wd-font);
   font-size: 14px;
-  color: var(--wd-text);
-  background: var(--wd-bg);
+  color: theme-color('text');
+  background: theme-color('bg');
 }
 
 button {

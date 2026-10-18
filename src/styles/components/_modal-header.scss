@@ -11,8 +11,8 @@
     justify-content: center;
     width: 38px;
     height: 38px;
-    color: var(--wd-primary);
-    background: var(--wd-primary-soft);
+    color: theme-color('primary');
+    background: theme-color('primary-soft');
     border-radius: 10px;
 
     .mat-icon {
@@ -22,23 +22,23 @@
     }
 
     &--success {
-      color: var(--wd-success);
-      background: var(--wd-success-soft);
+      color: theme-color('success');
+      background: theme-color('success-soft');
     }
 
     &--warning {
-      color: #d97706;
-      background: var(--wd-warning-soft);
+      color: theme-color('warning');
+      background: theme-color('warning-soft');
     }
 
     &--danger {
-      color: var(--wd-danger);
-      background: var(--wd-danger-soft);
+      color: theme-color('danger');
+      background: theme-color('danger-soft');
     }
 
     &--purple {
-      color: var(--wd-purple);
-      background: var(--wd-purple-soft);
+      color: theme-color('purple');
+      background: theme-color('purple-soft');
     }
   }
 

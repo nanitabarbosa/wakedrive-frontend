@@ -4,7 +4,7 @@
   min-height: 100vh;
   padding: clamp(24px, 12vh, 120px) 6vw 24px;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.15) 45%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(90deg, theme-color('white', 0.55) 0%, theme-color('white', 0.15) 45%, theme-color('white', 0) 60%),
     url('/images/login-bg.jpg') center / cover no-repeat;
 
   &__content {
@@ -34,7 +34,7 @@
     width: 58px;
     height: 3px;
     margin: 20px 0 18px;
-    background: var(--wd-primary);
+    background: theme-color('primary');
     border-radius: 2px;
   }
 
@@ -45,18 +45,18 @@
     font-weight: 800;
     line-height: 1.2;
     letter-spacing: -0.5px;
-    color: #0b1b33;
+    color: theme-color('text');
   }
 
   &__title-line--accent {
-    color: #1a6cf0;
+    color: theme-color('primary');
   }
 
   &__subtitle {
     margin-top: 14px;
     font-size: 16px;
     line-height: 1.5;
-    color: #475569;
+    color: theme-color('text-secondary');
   }
 }
 
@@ -66,22 +66,22 @@
   width: 100%;
   max-width: 440px;
   padding: 32px 36px 28px;
-  background: rgba(255, 255, 255, 0.96);
+  background: theme-color('white', 0.96);
   border-radius: 18px;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 24px 60px theme-color('text', 0.18);
   backdrop-filter: blur(6px);
 
   &__title {
     font-size: 24px;
     font-weight: 800;
-    color: #0b1b33;
+    color: theme-color('text');
   }
 
   &__description {
     margin-top: 6px;
     font-size: 14px;
     line-height: 1.55;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   &__separator {
@@ -89,14 +89,14 @@
     align-items: center;
     gap: 12px;
     margin: 18px 0;
-    color: #cbd5e1;
+    color: theme-color('border-strong');
 
     &::before,
     &::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--wd-border);
+      background: theme-color('border');
     }
 
     .mat-icon {
@@ -124,7 +124,7 @@
     padding: 0;
     font-size: 13px;
     font-weight: 600;
-    color: var(--wd-primary);
+    color: theme-color('primary');
     background: none;
     border: none;
     cursor: pointer;
@@ -138,8 +138,8 @@
     display: block;
     padding: 10px 12px;
     font-size: 13px;
-    color: #b91c1c;
-    background: var(--wd-danger-soft);
+    color: theme-color('danger');
+    background: theme-color('danger-soft');
     border-radius: var(--wd-radius-sm);
   }
 
@@ -163,22 +163,22 @@
   gap: 10px;
   height: 44px;
   padding: 0 16px;
-  background: var(--wd-surface);
-  border: 1.5px solid var(--wd-border);
+  background: theme-color('surface');
+  border: 1.5px solid theme-color('border');
   border-radius: var(--wd-radius);
   transition: border-color 0.15s ease;
 
   &:focus-within {
-    border-color: var(--wd-primary);
+    border-color: theme-color('primary');
   }
 
   &.is-invalid {
-    border-color: var(--wd-danger);
+    border-color: theme-color('danger');
   }
 
   &__icon {
     flex-shrink: 0;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 
   .form-field & input {
@@ -193,14 +193,14 @@
   &__toggle {
     display: inline-flex;
     padding: 4px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
     background: none;
     border: none;
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
     &:hover {
-      color: var(--wd-text);
+      color: theme-color('text');
     }
   }
 }
@@ -210,7 +210,7 @@
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  background: #edf3fd;
+  background: theme-color('primary-tint');
   border-radius: var(--wd-radius);
 
   &__icon {
@@ -220,8 +220,8 @@
     flex-shrink: 0;
     width: 46px;
     height: 46px;
-    color: var(--wd-primary);
-    background: #dde8fb;
+    color: theme-color('primary');
+    background: theme-color('primary-soft-hover');
     border-radius: var(--wd-radius);
 
     .mat-icon {
@@ -242,7 +242,7 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 1.4;
-    color: #0b1b33;
+    color: theme-color('text');
   }
 
   &__link {
@@ -252,7 +252,7 @@
     padding: 0;
     font-size: 14px;
     font-weight: 600;
-    color: var(--wd-primary);
+    color: theme-color('primary');
     background: none;
     border: none;
     cursor: pointer;
@@ -284,7 +284,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--wd-primary);
+  color: theme-color('primary');
   cursor: pointer;
 
   .mat-icon {
@@ -303,7 +303,7 @@
     margin-top: 4px;
     font-size: 15px;
     font-weight: 700;
-    color: #0b1b33;
+    color: theme-color('text');
   }
 
   &__row {
@@ -330,7 +330,7 @@
     cursor: pointer;
 
     &:invalid {
-      color: var(--wd-text-muted);
+      color: theme-color('text-muted');
     }
 
     &:disabled {
@@ -379,8 +379,8 @@
     width: 64px;
     height: 64px;
     margin-bottom: 4px;
-    color: var(--wd-primary);
-    background: var(--wd-primary-soft);
+    color: theme-color('primary');
+    background: theme-color('primary-soft');
     border-radius: 50%;
 
     .mat-icon {
@@ -391,8 +391,8 @@
   }
 
   &--danger &__icon {
-    color: var(--wd-danger);
-    background: var(--wd-danger-soft);
+    color: theme-color('danger');
+    background: theme-color('danger-soft');
   }
 
   .auth-form__submit {
@@ -409,7 +409,7 @@
   padding: 0;
   font-size: 13px;
   font-weight: 600;
-  color: var(--wd-primary);
+  color: theme-color('primary');
   background: none;
   border: none;
   cursor: pointer;
@@ -429,7 +429,7 @@
   .auth-page {
     padding: 32px 16px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 45%),
+      linear-gradient(180deg, theme-color('white', 0.6) 0%, theme-color('white', 0) 45%),
       url('/images/login-bg.jpg') 30% center / cover no-repeat;
 
     &__content {

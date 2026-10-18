@@ -47,14 +47,14 @@
     width: 40px;
     height: 40px;
     margin-left: auto;
-    color: var(--wd-text);
-    background: var(--wd-surface);
-    border: 1px solid var(--wd-border);
+    color: theme-color('text');
+    background: theme-color('surface');
+    border: 1px solid theme-color('border');
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
     &:hover {
-      border-color: var(--wd-primary);
+      border-color: theme-color('primary');
     }
   }
 
@@ -62,7 +62,7 @@
     grid-column: 1 / -1;
     margin: 0;
     font-size: 13px;
-    color: var(--wd-danger);
+    color: theme-color('danger');
   }
 }
 

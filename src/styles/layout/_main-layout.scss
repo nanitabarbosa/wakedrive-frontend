@@ -24,8 +24,8 @@
   width: var(--wd-sidebar-width);
   height: 100vh;
   padding: 20px 12px;
-  color: var(--wd-sidebar-text);
-  background: var(--wd-sidebar-bg);
+  color: theme-color('sidebar-text');
+  background: theme-color('sidebar-bg');
   transition: width 0.2s ease;
 
   &__brand {
@@ -36,11 +36,11 @@
     padding: 0 8px 28px;
     font-size: 20px;
     font-weight: 700;
-    color: #fff;
+    color: theme-color('white');
     white-space: nowrap;
 
     span span {
-      color: #4f8cff;
+      color: theme-color('sidebar-accent');
     }
   }
 
@@ -71,8 +71,8 @@
     }
 
     &:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.06);
+      color: theme-color('white');
+      background: theme-color('white', 0.06);
     }
   }
 
@@ -84,8 +84,8 @@
 
   &__link--active,
   &__link--active:hover {
-    color: #6ea0ff;
-    background: var(--wd-sidebar-active);
+    color: theme-color('sidebar-accent');
+    background: theme-color('sidebar-active');
   }
 
   &__collapse {
@@ -129,14 +129,14 @@
     position: relative;
     display: inline-flex;
     padding: 6px;
-    color: var(--wd-text);
+    color: theme-color('text');
     background: none;
     border: none;
     border-radius: 50%;
     cursor: pointer;
 
     &:hover {
-      background: var(--wd-border);
+      background: theme-color('border');
     }
   }
 
@@ -152,9 +152,9 @@
     padding: 0 4px;
     font-size: 10px;
     font-weight: 700;
-    color: #fff;
-    background: var(--wd-danger);
-    border: 2px solid var(--wd-bg);
+    color: theme-color('white');
+    background: theme-color('danger');
+    border: 2px solid theme-color('bg');
     border-radius: 9px;
   }
 
@@ -164,8 +164,8 @@
     right: 7px;
     width: 8px;
     height: 8px;
-    background: var(--wd-danger);
-    border: 2px solid var(--wd-bg);
+    background: theme-color('danger');
+    border: 2px solid theme-color('bg');
     border-radius: 50%;
   }
 
@@ -174,14 +174,14 @@
     align-items: center;
     gap: 10px;
     padding: 4px;
-    color: var(--wd-text);
+    color: theme-color('text');
     background: none;
     border: none;
     border-radius: var(--wd-radius-sm);
     cursor: pointer;
 
     &:hover {
-      background: var(--wd-border);
+      background: theme-color('border');
     }
   }
 
@@ -199,7 +199,7 @@
 
   &__user-role {
     font-size: 11px;
-    color: var(--wd-text-muted);
+    color: theme-color('text-muted');
   }
 }
 

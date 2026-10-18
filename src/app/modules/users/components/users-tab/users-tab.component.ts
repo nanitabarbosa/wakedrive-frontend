@@ -33,7 +33,6 @@ export class UsersTabComponent implements OnInit {
   ];
   readonly statusLabels = RECORD_STATUS_LABELS;
   readonly statusOptions = Object.entries(RECORD_STATUS_LABELS);
-  readonly avatarColors = ['#4f6f9f', '#5b8070', '#9a7b4f', '#6f6598', '#986a76', '#4f8591'];
   readonly pageSize = 8;
 
   readonly users = signal<User[]>([]);

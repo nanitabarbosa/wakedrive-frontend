@@ -17,21 +17,21 @@
   }
 
   &--primary {
-    color: #fff;
-    background: var(--wd-primary);
+    color: theme-color('white');
+    background: theme-color('primary');
 
     &:hover:not(:disabled) {
-      background: #245fd6;
+      background: theme-color('primary-hover');
     }
   }
 
   &--outline {
-    color: var(--wd-text);
-    background: var(--wd-surface);
-    border-color: var(--wd-border);
+    color: theme-color('text');
+    background: theme-color('surface');
+    border-color: theme-color('border');
 
     &:hover:not(:disabled) {
-      background: var(--wd-bg);
+      background: theme-color('bg');
     }
   }
 }
@@ -55,10 +55,10 @@
 }
 
 .btn--danger {
-  color: #fff;
-  background: var(--wd-danger);
+  color: theme-color('white');
+  background: theme-color('danger');
 
   &:hover:not(:disabled) {
-    background: #dc2626;
+    background: theme-color('danger');
   }
 }
