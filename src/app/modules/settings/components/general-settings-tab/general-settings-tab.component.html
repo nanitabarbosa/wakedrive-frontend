@@ -80,7 +80,7 @@
           <label class="form-field__label" for="settings-companyName">Nombre de la empresa <span class="required">*</span></label>
           <div class="input-icon" [class.is-invalid]="hasError('companyName')">
             <mat-icon class="input-icon__icon">apartment</mat-icon>
-            <input class="input-icon__field" id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="100" />
+            <input class="input-icon__field" id="settings-companyName" formControlName="companyName" placeholder="Ej. Transportes ABC" maxlength="120" />
           </div>
           @if (hasError('companyName')) {
             <span class="form-field__error">{{ errorFor('companyName') }}</span>
