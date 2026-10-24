@@ -16,7 +16,7 @@ import { RECORD_STATUS_LABELS, User, UserPayload } from '../../interfaces/user.i
 import { UserService } from '../../services/user.service';
 
 const ERROR_MESSAGES: Record<string, Record<string, string>> = {
-  document: { pattern: 'Solo números, entre 6 y 12 dígitos.' },
+  document: { pattern: 'Solo números, entre 6 y 10 dígitos.' },
   email: { email: 'Ingresa un correo válido.' },
 };
 
@@ -62,8 +62,8 @@ export class UserDrawerComponent implements OnInit, OnChanges {
   buildForm(): void {
     this.form = this._fb.nonNullable.group({
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
-      document: ['', [Validators.required, Validators.pattern(/^\d{6,12}$/)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      document: ['', [Validators.required, Validators.pattern(/^\d{6,10}$/)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       status: ['ACTIVE', Validators.required],
     });

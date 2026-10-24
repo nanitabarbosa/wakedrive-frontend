@@ -65,7 +65,7 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       nit: [{ value: '', disabled: true }],
       address: ['', [Validators.required, Validators.maxLength(150)]],
       phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
     });
   }
 
