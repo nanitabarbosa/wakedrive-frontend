@@ -63,7 +63,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     this.form = this._fb.nonNullable.group({
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
       document: ['', [Validators.required, Validators.pattern(/^\d{6,10}$/)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       status: ['ACTIVE', Validators.required],
     });

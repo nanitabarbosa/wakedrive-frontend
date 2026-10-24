@@ -61,11 +61,11 @@ export class GeneralSettingsTabComponent implements OnInit, OnDestroy {
       faceRecognitionAlways: [true],
       notifyDeviceShutdown: [true],
       alarmDurationSeconds: [10, [Validators.required, Validators.min(1), Validators.max(60)]],
-      companyName: ['', [Validators.required, Validators.maxLength(120)]],
+      companyName: ['', [Validators.required, Validators.maxLength(100)]],
       nit: [{ value: '', disabled: true }],
       address: ['', [Validators.required, Validators.maxLength(150)]],
       phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
     });
   }
 

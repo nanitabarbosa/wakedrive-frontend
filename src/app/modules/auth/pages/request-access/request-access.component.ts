@@ -45,13 +45,13 @@ export class RequestAccessComponent implements OnInit {
 
   buildForm(): void {
     this.form = this._fb.nonNullable.group({
-      companyName: ['', [Validators.required, Validators.maxLength(120)]],
+      companyName: ['', [Validators.required, Validators.maxLength(100)]],
       nit: ['', [Validators.required, Validators.pattern(/^\d{9,10}-\d$/)]],
       cityId: ['', Validators.required],
       address: ['', [Validators.required, Validators.maxLength(150)]],
       companyPhone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       adminName: ['', [Validators.required, Validators.maxLength(100)]],
-      adminEmail: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      adminEmail: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
       adminPhone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
     });
   }
