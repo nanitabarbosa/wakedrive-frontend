@@ -3,26 +3,32 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
+import { AlertService } from '../../../../core/services/alert.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { CompanyDrawerComponent } from '../../components/company-drawer/company-drawer.component';
 import { CompanyDevicesDrawerComponent } from '../../components/company-devices-drawer/company-devices-drawer.component';
+import { RECORD_STATUS_LABELS } from '../../../users/interfaces/user.interface';
 import { CompanySummary } from '../../interfaces/company.interface';
 import { CompanyAdminService } from '../../services/company-admin.service';
 
 @Component({
   selector: 'app-company-list',
   standalone: true,
-  imports: [MatIconModule, PageHeaderComponent, TableComponent, CompanyDevicesDrawerComponent],
+  imports: [MatIconModule, PageHeaderComponent, TableComponent, CompanyDevicesDrawerComponent, CompanyDrawerComponent],
   templateUrl: './company-list.component.html',
 })
 export class CompanyListComponent implements OnInit {
   readonly columns: TableColumn[] = [
     { key: 'name', label: 'Empresa' },
+    { key: 'city', label: 'Ciudad' },
+    { key: 'status', label: 'Estado' },
     { key: 'deviceCount', label: 'Dispositivos asignados' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];
   readonly pageSize = 10;
+  readonly statusLabels = RECORD_STATUS_LABELS;
 
   readonly companies = signal<CompanySummary[]>([]);
   readonly total = signal(0);
@@ -32,12 +38,15 @@ export class CompanyListComponent implements OnInit {
 
   readonly drawerOpen = signal(false);
   readonly selectedCompany = signal<CompanySummary | null>(null);
+  readonly editOpen = signal(false);
+  readonly editingCompany = signal<CompanySummary | null>(null);
 
   private readonly _search$ = new Subject<string>();
 
   constructor(
     private _companyAdminService: CompanyAdminService,
     private _destroyRef: DestroyRef,
+    private _alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -86,5 +95,20 @@ export class CompanyListComponent implements OnInit {
 
   closeDrawer(): void {
     this.drawerOpen.set(false);
+  }
+
+  openEdit(company: CompanySummary): void {
+    this.editingCompany.set(company);
+    this.editOpen.set(true);
+  }
+
+  closeEdit(): void {
+    this.editOpen.set(false);
+  }
+
+  onSaved(message: string): void {
+    this.closeEdit();
+    this._alert.success(message);
+    this.loadCompanies();
   }
 }

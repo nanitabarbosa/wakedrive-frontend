@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Page } from '../../../core/interfaces/page.interface';
 import { buildPageParams } from '../../../core/utils/http-params';
+import { RecordStatus } from '../../users/interfaces/user.interface';
 import { CompanyDevice, CompanyDeviceCounts, CompanyDeviceFilters, CompanyFilters, CompanySummary } from '../interfaces/company.interface';
 
 const ENDPOINT = `${environment.apiUrl}/companies`;
@@ -19,6 +20,10 @@ export class CompanyAdminService {
 
   getDevices(companyId: number, filters: CompanyDeviceFilters): Observable<Page<CompanyDevice>> {
     return this._http.get<Page<CompanyDevice>>(`${ENDPOINT}/${companyId}/devices`, { params: buildPageParams({ ...filters }) });
+  }
+
+  updateStatus(companyId: number, status: RecordStatus): Observable<CompanySummary> {
+    return this._http.put<CompanySummary>(`${ENDPOINT}/${companyId}/status`, { status });
   }
 
   getDeviceCounts(companyId: number): Observable<CompanyDeviceCounts> {

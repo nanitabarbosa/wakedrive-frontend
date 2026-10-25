@@ -8,7 +8,7 @@
   <app-table
     [columns]="columns"
     [data]="companies()"
-    [customColumns]="['name', 'actions']"
+    [customColumns]="['name', 'city', 'status', 'actions']"
     [paginated]="true"
     [page]="page()"
     [pageSize]="pageSize"
@@ -22,10 +22,21 @@
         @case ('name') {
           <span class="text-strong">{{ company.name }}</span>
         }
+        @case ('city') {
+          {{ company.city ?? '—' }}
+        }
+        @case ('status') {
+          <span class="badge" [class.badge--success]="company.status === 'ACTIVE'" [class.badge--danger]="company.status === 'INACTIVE'">
+            {{ statusLabels[company.status] }}
+          </span>
+        }
         @case ('actions') {
           <span class="row-actions">
             <button type="button" class="row-actions__btn" (click)="openDrawer(company)" aria-label="Ver dispositivos" title="Ver dispositivos">
               <mat-icon>visibility</mat-icon>
+            </button>
+            <button type="button" class="row-actions__btn" (click)="openEdit(company)" aria-label="Editar empresa" title="Editar">
+              <mat-icon>edit</mat-icon>
             </button>
           </span>
         }
@@ -33,4 +44,5 @@
     </ng-template>
   </app-table>
   <app-company-devices-drawer [open]="drawerOpen()" [company]="selectedCompany()" (closed)="closeDrawer()" />
+  <app-company-drawer [open]="editOpen()" [company]="editingCompany()" (closed)="closeEdit()" (saved)="onSaved($event)" />
 </section>

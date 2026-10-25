@@ -3,6 +3,9 @@ import { RecordStatus } from '../../users/interfaces/user.interface';
 export interface CompanySummary {
   id: number;
   name: string;
+  nit: string;
+  city: string | null;
+  status: RecordStatus;
   deviceCount: number;
 }
 

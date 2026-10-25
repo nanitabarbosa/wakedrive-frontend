@@ -1,0 +1,46 @@
+<app-drawer title="Editar empresa" icon="domain" variant="primary" [open]="open" (closed)="closed.emit()">
+  @if (company; as c) {
+    <div class="drawer-cards">
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>domain</mat-icon></span>
+          Información de la empresa
+        </span>
+        <dl class="detail-list">
+          <dt class="detail-list__label">Nombre</dt>
+          <dd class="detail-list__value">{{ c.name }}</dd>
+          <dt class="detail-list__label">NIT</dt>
+          <dd class="detail-list__value">{{ c.nit }}</dd>
+          <dt class="detail-list__label">Ciudad</dt>
+          <dd class="detail-list__value">{{ c.city ?? 'Sin ciudad' }}</dd>
+        </dl>
+      </section>
+
+      <section class="info-card">
+        <span class="info-card__title">
+          <span class="info-card__icon"><mat-icon>toggle_on</mat-icon></span>
+          Estado <span class="required">*</span>
+        </span>
+        <div class="segmented" role="radiogroup" aria-label="Estado de la empresa">
+          @for (option of statusOptions; track option[0]) {
+            <button
+              type="button"
+              role="radio"
+              class="segmented__tab status-option"
+              [class.segmented__tab--active]="status() === option[0]"
+              [class.status-option--on]="option[0] === 'ACTIVE'"
+              [attr.aria-checked]="status() === option[0]"
+              (click)="setStatus(option[0])"
+            >
+              {{ option[1] }}
+            </button>
+          }
+        </div>
+        @if (status() === 'INACTIVE') {
+          <span class="form-section__hint">Si la desactivas, ningún usuario de la empresa podrá iniciar sesión hasta que la actives de nuevo.</span>
+        }
+      </section>
+    </div>
+  }
+  <app-form-actions drawer-footer saveLabel="Guardar cambios" [disabled]="!changed" [loading]="saving()" (save)="save()" (dismiss)="closed.emit()" />
+</app-drawer>

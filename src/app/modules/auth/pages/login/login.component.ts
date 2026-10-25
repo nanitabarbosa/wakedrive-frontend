@@ -53,6 +53,12 @@ export class LoginComponent implements OnInit {
     return 'Valor no válido.';
   }
 
+  loginErrorMessage(error: HttpErrorResponse): string {
+    if (error.status === 401) return 'Correo o contraseña incorrectos.';
+    if (error.status === 403) return error.error?.message ?? 'La empresa está inactiva. Comunícate con el administrador de WakeDrive.';
+    return 'No se pudo iniciar sesión. Intenta de nuevo.';
+  }
+
   submit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -65,7 +71,7 @@ export class LoginComponent implements OnInit {
       next: () => this._router.navigateByUrl(this._authService.homeRoute()),
       error: (error: HttpErrorResponse) => {
         this.loading.set(false);
-        this._alert.error(error.status === 401 ? 'Correo o contraseña incorrectos.' : 'No se pudo iniciar sesión. Intenta de nuevo.');
+        this._alert.error(this.loginErrorMessage(error));
       },
     });
   }
