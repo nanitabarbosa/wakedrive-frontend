@@ -109,7 +109,7 @@
             <label class="form-field__label" for="settings-email">Correo electrónico <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('email')">
               <mat-icon class="input-icon__icon">mail_outline</mat-icon>
-              <input class="input-icon__field" id="settings-email" type="email" formControlName="email" placeholder="Ej. contacto@empresa.com" maxlength="120" autocomplete="email" />
+              <input class="input-icon__field" id="settings-email" type="email" formControlName="email" placeholder="Ej. contacto@empresa.com" maxlength="100" autocomplete="email" />
             </div>
             @if (hasError('email')) {
               <span class="form-field__error">{{ errorFor('email') }}</span>

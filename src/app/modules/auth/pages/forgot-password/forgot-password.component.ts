@@ -30,7 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   buildForm(): void {
     this.form = this._fb.nonNullable.group({
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
     });
   }
 

@@ -56,6 +56,36 @@ $theme-colors: (
 
 $avatar-tones: 10;
 
+$bp-sm: 640px;
+$bp-md: 1024px;
+$bp-xl: 1600px;
+
+@mixin respond($size) {
+  @if $size == 'sm' {
+    @media (max-width: $bp-sm) {
+      @content;
+    }
+  } @else if $size == 'md' {
+    @media (min-width: $bp-sm + 1) and (max-width: $bp-md) {
+      @content;
+    }
+  } @else if $size == 'md-down' {
+    @media (max-width: $bp-md) {
+      @content;
+    }
+  } @else if $size == 'lg' {
+    @media (min-width: $bp-md + 1) {
+      @content;
+    }
+  } @else if $size == 'xl' {
+    @media (min-width: $bp-xl) and (min-height: 850px) {
+      @content;
+    }
+  } @else {
+    @error 'respond: "#{$size}" no es un breakpoint valido (sm, md, md-down, lg, xl).';
+  }
+}
+
 @function theme-color($name, $alpha: 1) {
   @if not map-has-key($theme-colors, $name) {
     @error 'theme-color: "#{$name}" no existe en $theme-colors.';

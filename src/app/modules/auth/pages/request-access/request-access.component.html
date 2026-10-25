@@ -23,7 +23,7 @@
           <label class="form-field__label" for="request-companyName">Nombre de la empresa <span class="required">*</span></label>
           <div class="input-icon" [class.is-invalid]="hasError('companyName')">
             <mat-icon class="input-icon__icon">apartment</mat-icon>
-            <input class="input-icon__field" id="request-companyName" formControlName="companyName" placeholder="Nombre de la empresa" maxlength="120" autocomplete="organization" />
+            <input class="input-icon__field" id="request-companyName" formControlName="companyName" placeholder="Nombre de la empresa" maxlength="100" autocomplete="organization" />
           </div>
           @if (hasError('companyName')) {
             <span class="form-field__error">{{ errorFor('companyName') }}</span>
@@ -34,7 +34,7 @@
             <label class="form-field__label" for="request-nit">NIT <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('nit')">
               <mat-icon class="input-icon__icon">description</mat-icon>
-              <input class="input-icon__field" id="request-nit" formControlName="nit" placeholder="Ingresa el NIT" maxlength="15" />
+              <input class="input-icon__field" id="request-nit" formControlName="nit" placeholder="900123456-7" maxlength="12" />
             </div>
             @if (hasError('nit')) {
               <span class="form-field__error">{{ errorFor('nit') }}</span>
@@ -87,7 +87,7 @@
             <label class="form-field__label" for="request-adminEmail">Correo corporativo <span class="required">*</span></label>
             <div class="input-icon" [class.is-invalid]="hasError('adminEmail')">
               <mat-icon class="input-icon__icon">mail_outline</mat-icon>
-              <input class="input-icon__field" id="request-adminEmail" type="email" formControlName="adminEmail" placeholder="admin@empresa.com" maxlength="120" autocomplete="email" />
+              <input class="input-icon__field" id="request-adminEmail" type="email" formControlName="adminEmail" placeholder="admin@empresa.com" maxlength="100" autocomplete="email" />
             </div>
             @if (hasError('adminEmail')) {
               <span class="form-field__error">{{ errorFor('adminEmail') }}</span>
