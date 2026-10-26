@@ -1,0 +1,29 @@
+@if (guide.step(); as step) {
+  <div class="guide" role="dialog" aria-modal="true" aria-labelledby="guide-title" aria-describedby="guide-description">
+    <div class="guide__backdrop" [class.guide__backdrop--dim]="!rect()"></div>
+    @if (rect(); as r) {
+      <div class="guide__spotlight" [style.top.px]="r.top" [style.left.px]="r.left" [style.width.px]="r.width" [style.height.px]="r.height"></div>
+    }
+    <div class="guide__tooltip guide__tooltip--{{ placement() }}" [style]="tooltipStyle()">
+      <div class="guide__header">
+        <span class="guide__badge"><mat-icon>assistant</mat-icon>{{ guide.tour()?.title }}</span>
+        <button type="button" class="guide__close" (click)="guide.close()" aria-label="Cerrar asistente" title="Cerrar">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <span class="guide__title" id="guide-title">{{ step.title }}</span>
+      <p class="guide__description" id="guide-description">{{ step.description }}</p>
+      <div class="guide__footer">
+        <span class="guide__progress">{{ guide.index() + 1 }} de {{ guide.total() }}</span>
+        <div class="guide__actions">
+          @if (!guide.isFirst()) {
+            <button type="button" class="btn btn--outline btn--sm" (click)="guide.previous()">Anterior</button>
+          }
+          <button type="button" class="btn btn--primary btn--sm" (click)="guide.next()">
+            {{ guide.isLast() ? 'Finalizar' : 'Siguiente' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

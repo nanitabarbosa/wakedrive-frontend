@@ -50,6 +50,10 @@
         <mat-icon>expand_more</mat-icon>
       </button>
       <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="openGuide()">
+          <mat-icon>assistant</mat-icon>
+          <span>Asistente</span>
+        </button>
         <button mat-menu-item (click)="openChangePassword()">
           <mat-icon>lock_reset</mat-icon>
           <span>Cambiar contraseña</span>
@@ -68,3 +72,4 @@
     </section>
   </div>
 </div>
+<app-guide-tour />
