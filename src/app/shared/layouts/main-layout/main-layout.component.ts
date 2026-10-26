@@ -6,6 +6,8 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { AuthService } from '../../../core/services/auth.service';
 import { ChangePasswordDialogComponent } from '../../../modules/auth/components/change-password-dialog/change-password-dialog.component';
+import { GuideTourComponent } from '../../../modules/module-guide/components/guide-tour/guide-tour.component';
+import { ModuleGuideService } from '../../../modules/module-guide/services/module-guide.service';
 import { SettingsService } from '../../../modules/settings/services/settings.service';
 import { NotificationsModalComponent } from '../../../modules/notifications/modal/notifications-modal.component';
 import { NotificationService } from '../../../modules/notifications/services/notification.service';
@@ -19,7 +21,7 @@ interface NavItem {
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule, MatMenuModule, NotificationsModalComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, MatIconModule, MatMenuModule, NotificationsModalComponent, GuideTourComponent],
   templateUrl: './main-layout.component.html',
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
@@ -43,6 +45,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _notificationService: NotificationService,
     private _settingsService: SettingsService,
+    private _guideService: ModuleGuideService,
     private _dialog: MatDialog,
   ) {}
 
@@ -113,6 +116,10 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   openChangePassword(): void {
     this._dialog.open(ChangePasswordDialogComponent, { width: '440px', maxWidth: '92vw' });
+  }
+
+  openGuide(): void {
+    this._guideService.start();
   }
 
   logout(): void {

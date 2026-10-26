@@ -1,0 +1,120 @@
+.guide {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+
+    &--dim {
+      background: theme-color('text', 0.55);
+    }
+  }
+
+  &__spotlight {
+    position: absolute;
+    border-radius: var(--wd-radius);
+    box-shadow: 0 0 0 9999px theme-color('text', 0.55);
+    outline: 2px solid theme-color('primary');
+    pointer-events: none;
+    transition:
+      top 0.25s ease,
+      left 0.25s ease,
+      width 0.25s ease,
+      height 0.25s ease;
+  }
+
+  &__tooltip {
+    box-sizing: border-box;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: min(340px, calc(100vw - 32px));
+    padding: 16px;
+    background: theme-color('surface');
+    border-radius: var(--wd-radius);
+    box-shadow: 0 12px 32px theme-color('text', 0.18);
+
+    &--center {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: theme-color('primary');
+    background: theme-color('primary-soft');
+    border-radius: 999px;
+
+    .mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: theme-color('text-muted');
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+
+    &:hover {
+      background: theme-color('surface-muted');
+    }
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: theme-color('text');
+  }
+
+  &__description {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: theme-color('text-secondary');
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  &__progress {
+    font-size: 13px;
+    color: theme-color('text-muted');
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+}
