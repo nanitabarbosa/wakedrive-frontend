@@ -63,7 +63,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     this.form = this._fb.nonNullable.group({
       fullName: ['', [Validators.required, Validators.maxLength(100)]],
       document: ['', [Validators.required, Validators.pattern(/^\d{6,10}$/)]],
-      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
+      email: ['', [Validators.email, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       status: ['ACTIVE', Validators.required],
     });
@@ -71,7 +71,7 @@ export class UserDrawerComponent implements OnInit, OnChanges {
 
   resetForm(): void {
     this.form.reset();
-    if (this.user) this.form.patchValue({ ...this.user, phone: this.user.phone });
+    if (this.user) this.form.patchValue({ ...this.user, email: this.user.email ?? '', phone: this.user.phone });
     if (this.mode === 'view') this.form.disable();
     else this.form.enable();
   }
@@ -101,7 +101,8 @@ export class UserDrawerComponent implements OnInit, OnChanges {
     }
 
     const value = this.form.getRawValue();
-    const payload: UserPayload = { ...value, email: value.email.trim().toLowerCase() };
+    const email = value.email.trim().toLowerCase();
+    const payload: UserPayload = { ...value, email: email || null };
     const isEdit = this.mode === 'edit' && !!this.user;
     const request$ = isEdit ? this._userService.updateUser(this.user!.id, payload) : this._userService.createUser(payload);
 

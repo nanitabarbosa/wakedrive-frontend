@@ -9,7 +9,7 @@ export interface User {
   id: number;
   fullName: string;
   document: string;
-  email: string;
+  email: string | null;
   phone: string;
   status: RecordStatus;
 }
