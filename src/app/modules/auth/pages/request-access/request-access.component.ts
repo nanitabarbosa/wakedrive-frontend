@@ -47,7 +47,7 @@ export class RequestAccessComponent implements OnInit {
     this.form = this._fb.nonNullable.group({
       companyName: ['', [Validators.required, Validators.maxLength(100)]],
       nit: ['', [Validators.required, Validators.pattern(/^\d{9,10}-\d$/)]],
-      cityId: ['', Validators.required],
+      cityId: this._fb.control<number | null>(null, Validators.required),
       address: ['', [Validators.required, Validators.maxLength(150)]],
       companyPhone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
       adminName: ['', [Validators.required, Validators.maxLength(100)]],
