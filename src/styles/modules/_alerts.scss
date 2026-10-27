@@ -26,21 +26,9 @@
     &--wide {
       grid-column: span 2;
     }
-  }
 
-  &__inline {
-    display: flex;
-    gap: 12px;
-
-    .search {
-      box-sizing: border-box;
-      flex: 1;
-      width: auto;
-
-      .search__input {
-        box-sizing: border-box;
-        height: 40px;
-      }
+    &--actions {
+      justify-content: flex-end;
     }
   }
 

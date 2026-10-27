@@ -27,8 +27,6 @@ export class VehiclesTabComponent implements OnInit {
     { key: 'index', label: '#' },
     { key: 'plate', label: 'Placa' },
     { key: 'brand', label: 'Marca' },
-    { key: 'model', label: 'Modelo' },
-    { key: 'year', label: 'Año' },
     { key: 'type', label: 'Tipo' },
     { key: 'status', label: 'Estado' },
     { key: 'actions', label: 'Acciones', align: 'center' },

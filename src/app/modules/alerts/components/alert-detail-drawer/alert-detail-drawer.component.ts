@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 import { DrawerComponent } from '../../../../shared/components/drawer/drawer.component';
-import { ALERT_LEVEL_LABELS, ALERT_TYPE_ICONS, ALERT_TYPE_LABELS, Alert } from '../../interfaces/alert.interface';
+import { ALERT_LEVEL_LABELS, ALERT_TYPE_LABELS, Alert } from '../../interfaces/alert.interface';
 
 @Component({
   selector: 'app-alert-detail-drawer',
@@ -17,6 +17,5 @@ export class AlertDetailDrawerComponent {
   @Output() closed = new EventEmitter<void>();
 
   readonly typeLabels = ALERT_TYPE_LABELS;
-  readonly typeIcons = ALERT_TYPE_ICONS;
   readonly levelLabels = ALERT_LEVEL_LABELS;
 }

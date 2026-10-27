@@ -1,5 +1,5 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
-import { DatePipe, formatDate } from '@angular/common';
+import { DatePipe, DecimalPipe, formatDate } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -28,7 +28,7 @@ const LIMIT = 5;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DatePipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
+  imports: [DatePipe, DecimalPipe, RouterLink, MatIconModule, MatMenuModule, TimeAgoPipe, PageHeaderComponent, TableComponent],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
@@ -63,6 +63,7 @@ export class DashboardComponent implements OnInit {
   readonly alertLevelLabels: Record<string, string> = {
     HIGH: 'Alta',
     MEDIUM: 'Media',
+    LOW: 'Baja',
   };
   readonly rangePresets: DateRangePreset[] = [
     { label: 'Hoy', days: 1 },

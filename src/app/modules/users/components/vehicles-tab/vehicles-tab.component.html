@@ -15,7 +15,7 @@
     <div class="toolbar__row">
       <label class="search">
         <mat-icon>search</mat-icon>
-        <input class="search__input" type="search" placeholder="Buscar por placa, marca o modelo..." (input)="onSearch($any($event.target).value)" />
+        <input class="search__input" type="search" placeholder="Buscar por placa o marca..." (input)="onSearch($any($event.target).value)" />
       </label>
       <button type="button" class="btn btn--primary btn--sm" (click)="openDrawer('create')">
         <mat-icon>add</mat-icon>Nuevo vehículo

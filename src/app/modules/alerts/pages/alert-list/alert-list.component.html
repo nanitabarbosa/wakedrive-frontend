@@ -19,23 +19,16 @@
     </div>
     <div class="filters__field">
       <label class="filters__label" for="alerts-type">Tipo de alerta</label>
-      <ng-select [items]="typeOptions" bindLabel="1" bindValue="0" placeholder="Todos los tipos" [searchable]="false" [ngModel]="filters().type || null" (ngModelChange)="onSelectChange('type', $event ?? '')" inputId="alerts-type" />
+      <ng-select [items]="typeOptions()" bindLabel="label" bindValue="id" placeholder="Todos los tipos" [searchable]="false" [ngModel]="filters().eventTypeId || null" (ngModelChange)="onSelectChange('eventTypeId', $event ?? '')" inputId="alerts-type" />
     </div>
     <div class="filters__field">
       <label class="filters__label" for="alerts-level">Nivel</label>
       <ng-select [items]="levelOptions" bindLabel="1" bindValue="0" placeholder="Todos los niveles" [searchable]="false" [ngModel]="filters().level || null" (ngModelChange)="onSelectChange('level', $event ?? '')" inputId="alerts-level" />
     </div>
-    <div class="filters__field filters__field--wide">
-      <label class="filters__label" for="alerts-location">Ubicación</label>
-      <div class="filters__inline">
-        <label class="search">
-          <mat-icon>search</mat-icon>
-          <input class="search__input" id="alerts-location" type="search" placeholder="Buscar por ubicación..." (input)="onLocationSearch($any($event.target).value)" />
-        </label>
-        <button type="button" class="filters__refresh" (click)="loadAlerts()" aria-label="Actualizar" title="Actualizar">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </div>
+    <div class="filters__field filters__field--wide filters__field--actions">
+      <button type="button" class="filters__refresh" (click)="loadAlerts()" aria-label="Actualizar" title="Actualizar">
+        <mat-icon>refresh</mat-icon>
+      </button>
     </div>
     @if (dateError()) {
       <span class="filters__error" role="alert">{{ dateError() }}</span>
@@ -44,7 +37,7 @@
   <app-table
     [columns]="columns"
     [data]="alerts()"
-    [customColumns]="['date', 'time', 'vehiclePlate', 'type', 'durationSeconds', 'level', 'actions']"
+    [customColumns]="['date', 'time', 'vehiclePlate', 'type', 'level', 'actions']"
     [paginated]="true"
     [page]="filters().page"
     [pageSize]="filters().size"
@@ -65,15 +58,12 @@
           <span class="text-strong">{{ alert.vehiclePlate }}</span>
         }
         @case ('type') {
-          <span class="badge badge--icon" [class.badge--warning]="alert.type === 'FACE_NOT_DETECTED'" [class.badge--danger]="alert.type !== 'FACE_NOT_DETECTED'">
-            <mat-icon>{{ typeIcons[alert.type] }}</mat-icon>{{ typeLabels[alert.type] }}
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+            {{ typeLabels[alert.eventType.name] }}
           </span>
         }
-        @case ('durationSeconds') {
-          {{ alert.durationSeconds }} seg
-        }
         @case ('level') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
             {{ levelLabels[alert.level] }}
           </span>
         }

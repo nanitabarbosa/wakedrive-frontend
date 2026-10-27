@@ -67,7 +67,7 @@
       <div class="stat-card__foot">
         @if (s) {
           <span class="stat-card__chip" [class.stat-card__chip--danger]="s.alertsToday.variation > 0" [class.stat-card__chip--success]="s.alertsToday.variation <= 0">
-            <mat-icon>{{ s.alertsToday.variation >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ s.alertsToday.variation }}%
+            <mat-icon>{{ s.alertsToday.variation >= 0 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>{{ s.alertsToday.variation | number: '1.0-2' }}%
           </span>
           <span class="stat-card__hint">vs. día anterior</span>
         }
@@ -118,15 +118,15 @@
           {{ alert.date | date: 'HH:mm:ss' }}
         }
         @case ('type') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'">
-            {{ alertTypeLabels[alert.type] }}
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+            {{ alertTypeLabels[alert.eventType.name] }}
           </span>
         }
         @case ('durationSeconds') {
           {{ alert.durationSeconds }} seg
         }
         @case ('level') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
             {{ alertLevelLabels[alert.level] }}
           </span>
         }

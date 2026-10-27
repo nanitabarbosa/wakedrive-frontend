@@ -1,6 +1,6 @@
 export type DeviceStatus = 'ACTIVE' | 'OFFLINE';
 export type AlertType = 'DROWSINESS' | 'FACE_NOT_DETECTED' | 'DEVICE_OFF' | 'CONNECTION_LOST';
-export type AlertLevel = 'HIGH' | 'MEDIUM';
+export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW';
 
 export interface TrendStat {
   total: number;
@@ -28,7 +28,7 @@ export interface AlertSummary {
   user: string;
   vehiclePlate: string;
   location: string;
-  type: AlertType;
+  eventType: { id: number; name: AlertType };
   durationSeconds: number;
   level: AlertLevel;
 }

@@ -1,5 +1,5 @@
 export type AlertType = 'DROWSINESS' | 'FACE_NOT_DETECTED' | 'DEVICE_OFF' | 'CONNECTION_LOST';
-export type AlertLevel = 'HIGH' | 'MEDIUM';
+export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW';
 
 export const ALERT_TYPE_LABELS: Record<string, string> = {
   DROWSINESS: 'Somnolencia detectada',
@@ -8,17 +8,16 @@ export const ALERT_TYPE_LABELS: Record<string, string> = {
   CONNECTION_LOST: 'Pérdida de conexión',
 };
 
-export const ALERT_TYPE_ICONS: Record<string, string> = {
-  DROWSINESS: 'hotel',
-  FACE_NOT_DETECTED: 'person',
-  DEVICE_OFF: 'power_settings_new',
-  CONNECTION_LOST: 'wifi_off',
-};
-
 export const ALERT_LEVEL_LABELS: Record<string, string> = {
   HIGH: 'Alta',
   MEDIUM: 'Media',
+  LOW: 'Baja',
 };
+
+export interface EventType {
+  id: number;
+  name: AlertType;
+}
 
 export interface Alert {
   id: number;
@@ -29,7 +28,7 @@ export interface Alert {
   vehiclePlate: string;
   deviceSerial: string;
   location: string;
-  type: AlertType;
+  eventType: EventType;
   durationSeconds: number;
   level: AlertLevel;
 }
@@ -39,9 +38,8 @@ export interface AlertFilters {
   to: string;
   userId: number | '';
   vehicleId: number | '';
-  type: AlertType | '';
+  eventTypeId: number | '';
   level: AlertLevel | '';
-  location: string;
   page: number;
   size: number;
 }

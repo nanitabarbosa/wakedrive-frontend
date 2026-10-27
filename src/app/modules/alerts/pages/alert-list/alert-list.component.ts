@@ -1,10 +1,8 @@
-import { Component, DestroyRef, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { DatePipe, formatDate } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
@@ -12,7 +10,6 @@ import { TableComponent } from '../../../../shared/components/table/table.compon
 import { AlertDetailDrawerComponent } from '../../components/alert-detail-drawer/alert-detail-drawer.component';
 import {
   ALERT_LEVEL_LABELS,
-  ALERT_TYPE_ICONS,
   ALERT_TYPE_LABELS,
   Alert,
   AlertFilters,
@@ -35,16 +32,12 @@ export class AlertListComponent implements OnInit {
     { key: 'time', label: 'Hora' },
     { key: 'userName', label: 'Usuario' },
     { key: 'vehiclePlate', label: 'Vehículo' },
-    { key: 'location', label: 'Ubicación' },
     { key: 'type', label: 'Tipo de alerta' },
-    { key: 'durationSeconds', label: 'Duración' },
     { key: 'level', label: 'Nivel' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];
   readonly typeLabels = ALERT_TYPE_LABELS;
-  readonly typeIcons = ALERT_TYPE_ICONS;
   readonly levelLabels = ALERT_LEVEL_LABELS;
-  readonly typeOptions = Object.entries(ALERT_TYPE_LABELS);
   readonly levelOptions = Object.entries(ALERT_LEVEL_LABELS);
   readonly today = this.toIsoDate(new Date());
 
@@ -53,15 +46,15 @@ export class AlertListComponent implements OnInit {
   readonly loadError = signal(false);
   readonly userOptions = signal<FilterOption[]>([]);
   readonly vehicleOptions = signal<FilterOption[]>([]);
+  readonly typeOptions = signal<FilterOption[]>([]);
 
   readonly filters = signal<AlertFilters>({
     from: this.toIsoDate(new Date(Date.now() - (DEFAULT_DAYS - 1) * DAY)),
     to: this.today,
     userId: '',
     vehicleId: '',
-    type: '',
+    eventTypeId: '',
     level: '',
-    location: '',
     page: 1,
     size: 10,
   });
@@ -70,23 +63,11 @@ export class AlertListComponent implements OnInit {
   readonly drawerOpen = signal(false);
   readonly selectedAlert = signal<Alert | null>(null);
 
-  private readonly _location$ = new Subject<string>();
-
-  constructor(
-    private _alertService: AlertService,
-    private _destroyRef: DestroyRef,
-  ) {}
+  constructor(private _alertService: AlertService) {}
 
   ngOnInit(): void {
-    this.listenLocationSearch();
     this.loadFilterOptions();
     this.loadAlerts();
-  }
-
-  listenLocationSearch(): void {
-    this._location$
-      .pipe(debounceTime(350), distinctUntilChanged(), takeUntilDestroyed(this._destroyRef))
-      .subscribe(location => this.updateFilters({ location }));
   }
 
   loadFilterOptions(): void {
@@ -97,6 +78,10 @@ export class AlertListComponent implements OnInit {
     this._alertService.getVehicleOptions().subscribe({
       next: options => this.vehicleOptions.set(options),
       error: () => this.vehicleOptions.set([]),
+    });
+    this._alertService.getEventTypes().subscribe({
+      next: types => this.typeOptions.set(types.map(({ id, name }) => ({ id, label: ALERT_TYPE_LABELS[name] ?? name }))),
+      error: () => this.typeOptions.set([]),
     });
   }
 
@@ -125,13 +110,9 @@ export class AlertListComponent implements OnInit {
     this.updateFilters({ [field]: value });
   }
 
-  onSelectChange(field: 'userId' | 'vehicleId' | 'type' | 'level', value: string): void {
-    const parsed = (field === 'userId' || field === 'vehicleId') && value ? Number(value) : value;
+  onSelectChange(field: 'userId' | 'vehicleId' | 'eventTypeId' | 'level', value: string): void {
+    const parsed = field !== 'level' && value ? Number(value) : value;
     this.updateFilters({ [field]: parsed } as Partial<AlertFilters>);
-  }
-
-  onLocationSearch(term: string): void {
-    this._location$.next(term.trim());
   }
 
   onPageChange(page: number): void {

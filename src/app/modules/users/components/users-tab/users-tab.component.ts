@@ -27,7 +27,6 @@ export class UsersTabComponent implements OnInit {
     { key: 'index', label: '#' },
     { key: 'fullName', label: 'Nombre' },
     { key: 'document', label: 'Documento' },
-    { key: 'email', label: 'Correo' },
     { key: 'status', label: 'Estado' },
     { key: 'actions', label: 'Acciones', align: 'center' },
   ];

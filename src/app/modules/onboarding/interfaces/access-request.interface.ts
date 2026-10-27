@@ -32,7 +32,6 @@ export interface AccessRequest {
   id: number;
   companyName: string;
   nit: string;
-  country: string;
   city: string;
   address: string;
   companyPhone: string;

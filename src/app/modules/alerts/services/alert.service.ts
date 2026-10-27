@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Page } from '../../../core/interfaces/page.interface';
 import { buildPageParams } from '../../../core/utils/http-params';
-import { Alert, AlertFilters, FilterOption } from '../interfaces/alert.interface';
+import { Alert, AlertFilters, EventType, FilterOption } from '../interfaces/alert.interface';
 
 const ENDPOINT = `${environment.apiUrl}/alerts`;
 
@@ -23,5 +23,9 @@ export class AlertService {
 
   getVehicleOptions(): Observable<FilterOption[]> {
     return this._http.get<FilterOption[]>(`${environment.apiUrl}/vehicles/options`);
+  }
+
+  getEventTypes(): Observable<EventType[]> {
+    return this._http.get<EventType[]>(`${environment.apiUrl}/event-types`);
   }
 }

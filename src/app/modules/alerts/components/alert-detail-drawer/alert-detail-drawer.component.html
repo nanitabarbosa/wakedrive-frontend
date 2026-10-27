@@ -3,10 +3,10 @@
     <div class="form-section">
       <span class="form-section__title"><mat-icon>notifications_active</mat-icon>Alerta</span>
       <div class="detail-badges">
-        <span class="badge badge--icon" [class.badge--warning]="a.type === 'FACE_NOT_DETECTED'" [class.badge--danger]="a.type !== 'FACE_NOT_DETECTED'">
-          <mat-icon>{{ typeIcons[a.type] }}</mat-icon>{{ typeLabels[a.type] }}
+        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'">
+          {{ typeLabels[a.eventType.name] }}
         </span>
-        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'">
+        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'">
           Nivel {{ levelLabels[a.level] }}
         </span>
       </div>
