@@ -58,12 +58,12 @@
           <span class="text-strong">{{ alert.vehiclePlate }}</span>
         }
         @case ('type') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'" [class.badge--neutral]="alert.level === 'PENDING'">
             {{ typeLabels[alert.eventType.name] }}
           </span>
         }
         @case ('level') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'" [class.badge--neutral]="alert.level === 'PENDING'">
             {{ levelLabels[alert.level] }}
           </span>
         }

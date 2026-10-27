@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit {
     HIGH: 'Alta',
     MEDIUM: 'Media',
     LOW: 'Baja',
+    PENDING: 'En espera',
   };
   readonly rangePresets: DateRangePreset[] = [
     { label: 'Hoy', days: 1 },

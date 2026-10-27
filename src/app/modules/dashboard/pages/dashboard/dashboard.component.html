@@ -118,15 +118,19 @@
           {{ alert.date | date: 'HH:mm:ss' }}
         }
         @case ('type') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'" [class.badge--neutral]="alert.level === 'PENDING'">
             {{ alertTypeLabels[alert.eventType.name] }}
           </span>
         }
         @case ('durationSeconds') {
-          {{ alert.durationSeconds }} seg
+          @if (alert.level === 'PENDING') {
+            En espera
+          } @else {
+            {{ alert.durationSeconds }} seg
+          }
         }
         @case ('level') {
-          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'">
+          <span class="badge" [class.badge--warning]="alert.level === 'MEDIUM'" [class.badge--danger]="alert.level === 'HIGH'" [class.badge--success]="alert.level === 'LOW'" [class.badge--neutral]="alert.level === 'PENDING'">
             {{ alertLevelLabels[alert.level] }}
           </span>
         }

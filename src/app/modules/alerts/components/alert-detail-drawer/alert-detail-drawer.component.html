@@ -3,11 +3,11 @@
     <div class="form-section">
       <span class="form-section__title"><mat-icon>notifications_active</mat-icon>Alerta</span>
       <div class="detail-badges">
-        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'">
+        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'" [class.badge--neutral]="a.level === 'PENDING'">
           {{ typeLabels[a.eventType.name] }}
         </span>
-        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'">
-          Nivel {{ levelLabels[a.level] }}
+        <span class="badge" [class.badge--warning]="a.level === 'MEDIUM'" [class.badge--danger]="a.level === 'HIGH'" [class.badge--success]="a.level === 'LOW'" [class.badge--neutral]="a.level === 'PENDING'">
+          {{ a.level === 'PENDING' ? levelLabels[a.level] : 'Nivel ' + levelLabels[a.level] }}
         </span>
       </div>
       <div class="detail-list">
@@ -16,7 +16,7 @@
         <span class="detail-list__label">Hora</span>
         <span class="detail-list__value">{{ a.date | date: 'HH:mm:ss' }}</span>
         <span class="detail-list__label">Duración</span>
-        <span class="detail-list__value">{{ a.durationSeconds }} seg</span>
+        <span class="detail-list__value">{{ a.level === 'PENDING' ? 'En espera' : a.durationSeconds + ' seg' }}</span>
       </div>
     </div>
     <div class="form-section">

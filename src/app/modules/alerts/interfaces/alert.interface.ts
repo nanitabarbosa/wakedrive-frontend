@@ -1,5 +1,5 @@
 export type AlertType = 'DROWSINESS' | 'FACE_NOT_DETECTED' | 'DEVICE_OFF' | 'CONNECTION_LOST';
-export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW';
+export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW' | 'PENDING';
 
 export const ALERT_TYPE_LABELS: Record<string, string> = {
   DROWSINESS: 'Somnolencia detectada',
@@ -12,6 +12,7 @@ export const ALERT_LEVEL_LABELS: Record<string, string> = {
   HIGH: 'Alta',
   MEDIUM: 'Media',
   LOW: 'Baja',
+  PENDING: 'En espera',
 };
 
 export interface EventType {

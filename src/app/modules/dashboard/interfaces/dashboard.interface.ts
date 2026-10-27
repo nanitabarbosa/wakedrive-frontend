@@ -1,6 +1,6 @@
 export type DeviceStatus = 'ACTIVE' | 'OFFLINE';
 export type AlertType = 'DROWSINESS' | 'FACE_NOT_DETECTED' | 'DEVICE_OFF' | 'CONNECTION_LOST';
-export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW';
+export type AlertLevel = 'HIGH' | 'MEDIUM' | 'LOW' | 'PENDING';
 
 export interface TrendStat {
   total: number;
