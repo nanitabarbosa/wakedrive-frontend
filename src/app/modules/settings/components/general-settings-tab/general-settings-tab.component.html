@@ -33,7 +33,7 @@
       <mat-icon class="setting-row__icon">schedule</mat-icon>
       <div class="setting-row__body">
         <label class="setting-row__label" for="settings-alarmDuration">Duración de la alarma (segundos)</label>
-        <span class="setting-row__description">Tiempo que sonará la alarma cuando se detecte somnolencia.</span>
+        <span class="setting-row__description">Tiempo adicional que seguirá sonando la alarma después de detectar somnolencia.</span>
         @if (hasError('alarmDurationSeconds')) {
           <span class="form-field__error">{{ errorFor('alarmDurationSeconds') }}</span>
         }
