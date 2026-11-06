@@ -8,6 +8,7 @@ import { PageHeaderComponent } from '../../../../shared/components/page-header/p
 import { TableComponent } from '../../../../shared/components/table/table.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import {
   AlertSummary,
   DailyAlerts,
@@ -80,7 +81,7 @@ export class DashboardComponent implements OnInit {
   readonly errors = signal({ stats: false, devices: false, alerts: false, alertsByDay: false, topUsers: false });
 
   readonly dateRange = signal({ start: new Date(), end: new Date() });
-  readonly rangeDays = signal(7);
+  readonly rangeDays = persistedSignal('dashboard.rangeDays', 7);
 
   readonly chartMax = computed(() => Math.max(5, Math.ceil(Math.max(0, ...this.alertsByDay().map(d => d.total)) / 5) * 5));
   readonly chartTicks = computed(() => Array.from({ length: this.chartMax() / 5 + 1 }, (_, i) => i * 5));
@@ -89,7 +90,8 @@ export class DashboardComponent implements OnInit {
   constructor(private _dashboardService: DashboardService) {}
 
   ngOnInit(): void {
-    this.applyDateRange(this.rangePresets[1]);
+    const saved = this.rangePresets.find(p => p.days === this.rangeDays()) ?? this.rangePresets[1];
+    this.applyDateRange(saved);
     this.loadDashboard();
   }
 

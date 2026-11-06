@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { AlertDetailDrawerComponent } from '../../components/alert-detail-drawer/alert-detail-drawer.component';
 import {
   ALERT_LEVEL_LABELS,
@@ -48,7 +49,7 @@ export class AlertListComponent implements OnInit {
   readonly vehicleOptions = signal<FilterOption[]>([]);
   readonly typeOptions = signal<FilterOption[]>([]);
 
-  readonly filters = signal<AlertFilters>({
+  readonly filters = persistedSignal<AlertFilters>('alerts.filters', {
     from: this.toIsoDate(new Date(Date.now() - (DEFAULT_DAYS - 1) * DAY)),
     to: this.today,
     userId: '',

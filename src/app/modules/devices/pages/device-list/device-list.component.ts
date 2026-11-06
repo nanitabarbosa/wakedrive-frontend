@@ -8,6 +8,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { TimeAgoPipe } from '../../../../shared/pipes/time-ago.pipe';
 import {
   DEVICE_CONNECTION_LABELS,
@@ -37,11 +38,12 @@ export class DeviceListComponent implements OnInit {
 
   readonly devices = signal<DeviceStatusSummary[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
+  readonly page = persistedSignal('devices.page', 1);
   readonly loadError = signal(false);
 
-  readonly search = signal('');
-  readonly status = signal<DeviceConnectionStatus | ''>('');
+  readonly search = persistedSignal('devices.search', '');
+  readonly initialSearch = this.search();
+  readonly status = persistedSignal<DeviceConnectionStatus | ''>('devices.status', '');
 
   private readonly _search$ = new Subject<string>();
 

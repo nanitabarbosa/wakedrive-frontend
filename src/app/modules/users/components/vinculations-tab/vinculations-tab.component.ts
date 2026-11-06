@@ -9,6 +9,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { Vinculation } from '../../interfaces/vinculation.interface';
 import { VinculationService } from '../../services/vinculation.service';
@@ -33,9 +34,10 @@ export class VinculationsTabComponent implements OnInit {
 
   readonly vinculations = signal<Vinculation[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
+  readonly page = persistedSignal('users.vinculations.page', 1);
   readonly loadError = signal(false);
-  readonly search = signal('');
+  readonly search = persistedSignal('users.vinculations.search', '');
+  readonly initialSearch = this.search();
   readonly drawerOpen = signal(false);
 
   private readonly _search$ = new Subject<string>();

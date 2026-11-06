@@ -7,6 +7,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { CompanyDrawerComponent } from '../../components/company-drawer/company-drawer.component';
 import { CompanyDevicesDrawerComponent } from '../../components/company-devices-drawer/company-devices-drawer.component';
 import { RECORD_STATUS_LABELS } from '../../../users/interfaces/user.interface';
@@ -32,8 +33,9 @@ export class CompanyListComponent implements OnInit {
 
   readonly companies = signal<CompanySummary[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
-  readonly search = signal('');
+  readonly page = persistedSignal('companies.page', 1);
+  readonly search = persistedSignal('companies.search', '');
+  readonly initialSearch = this.search();
   readonly loadError = signal(false);
 
   readonly drawerOpen = signal(false);

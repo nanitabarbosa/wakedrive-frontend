@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { clearPersistedFilters } from '../../shared/utils/persisted-signal';
 
 import { environment } from '../../../environments/environment';
 import { AuthResponse, LoginRequest } from '../interfaces/auth.interface';
@@ -36,6 +37,7 @@ export class AuthService {
 
   logout(): void {
     [TOKEN_KEY, ROLES_KEY, USER_KEY].forEach(key => localStorage.removeItem(key));
+    clearPersistedFilters();
     this._token.set(null);
     this._roles.set([]);
     this._user.set(null);

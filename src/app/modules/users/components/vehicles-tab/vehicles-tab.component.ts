@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { RECORD_STATUS_LABELS, RecordStatus } from '../../interfaces/user.interface';
 import { CatalogItem, Vehicle, vehicleTypeLabel } from '../../interfaces/vehicle.interface';
 import { VehicleService } from '../../services/vehicle.service';
@@ -39,12 +40,13 @@ export class VehiclesTabComponent implements OnInit {
 
   readonly vehicles = signal<Vehicle[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
+  readonly page = persistedSignal('users.vehicles.page', 1);
   readonly loadError = signal(false);
 
-  readonly search = signal('');
-  readonly type = signal<number | ''>('');
-  readonly status = signal<RecordStatus | ''>('');
+  readonly search = persistedSignal('users.vehicles.search', '');
+  readonly initialSearch = this.search();
+  readonly type = persistedSignal<number | ''>('users.vehicles.type', '');
+  readonly status = persistedSignal<RecordStatus | ''>('users.vehicles.status', '');
 
   readonly drawerOpen = signal(false);
   readonly drawerMode = signal<DrawerMode>('create');

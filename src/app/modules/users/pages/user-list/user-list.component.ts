@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { DevicesTabComponent } from '../../components/devices-tab/devices-tab.component';
@@ -28,7 +29,7 @@ export class UserListComponent {
     { id: 'devices', label: 'Dispositivos', icon: 'memory' },
     { id: 'vinculations', label: 'Vincular', icon: 'link' },
   ];
-  readonly activeTab = signal<UsersTab>('drivers');
+  readonly activeTab = persistedSignal<UsersTab>('users.activeTab', 'drivers');
 
   selectTab(tab: UsersTab): void {
     this.activeTab.set(tab);

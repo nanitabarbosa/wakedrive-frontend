@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { Device } from '../../interfaces/device.interface';
 import { RECORD_STATUS_LABELS, RecordStatus } from '../../interfaces/user.interface';
 import { DeviceService } from '../../services/device.service';
@@ -35,11 +36,12 @@ export class DevicesTabComponent implements OnInit {
 
   readonly devices = signal<Device[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
+  readonly page = persistedSignal('users.devices.page', 1);
   readonly loadError = signal(false);
 
-  readonly search = signal('');
-  readonly status = signal<RecordStatus | ''>('');
+  readonly search = persistedSignal('users.devices.search', '');
+  readonly initialSearch = this.search();
+  readonly status = persistedSignal<RecordStatus | ''>('users.devices.status', '');
 
   readonly drawerOpen = signal(false);
   readonly drawerMode = signal<DrawerMode>('create');

@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 import { DrawerMode } from '../../../../shared/components/drawer/interfaces/drawer.interface';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { InitialsPipe } from '../../../../shared/pipes/initials.pipe';
 import { RECORD_STATUS_LABELS, RecordStatus, User } from '../../interfaces/user.interface';
 import { UserService } from '../../services/user.service';
@@ -36,11 +37,12 @@ export class UsersTabComponent implements OnInit {
 
   readonly users = signal<User[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
+  readonly page = persistedSignal('users.drivers.page', 1);
   readonly loadError = signal(false);
 
-  readonly search = signal('');
-  readonly status = signal<RecordStatus | ''>('');
+  readonly search = persistedSignal('users.drivers.search', '');
+  readonly initialSearch = this.search();
+  readonly status = persistedSignal<RecordStatus | ''>('users.drivers.status', '');
 
   readonly drawerOpen = signal(false);
   readonly drawerMode = signal<DrawerMode>('create');

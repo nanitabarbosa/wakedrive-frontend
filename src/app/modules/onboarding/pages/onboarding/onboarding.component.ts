@@ -6,6 +6,7 @@ import { AlertService } from '../../../../core/services/alert.service';
 import { PageHeaderComponent } from '../../../../shared/components/page-header/page-header.component';
 import { TableColumn } from '../../../../shared/components/table/interfaces/table.interface';
 import { TableComponent } from '../../../../shared/components/table/table.component';
+import { persistedSignal } from '../../../../shared/utils/persisted-signal';
 import { AccessRequestDrawerComponent } from '../../components/access-request-drawer/access-request-drawer.component';
 import {
   ACCESS_REQUEST_STATUS_LABELS,
@@ -46,8 +47,8 @@ export class OnboardingComponent implements OnInit {
 
   readonly requests = signal<AccessRequest[]>([]);
   readonly total = signal(0);
-  readonly page = signal(1);
-  readonly status = signal<AccessRequestStatus | ''>('');
+  readonly page = persistedSignal('onboarding.page', 1);
+  readonly status = persistedSignal<AccessRequestStatus | ''>('onboarding.status', '');
   readonly counts = signal<AccessRequestCounts>({ total: 0, pending: 0, approved: 0, rejected: 0, inactive: 0 });
   readonly loadError = signal(false);
 
